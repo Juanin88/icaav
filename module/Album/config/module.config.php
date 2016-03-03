@@ -31,4 +31,16 @@ return array(
 						'album' => __DIR__ . '/../view',
 				),
 		),
+		'doctrine' => array(
+		        'driver' => array(
+		            'application_entities' => array(
+		                'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
+		                'cache' => 'array',
+		                'paths' => array(__DIR__ . '/../src/Album/Entity')
+		            ),
+		            'orm_default' => array(
+		                'drivers' => array(
+		                    'Album\Entity' => 'application_entities'
+		                )
+		        ))),
 );
