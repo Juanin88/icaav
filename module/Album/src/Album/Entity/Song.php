@@ -10,16 +10,18 @@ use Doctrine\ORM\Mapping as ORM;
 class Song{
 	
 	/**
-	* @ORM\id_song
+	 * 
+	 * Este siempre es "id" aunque en el nombre de la tabla tenga otro nombre de id_algo, siempre se pone como "id"
+	* @ORM\id
 	* @ORM\Column(type="integer")
 	* @ORM\GeneratedValue(strategy="IDENTITY")
 	 */
-	private $id_song;
+	private $idSong;
 	
 	/**
 	 * @ORM\Column(type="integer")
 	 */
-	private $id;
+	private $id_album;
 	
 	/**
 	* @ORM\Column(type="string", length=45)
@@ -28,11 +30,12 @@ class Song{
 	
 	
 	/**
+	 * Set id_song
 	 * 
-	 * @param int $id_song
+	 * @param int $idsong
 	 */
-	public function setIdSong($id_song){
-		$this->id_song=$id_song;
+	public function setIdSong($idSong){
+		$this->idSong=$idSong;
 	}
 	
  	/**
@@ -41,15 +44,16 @@ class Song{
      * @return integer
      */
 	public function getIdSong(){
-		return $this->id_song;
+		return $this->idSong;
 	}
 	
 	/**
+	 *Set Id
 	 *
 	 * @param int $id
 	 */
-	public function setId($id){
-		$this->id=$id;
+	public function setIdAlbum($id_album){
+		$this->id_album=$id_album;
 	}
 	
 	/**
@@ -57,13 +61,14 @@ class Song{
 	 *
 	 * @return integer
 	 */
-	public function getId(){
-		return $this->id;
+	public function getIdAlbum(){
+		return $this->idSong;
 	}
 	
 	
 	/**
 	 *Set song_name
+	 *
 	 * @param string $song_name
 	 */
 	public function setSongName($song_name){

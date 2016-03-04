@@ -7,19 +7,13 @@ use Album\Entity\Album;
 use DoctrineORMModule\Form\Element\DoctrineEntity;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\ORM\EntityManager;
+use Album\Entity\Song;
 
 class AlbumController extends AbstractActionController
 {
 	public function indexAction()
 	{
 		
-		$rsm = new ResultSetMapping();
-		// build rsm here
-		$entityManager = new \DoctrineORMModule\Options\EntityManager();
-		$query = $entityManager->createNativeQuery('', $rsm);
-		$query->setParameter(1, 'romanb');
-		
-		$users = $query->getResult();
 
 	}
 
@@ -29,14 +23,23 @@ class AlbumController extends AbstractActionController
 		->getServiceLocator()
 		->get('DoctrineORMEntityManager');
 		
-		$user = new Album();
-		$user->setArtist('Juanin');
-		$user->setTitle('El mas mejor.');
+		$album = new Album();
+		$album->setArtist('Juanin');
+		$album->setTitle('El mas mejor.');
 		
-		$objectManager->persist($user);
+		$objectManager->persist($album);
 		$objectManager->flush();
 		
-		die('Hello there '.$user->getId());
+		echo ('Hello there '.$album->getIdAlbum());
+
+		$song = new Song();
+		$song->setSongName('La celula que explota');
+		$song->getIdAlbum(6);
+		
+		$objectManager->persist($song);
+		$objectManager->flush();
+		
+		echo ('Hello there '.$song->getIdSong());
 	}
 
 	public function editAction()
