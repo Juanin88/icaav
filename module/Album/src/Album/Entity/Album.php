@@ -15,7 +15,7 @@ class Album{
 	* @ORM\Column(type="integer")
 	* @ORM\GeneratedValue(strategy="IDENTITY")
 	 */
-	private $idAlbum;
+	private $id_album;
 	
 	/**
 	* @ORM\Column(type="string", length=100)
@@ -30,8 +30,8 @@ class Album{
 	 * 
 	 * @param int $id
 	 */
-	public function setIdAlbum($idAlbum){
-		$this->idAlbum=$idAlbum;
+	public function setIdAlbum($id_album){
+		$this->id_album=$id_album;
 	}
 	
  	/**
@@ -40,7 +40,7 @@ class Album{
      * @return integer
      */
 	public function getIdAlbum(){
-		return $this->idAlbum;
+		return $this->id_album;
 	}
 	
 	/**
