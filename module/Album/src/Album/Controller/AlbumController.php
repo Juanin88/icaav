@@ -123,8 +123,9 @@ class AlbumController extends AbstractActionController
 
 	public function editAction()
 	{
+		
 		$params = $this->getRequest()->getPost();;
-		echo '<pre>'.print_r($params,true).'</pre>';die;
+		//echo '<pre>'.print_r($params,true).'</pre>';die;
 		
 		$id = (int) $this->params()->fromRoute('id', 0);
 		$request = $this->getRequest();
@@ -138,9 +139,16 @@ class AlbumController extends AbstractActionController
 				));
 			}
 		}
-		
+
 		$em = $this->getEntityManager();
-		//Registry::set('entityManager', $em);
+		
+		//Assume that you have connected to a database instance...
+		$statement = $em->getConnection();  
+		$results = $statement->executeQuery("call prueba(?,?,?);",array('100','del','mero mero'));
+		//var_dump($results->fetchAll());
+		
+		echo '<pre>'.print_r( $results->fetchAll() ,true).'</pre>';die;
+		
 		
 		$album = $em->find('Album\Entity\Album',$id);
 		if (!$album) {
