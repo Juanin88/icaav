@@ -51,6 +51,16 @@ class Album{
 		$this->artist=$artist;
 	}
 	
+
+	/**
+	 * Get artist
+	 *
+	 * @return string
+	 */
+	public function getArtist(){
+		return $this->artist;
+	}
+	
 	/**
 	 * 
 	 * @param string $title
@@ -59,4 +69,12 @@ class Album{
 		$this->title=$title;
 	}
 	
+	/**
+	 * Get title
+	 *
+	 * @return string
+	 */
+	public function getTitle(){
+		return $this->title;
+	}
 }

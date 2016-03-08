@@ -8,6 +8,8 @@ use DoctrineORMModule\Form\Element\DoctrineEntity;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\ORM\EntityManager;
 use Album\Entity\Song;
+use Album\Model\AlbumModel;       
+use Album\Form\AlbumForm;   
 
 class AlbumController extends AbstractActionController
 {
@@ -51,12 +53,49 @@ class AlbumController extends AbstractActionController
 	{
 		$repository = $this->getEntityManager()->getRepository('Album\Entity\Album');
 		$albums     = $repository->findAll();
+		//echo '<pre>'.print_r($albums,true).'</pre>';die;
 		
-		$this->view->nombre = 'Juanito';
+		return array('albums'=>$albums);
 	}
 
 	public function addAction()
 	{
+		
+		
+		$form = new AlbumForm();
+		$form->get('submit')->setValue('Add');
+		
+		$request = $this->getRequest();
+		
+		
+		
+		if ($request->isPost()) {
+			$albumModel = new AlbumModel();
+			$form->setInputFilter($albumModel->getInputFilter());	
+			$form->setData($request->getPost());
+
+			if ($form->isValid()) {
+				
+				$albumModel->exchangeArray($form->getData());
+				
+				$objectManager = $this
+				->getServiceLocator()
+				->get('DoctrineORMEntityManager');
+				
+				$album = new Album();
+				$album->setArtist($albumModel->artist);
+				$album->setTitle($albumModel->title);
+				
+				$objectManager->persist($album);
+				$objectManager->flush();
+				// Redirect to list of albums
+				return $this->redirect()->toRoute('album');
+			}
+		}
+		return array('form' => $form);
+		
+		/*
+		
 		$objectManager = $this
 		->getServiceLocator()
 		->get('DoctrineORMEntityManager');
@@ -78,10 +117,61 @@ class AlbumController extends AbstractActionController
 		$objectManager->flush();
 		
 		echo ('Hello there '.$song->getIdSong());
+		
+		*/
 	}
 
 	public function editAction()
 	{
+		$params = $this->getRequest()->getPost();;
+		echo '<pre>'.print_r($params,true).'</pre>';die;
+		
+		$id = (int) $this->params()->fromRoute('id', 0);
+		$request = $this->getRequest();
+		//echo '<pre>'.$request->getContent('id').'</pre>';die;
+		if (!$id) {
+			$request = $this->getRequest();
+			$id = $request->getPost('id');
+			if (!$id) {
+				return $this->redirect()->toRoute('album', array(
+						'action' => 'index'
+				));
+			}
+		}
+		
+		$em = $this->getEntityManager();
+		//Registry::set('entityManager', $em);
+		
+		$album = $em->find('Album\Entity\Album',$id);
+		if (!$album) {
+			
+			return $this->redirect()->toRoute('album', array(
+					'action' => 'index'
+			));
+		}
+		
+		$form = new AlbumForm();
+		$request = $this->getRequest();
+		$form->bind($album);
+		$form->get('submit')->setAttribute('value', 'Edit');
+		
+		if ($request->isPost()) {
+			$form->setData($request->getPost());
+	
+			if ($form->isValid()) {
+				
+				$em->persist($album);
+				$em->flush();
+				
+				
+				
+			}
+		} 
+		
+		return array(
+				'id' => $id,
+				'form' => $form);
+		
 	}
 
 	public function deleteAction()

@@ -1,1 +1,27 @@
-<h1>edit</h1>
+<?php
+ // module/Album/view/album/album/add.phtml:
+
+ $title = 'Edit album';
+ $this->headTitle($title);
+ ?>
+ <h1><?php echo $this->escapeHtml($title); ?></h1>
+ <?php
+ $form->setAttribute('action', $this->url('album', array('action' => 'edit')));
+ $form->prepare();
+
+ echo $this->form()->openTag($form);
+ echo $this->formHidden($form->get('id'));
+ ?>
+ <div class="form-group">
+ 	<?php echo $this->formRow($form->get('title')); ?>
+ </div>
+ <div class="form-group">
+ 	<?php echo $this->formRow($form->get('artist')); ?>
+ </div>
+ <div class="form-group">
+ 	<?php echo $this->formSubmit($form->get('submit')); ?>
+ </div>
+ 
+ <?php echo $this->form()->closeTag(); ?>
+
+  
