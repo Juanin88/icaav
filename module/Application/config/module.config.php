@@ -15,9 +15,9 @@ return array(
             'home' => array(
                 'type' => 'Zend\Mvc\Router\Http\Literal',
                 'options' => array(
-                    'route'    => '/application[/:action][/:id]',
+                    'route'    => '/',
                     'defaults' => array(
-                        'controller' => 'Application\Controller\Index',
+                        'controller' => 'Album\Controller\Album',// <-- change here
                         'action'     => 'index',
                     ),
                 ),

@@ -17,7 +17,7 @@ namespace Album\Form;
          ->setInputFilter(new InputFilter());
          
          $this->add(array(
-             'name' => 'id',
+             'name' => 'id_album',
              'type' => 'Hidden',
          ));
          $this->add(array(
@@ -50,14 +50,15 @@ namespace Album\Form;
              ),
          ));
          
-         
+         /*
          $this->setValidationGroup(array(
          		'security',
          		'post' => array(
+         				'id_album',
          				'title',
          				'text'
          		)
-         ));
+         ));*/
          // Por default utiliza el metodo POST, pero para hacerlo por GET se indica explicitamente.
          // $this->setAttribute('method', 'GET');
      }
