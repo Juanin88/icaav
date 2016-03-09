@@ -39,7 +39,7 @@ class AlbumModel implements InputFilterAwareInterface
 			$inputFilter = new InputFilter();
 
 			$inputFilter->add(array(
-					'name'     => 'id',
+					'name'     => 'id_album',
 					'required' => true,
 					'filters'  => array(
 							array('name' => 'Int'),

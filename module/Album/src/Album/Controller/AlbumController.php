@@ -60,14 +60,10 @@ class AlbumController extends AbstractActionController
 
 	public function addAction()
 	{
-		
-		
 		$form = new AlbumForm();
 		$form->get('submit')->setValue('Add');
 		
 		$request = $this->getRequest();
-		
-		
 		
 		if ($request->isPost()) {
 			$albumModel = new AlbumModel();
@@ -75,7 +71,6 @@ class AlbumController extends AbstractActionController
 			$form->setData($request->getPost());
 
 			if ($form->isValid()) {
-				
 				$albumModel->exchangeArray($form->getData());
 				
 				$objectManager = $this
@@ -93,96 +88,79 @@ class AlbumController extends AbstractActionController
 			}
 		}
 		return array('form' => $form);
-		
-		/*
-		
-		$objectManager = $this
-		->getServiceLocator()
-		->get('DoctrineORMEntityManager');
-		
-		$album = new Album();
-		$album->setArtist('Juanin');
-		$album->setTitle('El mas mejor.');
-		
-		$objectManager->persist($album);
-		$objectManager->flush();
-		
-		echo ('Hello there '.$album->getIdAlbum());
-
-		$song = new Song();
-		$song->setSongName('La celula que explota');
-		$song->getIdAlbum(6);
-		
-		$objectManager->persist($song);
-		$objectManager->flush();
-		
-		echo ('Hello there '.$song->getIdSong());
-		
-		*/
 	}
 
 	public function editAction()
 	{
-		
-		$params = $this->getRequest()->getPost();;
-		//echo '<pre>'.print_r($params,true).'</pre>';die;
-		
 		$id = (int) $this->params()->fromRoute('id', 0);
-		$request = $this->getRequest();
-		//echo '<pre>'.$request->getContent('id').'</pre>';die;
-		if (!$id) {
-			$request = $this->getRequest();
-			$id = $request->getPost('id');
-			if (!$id) {
-				return $this->redirect()->toRoute('album', array(
-						'action' => 'index'
-				));
-			}
-		}
-
-		$em = $this->getEntityManager();
 		
+		if (!$id) {
+			$id = $this->getRequest()->getPost('id_album',null);
+		}
+		$em = $this->getEntityManager();
 		//Assume that you have connected to a database instance...
 		$statement = $em->getConnection();  
-		$results = $statement->executeQuery("call prueba(?,?,?);",array('100','del','mero mero'));
-		//var_dump($results->fetchAll());
-		
-		echo '<pre>'.print_r( $results->fetchAll() ,true).'</pre>';die;
-		
-		
-		$album = $em->find('Album\Entity\Album',$id);
-		if (!$album) {
-			
-			return $this->redirect()->toRoute('album', array(
-					'action' => 'index'
-			));
-		}
+		$results = $statement->executeQuery("CALL select_album(?);",array($id));	
+		$album = $results->fetchAll();
+		unset($results);
 		
 		$form = new AlbumForm();
-		$request = $this->getRequest();
-		$form->bind($album);
+		$form->populateValues($album[0]);
 		$form->get('submit')->setAttribute('value', 'Edit');
-		
+
+		$request = $this->getRequest();
 		if ($request->isPost()) {
 			$form->setData($request->getPost());
 	
 			if ($form->isValid()) {
-				
-				$em->persist($album);
-				$em->flush();
-				
-				
-				
+				$params = $this->getRequest()->getPost()->toArray();
+				$results = $statement->executeQuery("CALL update_album(?,?,?);",array($params['id_album'],$params['artist'],$params['title']));
+				$album = $results->fetchAll();
+				return $this->redirect()->toRoute('album', array(
+						'action' => 'index'
+				));
 			}
 		} 
-		
 		return array(
-				'id' => $id,
+				'id_album' => $id,
 				'form' => $form);
 		
 	}
 
 	public function deleteAction()
 	{
+		$id = (int) $this->params()->fromRoute('id', 0);
+		if (!$id) {
+			return $this->redirect()->toRoute('album');
+		}
+		
+		$em = $this->getEntityManager();
+		//Assume that you have connected to a database instance...
+		$statement = $em->getConnection();
+		$results = $statement->executeQuery("CALL select_album(?);",array($id));
+		$album = $results->fetchAll();
+		unset($results);
+		
+		$request = $this->getRequest();
+		if ($request->isPost()) {
+			$del = $request->getPost('del', 'No');
+		
+			if ($del == 'Yes') {
+				$em = $this->getEntityManager();
+				//Assume that you have connected to a database instance...
+				$statement = $em->getConnection();
+				$results = $statement->executeQuery("CALL delete_album(?);",array($id));
+				$album = $results->fetchAll();
+				unset($results);
+			}
+		
+			// Redirect to list of albums
+			return $this->redirect()->toRoute('album');
+		}
+		
+		return array(
+				'id'    => $id,
+				'album' => $album[0]
+		);
 	}
 }
