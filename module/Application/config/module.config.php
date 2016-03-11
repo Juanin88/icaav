@@ -1,6 +1,6 @@
 <?php
 /**
- * Application Module
+ * Application Module Configuration
  * 
  * Zend Framework (http://framework.zend.com/)
  *
@@ -12,15 +12,15 @@
 return array(
     'router' => array(
         'routes' => array(
-            'home' => array(
+            /*'home' => array(
                 'type' => 'Zend\Mvc\Router\Http\Literal',
                 'options' => array(
                     
-/*                		'route'    => '/',
+               		'route'    => '/',
                 		'defaults' => array(
                         	'controller' => 'Album\Controller\Album',// <-- change here
                         	'action'     => 'index',
-  */                  		
+                  		
                     		'route'    => '/application/application/index',
                     		'defaults' => array(
                     				'controller' => 'Application\Controller\Index',
@@ -28,15 +28,15 @@ return array(
                     		
                     ),
                 ),
-            ),
+            ),*/
             // The following is a route to simplify getting started creating
             // new controllers and actions without needing to create a new
             // module. Simply drop new controllers in, and you can access them
             // using the path /application/:controller/:action
             'application' => array(
-                'type'    => 'Literal',
+                'type'    => 'Zend\Mvc\Router\Http\Literal',
                 'options' => array(
-                    'route'    => '/application',
+                    'route'    => '/',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Application\Controller',
                         'controller'    => 'Index',
@@ -54,6 +54,8 @@ return array(
                                 'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
                             ),
                             'defaults' => array(
+	                            'controller' => 'Application\Controller\Index',
+                            	'action' => 'index'
                             ),
                         ),
                     ),
@@ -108,4 +110,16 @@ return array(
             ),
         ),
     ),
+    'doctrine' => array(
+    		'driver' => array(
+    				'application_entities' => array(
+    						'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
+    						'cache' => 'array',
+    						'paths' => array(__DIR__ . '/../src/Album/Entity')
+    				),
+    				'orm_default' => array(
+    						'drivers' => array(
+    								'Album\Entity' => 'application_entities'
+    						)
+    				))),
 );

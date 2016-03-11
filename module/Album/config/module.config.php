@@ -1,5 +1,63 @@
 <?php
 /**
+ * Album Module Configuration.
+ */
+return array(
+		'controllers' => array(
+				'invokables' => array(
+						'Album\Controller\Album' => 'Album\Controller\AlbumController',
+						'Album\Controller\Index' => 'Album\Controller\IndexController',
+				),
+		),
+
+		// The following section is new and should be added to your file
+		'router' => array(
+				'routes' => array(
+						'album' => array(
+								'type'    => 'segment',
+								'options' => array(
+										'route'    => '/album[/:action][/:id]',
+										'constraints' => array(
+												'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+												'id'     => '[0-9]+',
+										),
+										'defaults' => array(
+												'controller' => 'Album\Controller\Album',
+												'action'     => 'index',
+										),
+								),
+								'may_terminate' => true,
+								'child_routes' => array(
+										'default' => array(
+												'type'    => 'Segment',
+												'options' => array(
+														'route'    => '/[:controller[/:action]]',
+														'constraints' => array(
+																'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+																'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+														),
+														'defaults' => array(
+																'controller' => 'Application\Controller\Index',
+																'action' => 'index'
+														),
+												),
+										),
+								),
+						),
+				),
+		),
+
+		'view_manager' => array(
+				'template_path_stack' => array(
+						'album' => __DIR__ . '/../view',
+				),
+		),
+
+);
+
+
+
+/**
  * Album Module
  * 
  * Zend Framework (http://framework.zend.com/)
@@ -8,6 +66,7 @@
  * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
+/*
 return array(
 		// The following section is new and should be added to your file
 		'router' => array(
@@ -31,13 +90,13 @@ return array(
 			            // new controllers and actions without needing to create a new
 			            // module. Simply drop new controllers in, and you can access them
 			            // using the path /application/:controller/:action
-			            'application' => array(
-			                'type'    => 'Literal',
+			            'album' => array(
+			                'type'    => 'segment',
 			                'options' => array(
-			                    'route'    => '/album',
-			                    'defaults' => array(
+			                    'route'    => '/',
+			                   'defaults' => array(
 			                        '__NAMESPACE__' => 'Album\Controller',
-			                        'controller'    => 'Index',
+			                        'controller'    => 'Album',
 			                        'action'        => 'index',
 			                    ),
 			                ),
@@ -52,6 +111,8 @@ return array(
 			                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
 			                            ),
 			                            'defaults' => array(
+			                           	 'controller' => 'Album\Controller\Album',
+			                           	 'action' => 'index'
 			                            ),
 			                        ),
 			                    ),
@@ -81,6 +142,7 @@ return array(
 		'controllers' => array(
 				'invokables' => array(
 						'Album\Controller\Album' => 'Album\Controller\AlbumController',
+						'Album\Controller\Index' => 'Album\Controller\IndexController',
 				),
 		),
 		'view_manager' => array(
@@ -108,4 +170,4 @@ return array(
 						),
 				),
 		),
-);
+);*/
