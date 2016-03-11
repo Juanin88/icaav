@@ -99,8 +99,9 @@ class AlbumController extends AbstractActionController
 		}
 		$em = $this->getEntityManager();
 		//Assume that you have connected to a database instance...
-		$statement = $em->getConnection();  
-		$results = $statement->executeQuery("CALL select_album(?);",array($id));	
+		$statement = $em->getConnection();
+		$results = $statement->executeQuery("CALL select_album(?);",array($id));
+			
 		$album = $results->fetchAll();
 		unset($results);
 		

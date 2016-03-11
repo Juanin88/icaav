@@ -1,6 +1,6 @@
 <?php
 /**
- * Album Module
+ * Auth Module
  * 
  * Zend Framework (http://framework.zend.com/)
  *
@@ -12,19 +12,20 @@ return array(
 		// The following section is new and should be added to your file
 		'router' => array(
 				'routes' => array(
-						'album' => array(
+						'auth' => array(
 								'type'    => 'segment',
 								'options' => array(
-										//'route'    => '/album[/:action][/:id]',
-										'route'    => '/album/album/index',
+										//'route'    => '/auth[/:action][/:id]',
+										'route'    => '/auth/auth/index',
 										'constraints' => array(
-												'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-												'id'     => '[0-9]+',
-										),
-										'defaults' => array(
-												'controller' => 'Album\Controller\Album',
+												'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+												'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+												'id'     	 => '[a-zA-Z0-9_-]*',
+										)
+									/*	'defaults' => array(
+												'controller' => 'Auth\Controller\Auth',
 												'action'     => 'index',
-										),
+										),*/
 								),
 						),
 			            // The following is a route to simplify getting started creating
@@ -34,9 +35,9 @@ return array(
 			            'application' => array(
 			                'type'    => 'Literal',
 			                'options' => array(
-			                    'route'    => '/album',
+			                    'route'    => '/auth',
 			                    'defaults' => array(
-			                        '__NAMESPACE__' => 'Album\Controller',
+			                        '__NAMESPACE__' => 'Auth\Controller',
 			                        'controller'    => 'Index',
 			                        'action'        => 'index',
 			                    ),
@@ -49,7 +50,8 @@ return array(
 			                            'route'    => '/[:controller[/:action[/:id]]]',
 			                            'constraints' => array(
 			                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
-			                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+											'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+											'id'     	 => '[a-zA-Z0-9_-]*'
 			                            ),
 			                            'defaults' => array(
 			                            ),
@@ -80,27 +82,19 @@ return array(
 		),
 		'controllers' => array(
 				'invokables' => array(
-						'Album\Controller\Album' => 'Album\Controller\AlbumController',
+						'Auth\Controller\Admin' => 'Auth\Controller\AdminController',
+						'Auth\Controller\Auth'	=> 'Auth\Controller\AuthController',
+						'Auth\Controller\Index'	=> 'Auth\Controller\IndexController'
+						
 				),
-		),
+		),		
 		'view_manager' => array(
 				'template_path_stack' => array(
-						'album' => __DIR__ . '/../view'
+						'auth' => __DIR__ . '/../view'
 				),
+		
 				'display_exceptions' => true,
 		),
-		'doctrine' => array(
-		        'driver' => array(
-		            'application_entities' => array(
-		                'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
-		                'cache' => 'array',
-		                'paths' => array(__DIR__ . '/../src/Album/Entity')
-		            ),
-		            'orm_default' => array(
-		                'drivers' => array(
-		                    'Album\Entity' => 'application_entities'
-		                )
-		        ))),
 		// Placeholder for console routes
 		'console' => array(
 				'router' => array(

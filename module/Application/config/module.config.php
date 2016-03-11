@@ -15,10 +15,17 @@ return array(
             'home' => array(
                 'type' => 'Zend\Mvc\Router\Http\Literal',
                 'options' => array(
-                    'route'    => '/',
-                    'defaults' => array(
-                        'controller' => 'Album\Controller\Album',// <-- change here
-                        'action'     => 'index',
+                    
+/*                		'route'    => '/',
+                		'defaults' => array(
+                        	'controller' => 'Album\Controller\Album',// <-- change here
+                        	'action'     => 'index',
+  */                  		
+                    		'route'    => '/application/application/index',
+                    		'defaults' => array(
+                    				'controller' => 'Application\Controller\Index',
+                    				'action' => 'index'
+                    		
                     ),
                 ),
             ),
