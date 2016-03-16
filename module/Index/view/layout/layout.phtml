@@ -33,8 +33,6 @@
                 </div>
                 <div class="collapse navbar-collapse" id="navbar">
                     <form class="navbar-form navbar-right" action="<?php echo $this->basePath('auth/authentication')?>" method="post">
-                        <input type="text" name="" hidden>
-                        <input type="password" name="" hidden>
                         <input type="text" name="user" class="form-control" placeholder="Usuario">
                         <input type="password" name="password" class="form-control" placeholder="Contraseña">
                         <button type="submit" class="btn">ENTRAR</button>
@@ -42,22 +40,18 @@
                 </div>
             </div>
         </nav>
-       <div class="container">
+       <div class="container content-index">
             <?php echo $this->content; ?>
-                <section class="text-content">
-                    <h2>El buen funcionamiento de tu agencia</h2>
-                    <h3>Require un gran respaldo</h3>
-                </section>
+        </div>
+        <footer class="footer-login container">
+            <div class="pull-left">
+                <p>Tipo de cambio</p>
+                <p>Fecha</p>
             </div>
-            <footer class="footer-login container">
-                <div class="pull-left">
-                    <p>Tipo de cambio</p>
-                    <p>Fecha</p>
-                </div>
-                <div class="pull-right">
-                    <p>Microinformática Gerencial S.A. de C.V Todos los derechos reservados</p>
-                </div>
-            </footer>
+            <div class="pull-right">
+                <p>Microinformática Gerencial S.A. de C.V Todos los derechos reservados</p>
+            </div>
+        </footer>
         <?php echo $this->inlineScript() ?>
     </body>
 </html>

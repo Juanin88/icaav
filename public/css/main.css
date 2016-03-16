@@ -10,6 +10,7 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
+@import url(https://fonts.googleapis.com/css?family=Lato);
 html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;
@@ -5941,5 +5942,28 @@ input[type="text"], input[type="password"] {
   height: 100px;
   position: absolute;
   z-index: 3; }
+
+#content-404 {
+  color: #fff;
+  padding: 1em 0em;
+  text-shadow: 1px 1px #000; }
+
+.container.content-index, .content-index.footer-login {
+  color: #fff;
+  padding: 7em 0em;
+  width: 90%;
+  font-family: 'Lato', sans-serif; }
+  .container.content-index h2, .content-index.footer-login h2 {
+    line-height: 67px;
+    font-size: 48px; }
+  .container.content-index h3, .content-index.footer-login h3 {
+    line-height: 42px;
+    font-size: 30px; }
+  .container.content-index button, .content-index.footer-login button {
+    margin-top: 5px;
+    padding: 15px;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.3);
+    border: none; }
 
 /*# sourceMappingURL=main.css.map */

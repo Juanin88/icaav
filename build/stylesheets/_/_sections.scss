@@ -1,0 +1,23 @@
+@import url(https://fonts.googleapis.com/css?family=Lato);
+
+.container.content-index {
+	color: #fff;
+	padding: 7em 0em;
+    width: 90%;
+    font-family: 'Lato', sans-serif;
+    h2 {
+    	line-height: 67px;
+    	font-size: 48px;
+    }
+    h3 {
+    	line-height: 42px;
+    	font-size: 30px;
+    }
+    button {
+    	margin-top: 5px;
+	    padding: 15px;
+	    border-radius: 5px;
+	    background: rgba(255, 255, 255, .3);
+	    border: none;
+    }
+}
