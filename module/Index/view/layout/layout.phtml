@@ -32,11 +32,11 @@
                     <a class="navbar-brand navbar-logo" href="#"><img src="<?php echo $this->basePath('images/logosuite.svg') ?>"></a>
                 </div>
                 <div class="collapse navbar-collapse" id="navbar">
-                    <form class="navbar-form navbar-right">
+                    <form class="navbar-form navbar-right" action="<?php echo $this->basePath('auth/authentication')?>" method="post">
                         <input type="text" hidden>
                         <input type="password" hidden>
-                        <input type="text" class="form-control" placeholder="Usuario">
-                        <input type="password" class="form-control" placeholder="Contraseña">
+                        <input type="text" name="user" class="form-control" placeholder="Usuario">
+                        <input type="password" name="password" class="form-control" placeholder="Contraseña">
                         <button type="submit" class="btn">ENTRAR</button>
                     </form>
                 </div>

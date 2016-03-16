@@ -10,16 +10,36 @@ namespace Index\Controller;
  */
 
 use Zend\Mvc\Controller\AbstractActionController;
-use Zend\View\Model\ViewModel;
+use Zend\Authentication\AuthenticationServiceInterface;
+use Zend\View\Model\JsonModel;
 
 class AuthController extends AbstractActionController {
 
-    public function indexAction() {
-        return new ViewModel();
+	protected $authService;
+   
+    public function __construct(AuthenticationServiceInterface $authService) {
+        $this->authService = $authService;
     }
 
-    public function pruebaAction() {
-    	return new ViewModel();
-    }
+	public function indexAction() {
+		return new JsonModel(array());
+	}
+
+	public function authenticationAction() {
+		
+		$user 	  = $this->params()->fromPost('user');
+		$password = $this->params()->fromPost('password');
+
+		$authService = $this->getServiceLocator()->get('Zend\Authentication\AuthenticationService');
+		$adapter = $authService->getAdapter();
+		$adapter->setIdentity($user);
+		$adapter->setCredential($password);
+
+		$authResult = $authService->authenticate();
+
+		return new JsonModel(array(
+			'success'	=> $authResult->isValid()
+			));
+	}
 
 }
