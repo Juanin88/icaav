@@ -19,5 +19,5 @@ Step 2 (Use):
 Step 3 (browser):
 
 ```shell
-  localhost:3001/public or localhost/icaav/public
+  localhost:3000/public or localhost/icaav/public
 ```
