@@ -14,7 +14,21 @@
 return array(
     // ...
     'module_layouts' => array(
-       'Application' => 'layout/layout.phtml',
-       'Auth'		 => 'layoutAuth/layout.phtml',
+       'Album'		 => 'layoutAlbum/layout.phtml',
+       'Index'		 => 'layout/layout.phtml',
+    ),
+    'doctrine' => array(
+        'connection' => array(
+            'orm_default' => array(
+                'driverClass' => 'Doctrine\DBAL\Driver\PDOMySql\Driver',
+                'params' => array(
+                    'host'     => '192.168.20.4',
+                    'port'     => '3306',
+                    'user'     => 'dbadmin',
+                    'password' => 'a1s2d3f4',
+                    'dbname'   => 'zf_demo',
+                )
+            )
+        )
     ),
 );
