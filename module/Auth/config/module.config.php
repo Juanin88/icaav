@@ -24,15 +24,18 @@ namespace Auth;
 										'constraints' => array(
 												'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
 												'id'     => '[0-9]+',
+										),'defaults' => array(
+							                 'controller' => 'Auth\Controller\Auth',
+							                 'action'     => 'index',
+							             ),
 										),
-								),
 						),
 				),
 		),
 
 		'view_manager' => array(
-			'display_not_found_reason' => false,
-	        'display_exceptions'       => false,
+			'display_not_found_reason' => true,
+	        'display_exceptions'       => true,
 	        'doctype'                  => 'HTML5',
 	        'strategies' => array(
 		        'ViewJsonStrategy',
