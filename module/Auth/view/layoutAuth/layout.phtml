@@ -1,0 +1,63 @@
+<?php echo $this->doctype(); ?>
+
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <?php echo $this->headTitle($this->translate('Login - Icaav'))->setSeparator(' - ')->setAutoEscape(false) ?>
+
+        <?php echo $this->headMeta()
+            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+        ?>
+
+        <!-- Le styles -->
+        <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/images/logosuite.ico'))
+                        ->prependStylesheet($this->basePath() . '/css/main.css')?>
+        <!-- Scripts -->
+        <?php echo $this->headScript()
+            ->prependFile($this->basePath() . '/js/bootstrap.min.js')
+            ->prependFile($this->basePath() . '/js/jquery.min.js')
+            ->prependFile($this->basePath() . '/js/respond.min.js', 'text/javascript', array('conditional' => 'lt IE 9',))
+            ->prependFile($this->basePath() . '/js/html5shiv.js',   'text/javascript', array('conditional' => 'lt IE 9',))
+        ; ?>
+
+    </head>
+    <body>
+        <nav class="navbar navbar-login">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+                        ENTRAR
+                    </button>
+                    <a class="navbar-brand navbar-logo" href="#"><img src="<?php echo $this->basePath('images/logosuite.svg') ?>"></a>
+                </div>
+                <div class="collapse navbar-collapse" id="navbar">
+                    <form class="navbar-form navbar-right">
+                        <input type="text" hidden>
+                        <input type="password" hidden>
+                        <input type="text" class="form-control" placeholder="Usuario">
+                        <input type="password" class="form-control" placeholder="Contraseña">
+                        <button type="submit" class="btn">ENTRAR</button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+       <div class="container">
+            <?php echo $this->content; ?>
+                <section class="text-content">
+                    <h2>El buen funcionamiento de tu agencia</h2>
+                    <h3>Require un gran respaldo</h3>
+                </section>
+            </div>
+            <footer class="footer-login container">
+                <div class="pull-left">
+                    <p>Tipo de cambio</p>
+                    <p>Fecha</p>
+                </div>
+                <div class="pull-right">
+                    <p>Microinformática Gerencial S.A. de C.V Todos los derechos reservados</p>
+                </div>
+            </footer>
+        <?php echo $this->inlineScript() ?>
+    </body>
+</html>

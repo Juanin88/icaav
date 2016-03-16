@@ -13,4 +13,8 @@
 
 return array(
     // ...
+    'module_layouts' => array(
+       'Application' => 'layout/layout.phtml',
+       'Auth'		 => 'layoutAuth/layout.phtml',
+    ),
 );
