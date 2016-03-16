@@ -1,5 +1,5 @@
 <?php
-namespace Index\Entity;
+namespace Auth\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 

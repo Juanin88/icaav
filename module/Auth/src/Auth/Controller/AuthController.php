@@ -1,5 +1,6 @@
 <?php
-namespace Index\Controller;
+
+namespace Auth\Controller;
 
 /**
  * Zend Framework (http://framework.zend.com/)
@@ -16,13 +17,13 @@ use Zend\View\Model\JsonModel;
 class AuthController extends AbstractActionController {
 
 	protected $authService;
-   
+
     public function __construct(AuthenticationServiceInterface $authService) {
         $this->authService = $authService;
     }
 
 	public function authenticationAction() {
-		
+
 		$user 	  = $this->params()->fromPost('user');
 		$password = $this->params()->fromPost('password');
 		$response = array();

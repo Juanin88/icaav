@@ -1,5 +1,5 @@
 <?php
-namespace Index\Adapter;
+namespace Auth\Adapter;
  
 use DoctrineModule\Authentication\Adapter\ObjectRepository as BaseObjectRepository;
 use Zend\Authentication\Result as AuthenticationResult;

@@ -1,16 +1,16 @@
 <?php
 
-namespace Index\Factory\Authentication;
+namespace Auth\Factory\Authentication;
 
 use DoctrineModule\Service\Authentication\AdapterFactory as BaseAdapterFactory;
-use Index\Adapter\ObjectRepository;
+use Auth\Adapter\ObjectRepository;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 class AdapterFactory extends BaseAdapterFactory {
     /**
      * {@inheritDoc}
      *
-     * @return \Index\Adapter\ObjectRepository
+     * @return \Auth\Adapter\ObjectRepository
      */
     public function createService(ServiceLocatorInterface $serviceLocator) {
         /* @var $options \DoctrineModule\Options\Authentication */
