@@ -21,25 +21,26 @@ class AuthController extends AbstractActionController {
         $this->authService = $authService;
     }
 
-	public function indexAction() {
-		return new JsonModel(array());
-	}
-
 	public function authenticationAction() {
 		
 		$user 	  = $this->params()->fromPost('user');
 		$password = $this->params()->fromPost('password');
+		$response = array();
 
-		$authService = $this->getServiceLocator()->get('Zend\Authentication\AuthenticationService');
-		$adapter = $authService->getAdapter();
-		$adapter->setIdentity($user);
-		$adapter->setCredential($password);
+		if(!empty($user) && !empty($password)) {
+			$authService = $this->getServiceLocator()->get('Zend\Authentication\AuthenticationService');
+			$adapter = $authService->getAdapter();
+			$adapter->setIdentity($user);
+			$adapter->setCredential($password);
 
-		$authResult = $authService->authenticate();
+			$authResult = $authService->authenticate();
 
-		return new JsonModel(array(
-			'success'	=> $authResult->isValid()
-			));
+			$response = array(
+				'success'	=> $authResult->isValid()
+				);
+		}
+
+		return new JsonModel($response);
 	}
 
 }
