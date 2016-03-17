@@ -20,7 +20,7 @@ return array(
 						'album' => array(
 			                'type'    => 'Segment',
 			                'options' => array(
-			                    'route'    => '/[:module]',
+			                    'route'    => '/album[/:controller][/:action][/:id]',
 			                    'defaults' => array(
 			                        '__NAMESPACE__' => 'Album\Controller',
 			                        'controller'    => 'Index',

@@ -11,7 +11,7 @@
      '<?php echo $this->escapeHtml($album['artist']); ?>'?
  </p>
  <?php
- $url = $this->url('album', array('module' => 'album')).'/album/delete/' . $this->id;
+ $url = $this->url('album', array('controller' => 'album', 'action' => 'delete', 'id' => $this->id));
  ?>
  <form action="<?php echo $url; ?>" method="post">
  <div>
