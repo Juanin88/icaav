@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManager;
 use Album\Entity\Song;
 use Album\Model\AlbumModel;       
 use Album\Form\AlbumForm;   
+use Auth\Services\DummyService;
 
 class AlbumController extends AbstractActionController
 {
@@ -51,6 +52,7 @@ class AlbumController extends AbstractActionController
 	
 	public function indexAction()
 	{
+		$dummy = new \Auth\Services\DummyService();echo $dummy->test(43);exit();
 		$repository = $this->getEntityManager()->getRepository('Album\Entity\Album');
 		$albums     = $repository->findAll();
 		//echo '<pre>'.print_r($albums,true).'</pre>';die;

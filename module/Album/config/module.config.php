@@ -13,21 +13,11 @@ return array(
 
 		// The following section is new and should be added to your file
 		'router' => array(
-				'routes' => array(/*
-						'index2' => array(
-								'type'    => 'segment',
-								'options' => array(
-										'route'    => '/song[/]',
-										'defaults' => array(
-												'controller' => 'Album\Controller\Index',
-												'action'     => 'index',
-										),
-								),
-						),*/
+				'routes' => array(
 						'album' => array(
-			                'type'    => 'Zend\Mvc\Router\Http\Literal',
+			                'type'    => 'Segment',
 			                'options' => array(
-			                    'route'    => '/album',
+			                    'route'    => '/[:module]',
 			                    'defaults' => array(
 			                        '__NAMESPACE__' => 'Album\Controller',
 			                        'controller'    => 'Index',
@@ -39,14 +29,10 @@ return array(
 			                    'default' => array(
 			                        'type'    => 'Segment',
 			                        'options' => array(
-			                            'route'    => '/[:controller[/:action]]',
+			                            'route'    => '/[:controller[/:action[/:id]]][/]',
 			                            'constraints' => array(
 			                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
 			                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
-			                            ),
-			                            'defaults' => array(
-				                            'controller' => 'Album\Controller\Index',
-			                            	'action' => 'index'
 			                            ),
 			                        ),
 			                    ),
