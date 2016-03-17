@@ -13,38 +13,45 @@ return array(
 
 		// The following section is new and should be added to your file
 		'router' => array(
-				'routes' => array(
-						'album' => array(
+				'routes' => array(/*
+						'index2' => array(
 								'type'    => 'segment',
 								'options' => array(
-										'route'    => '/album[/][:action][/:id]',
-										'constraints' => array(
-												'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-												'id'     => '[0-9]+',
-										),
+										'route'    => '/song[/]',
 										'defaults' => array(
-												'controller' => 'Album\Controller\Album',
+												'controller' => 'Album\Controller\Index',
 												'action'     => 'index',
 										),
 								),
-								'may_terminate' => true,
-								'child_routes' => array(
-										'default' => array(
-												'type'    => 'Segment',
-												'options' => array(
-														'route'    => '/[:controller[/:action]]',
-														'constraints' => array(
-																'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
-																'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
-														),
-														'defaults' => array(
-																'controller' => 'Application\Controller\Index',
-																'action' => 'index'
-														),
-												),
-										),
-								),
-						),
+						),*/
+						'album' => array(
+			                'type'    => 'Zend\Mvc\Router\Http\Literal',
+			                'options' => array(
+			                    'route'    => '/album',
+			                    'defaults' => array(
+			                        '__NAMESPACE__' => 'Album\Controller',
+			                        'controller'    => 'Index',
+			                        'action'        => 'index',
+			                    ),
+			                ),
+			                'may_terminate' => true,
+			                'child_routes' => array(
+			                    'default' => array(
+			                        'type'    => 'Segment',
+			                        'options' => array(
+			                            'route'    => '/[:controller[/:action]]',
+			                            'constraints' => array(
+			                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+			                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+			                            ),
+			                            'defaults' => array(
+				                            'controller' => 'Album\Controller\Index',
+			                            	'action' => 'index'
+			                            ),
+			                        ),
+			                    ),
+			                ),
+			            ),
 				),
 		),
 
