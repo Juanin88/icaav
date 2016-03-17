@@ -10,7 +10,7 @@ namespace Index;
  						'Index\Controller\Index' => 'Index\Controller\IndexController',
  				),
  		),
- 			
+
 		// The following section is new and should be added to your file
 		'router' => array(
 				'routes' => array(
