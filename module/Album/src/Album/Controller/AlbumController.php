@@ -8,6 +8,11 @@ use ReUse\Services\AbstractActionIcaavController;
 
 class AlbumController extends AbstractActionIcaavController {
 	
+	public function __construct() {
+		$this->setSPEdit('update_album', array());
+		$this->setSPDelete('delete_album', array());
+	}
+	
 	public function indexAction()
 	{
 		$repository = $this->getEntityManager()->getRepository('Album\Entity\Album');

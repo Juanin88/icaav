@@ -8,6 +8,15 @@ use Doctrine\ORM\EntityManager;
 use Zend\Mvc\Controller\AbstractActionController;
 
 abstract class AbstractActionIcaavController extends AbstractActionController {
+
+	
+	protected $nameSPAdd		= null;
+	protected $arraySPAdd		= null;
+	protected $nameSPEdit		= null;
+	protected $arraySPEdit		= null;
+	protected $nameSPDelete 	= null;
+	protected $arraySPDelete    = null;
+	
 	
 	/**
 	 * @var EntityManager
@@ -49,7 +58,7 @@ abstract class AbstractActionIcaavController extends AbstractActionController {
 	 * @param unknown $nameSP
 	 * @param array $params
 	 */
-	public function callSP ( $nameSP , array $params ){
+	protected function callSP ( $nameSP , array $params ){
 		$em = $this->getEntityManager();
 		//Assume that you have connected to a database instance...
 		$statement = $em->getConnection();
@@ -59,5 +68,23 @@ abstract class AbstractActionIcaavController extends AbstractActionController {
 
 		return $album;
 	}
+
+	protected function setSPEdit($nameSP, array $params) {
+		$this->nameSPEdit = $nameSP;
+		$this->arraySPEdit = $params;
+	}
+	
+	protected function setSPDelete($nameSP, array $params) {
+		$this->nameSPDelete = $nameSP;
+		$this->arraySPDelete = $params;
+	}
+
+	public abstract function addAction();
+	
+	public function editAction() {
+		
+	}
+	
+	public abstract function deleteAction();
 
 }
