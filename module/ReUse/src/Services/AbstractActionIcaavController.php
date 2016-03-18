@@ -7,6 +7,12 @@ use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\ORM\EntityManager;
 use Zend\Mvc\Controller\AbstractActionController;
 
+/**
+*	This class will help to ActionControllers of Icaav providing a list of methods
+*	that help make certain faster processes and serving as a guide for the proyect standardization
+*
+*	@author Alan Olivares, Juan Garfias
+*/
 abstract class AbstractActionIcaavController extends AbstractActionController {
 
 	
@@ -52,7 +58,7 @@ abstract class AbstractActionIcaavController extends AbstractActionController {
 	 * and the parameters you need and get the result
 	 * Example: callSP('my_sp', array('param1', 2, 'param3'));
 	 *
-	 * @author Alan Olivares
+	 * @author Alan Olivares, Juan Garfias
 	 * @param {string} $nameSP
 	 * @param array $params
 	 */
