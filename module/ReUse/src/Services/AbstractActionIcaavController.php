@@ -30,8 +30,7 @@ abstract class AbstractActionIcaavController extends AbstractActionController {
 	 * @access protected
 	 * @return PostController
 	 */
-	protected function setEntityManager(EntityManager $em)
-	{
+	protected function setEntityManager(EntityManager $em) {
 		$this->entityManager = $em;
 		return $this;
 	}
@@ -45,11 +44,11 @@ abstract class AbstractActionIcaavController extends AbstractActionController {
 	 * @access protected
 	 * @return EntityManager
 	 */
-	protected function getEntityManager()
-	{
+	protected function getEntityManager() {
 		if (null === $this->entityManager) {
 			$this->setEntityManager($this->getServiceLocator()->get('Doctrine\ORM\EntityManager'));
 		}
+
 		return $this->entityManager;
 	}
 
@@ -66,11 +65,16 @@ abstract class AbstractActionIcaavController extends AbstractActionController {
 		$em = $this->getEntityManager();
 		//Assume that you have connected to a database instance...
 		$statement = $em->getConnection();
-		$results = $statement->executeQuery("CALL {$nameSP}(".implode(',', array_fill(0, count($params), '?')).");", $params);
+		$results = $statement->executeQuery("CALL {$nameSP}("
+						 				.implode(',',
+						 					array_fill(0,
+						 						count($params),
+						 						'?')
+						 					)
+						 				.");",
+										$params);
 
-		$album = $results->fetchAll();
-
-		return $album;
+		return $results->fetchAll();
 	}
 
 	/**
@@ -82,22 +86,7 @@ abstract class AbstractActionIcaavController extends AbstractActionController {
 	*/
 	protected function callSPByName($nameSP) {
 		if(isset($this->SPs[$nameSP])) {
-			$em = $this->getEntityManager();
-			//Assume that you have connected to a database instance...
-			$statement = $em->getConnection();
-			$results = $statement
-					 ->executeQuery("CALL {$nameSP}("
-						 				.implode(',',
-						 					array_fill(0,
-						 						count($this->SPs[$nameSP]),
-						 						'?')
-						 				).
-						 			");",
-					 				$this->getArrayParams($this->SPs[$nameSP])
-					 				);
-			$data = $results->fetchAll();
-
-			return $data;
+			return $this->callSP($nameSP, $this->getArrayParams($this->SPs[$nameSP]));
 		}
 
 		return array('error' => 'SP is not defined');
