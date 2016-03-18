@@ -9,8 +9,14 @@ use ReUse\Services\AbstractActionIcaavController;
 class AlbumController extends AbstractActionIcaavController {
 	
 	public function __construct() {
-		$this->setSPEdit('update_album', array());
-		$this->setSPDelete('delete_album', array());
+		$this->setSP('update_album', array(
+				array('method' => 'post', 'name' => 'id_album'),
+				array('method' => 'post', 'name' => 'artist'),
+				array('method' => 'post', 'name' => 'title'),
+			));
+		$this->setSP('delete_album', array(
+				array('method' => 'route', 'name' => 'id'),
+			));
 	}
 	
 	public function indexAction()
@@ -62,7 +68,7 @@ class AlbumController extends AbstractActionIcaavController {
 		}
 
 		$album = $this->callSP('select_album', array($id));
-		
+
 		$form = new AlbumForm();
 		$form->populateValues($album[0]);
 		$form->get('submit')->setAttribute('value', 'Edit');
@@ -74,7 +80,7 @@ class AlbumController extends AbstractActionIcaavController {
 			if ($form->isValid()) {
 				$params = $this->getRequest()->getPost()->toArray();
 				
-				$album = $this->callSP('update_album', array($params['id_album'],$params['artist'],$params['title']));
+				$album = $this->callSPByName('update_album');
 				
 				return $this->redirect()->toRoute('album', array('controller' =>'album','action' => 'index'
 				));
@@ -100,9 +106,7 @@ class AlbumController extends AbstractActionIcaavController {
 			$del = $request->getPost('del', 'No');
 		
 			if ($del == 'Yes') {
-				
-
-				$this->callSP('delete_album',array($id));
+				$album = $this->callSPByName('delete_album');
 			}
 			// Redirect to list of albums
 			return $this->redirect()->toRoute('album', array('controller' =>'album','action' => 'index'
