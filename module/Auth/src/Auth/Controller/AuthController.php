@@ -35,9 +35,12 @@ class AuthController extends AbstractActionController {
 			$adapter->setCredential($password);
 
 			$authResult = $authService->authenticate();
+			
+			unset($_SESSION['Zend_Auth']);
 
 			$response = array(
-				'success'	=> $authResult->isValid()
+				'success'	=> $authResult->isValid(),
+				'session'	=> $_SESSION
 				);
 		}
 
