@@ -39,8 +39,7 @@ class AuthController extends AbstractActionController {
 			unset($_SESSION['Zend_Auth']);
 
 			$response = array(
-				'success'	=> $authResult->isValid(),
-				'session'	=> $_SESSION
+				'success'	=> $authResult->isValid()
 				);
 		}
 

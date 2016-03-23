@@ -11,7 +11,7 @@ class Album{
 	
 	/**
 	 * Este siempre es "id" aunque en el nombre de la tabla tenga otro nombre de id_algo, siempre se pone como "id"
-	* @ORM\id
+	* @ORM\Id
 	* @ORM\Column(type="integer")
 	* @ORM\GeneratedValue(strategy="IDENTITY")
 	 */

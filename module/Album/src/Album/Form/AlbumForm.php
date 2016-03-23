@@ -4,6 +4,8 @@ namespace Album\Form;
  use Zend\Form\Form;
  use Zend\InputFilter\InputFilter;
  use Zend\StdLib\Hydrator\ClassMethods;
+ use Zend\Form\Element\Email;
+ use Album\Model\AlbumModel;
  
  class AlbumForm extends Form
  {
@@ -13,8 +15,9 @@ namespace Album\Form;
          parent::__construct('album');
          
          $this->setAttribute('method', 'post')
-         ->setHydrator(new ClassMethods())
-         ->setInputFilter(new InputFilter());
+         //->setHydrator(new ClassMethods())
+         //->setInputFilter(new InputFilter());
+         ->setInputFilter((new AlbumModel())->getInputFilter());
          
          $this->add(array(
              'name' => 'id_album',

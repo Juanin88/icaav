@@ -3,7 +3,8 @@ namespace Album\Controller;
 
 use Album\Entity\Album;
 use Album\Model\AlbumModel;       
-use Album\Form\AlbumForm;   
+use Album\Form\AlbumForm;
+use Zend\View\Model\JsonModel;
 use ReUse\Services\AbstractActionIcaavController;
 
 class AlbumController extends AbstractActionIcaavController {
@@ -13,22 +14,20 @@ class AlbumController extends AbstractActionIcaavController {
 				array('method' => 'post', 'name' => 'id_album'),
 				array('method' => 'post', 'name' => 'artist'),
 				array('method' => 'post', 'name' => 'title'),
-			));
+			), new AlbumForm());
 		$this->setSP('delete_album', array(
 				array('method' => 'route', 'name' => 'id'),
 			));
 	}
 	
-	public function indexAction()
-	{
+	public function indexAction() {
 		$repository = $this->getEntityManager()->getRepository('Album\Entity\Album');
 		$albums     = $repository->findAll();
 		
 		return array('albums'=>$albums);
 	}
 
-	public function addAction()
-	{
+	public function addAction() {
 		$form = new AlbumForm();
 		$form->get('submit')->setValue('Add');
 		
@@ -59,8 +58,7 @@ class AlbumController extends AbstractActionIcaavController {
 		return array('form' => $form);
 	}
 
-	public function editAction()
-	{
+	public function editAction() {
 		$id = (int) $this->params()->fromRoute('id', 0);
 		
 		if (!$id) {
@@ -75,15 +73,13 @@ class AlbumController extends AbstractActionIcaavController {
 
 		$request = $this->getRequest();
 		if ($request->isPost()) {
+
 			$form->setData($request->getPost());
 	
+				$this->callSPByName('update_album');
 			if ($form->isValid()) {
-				$params = $this->getRequest()->getPost()->toArray();
 				
-				$album = $this->callSPByName('update_album');
-				
-				return $this->redirect()->toRoute('album', array('controller' =>'album','action' => 'index'
-				));
+				return $this->redirect()->toRoute('album', array('controller' => 'album', 'action' => 'index'));
 			}
 		} 
 		return array(
@@ -92,14 +88,13 @@ class AlbumController extends AbstractActionIcaavController {
 		
 	}
 
-	public function deleteAction()
-	{
+	public function deleteAction() {
 		$id = (int) $this->params()->fromRoute('id', 0);
 		if (!$id) {
 			return $this->redirect()->toRoute('album');
 		}
 
-		$album = $this->callSP('select_album',array($id));
+		$album = $this->callSP('select_album', array($id));
 		
 		$request = $this->getRequest();
 		if ($request->isPost()) {
@@ -109,8 +104,7 @@ class AlbumController extends AbstractActionIcaavController {
 				$album = $this->callSPByName('delete_album');
 			}
 			// Redirect to list of albums
-			return $this->redirect()->toRoute('album', array('controller' =>'album','action' => 'index'
-				));
+			return $this->redirect()->toRoute('album', array('controller' =>'album','action' => 'index'));
 		}
 		
 		return array(

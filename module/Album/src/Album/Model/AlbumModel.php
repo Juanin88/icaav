@@ -20,24 +20,20 @@ class AlbumModel implements InputFilterAwareInterface
 	public $title;
 	protected $inputFilter;                       // <-- Add this variable
 
-	public function exchangeArray($data)
-	{
+	public function exchangeArray($data) {
 		$this->id     = (isset($data['id']))     ? $data['id']     : null;
 		$this->artist = (isset($data['artist'])) ? $data['artist'] : null;
 		$this->title  = (isset($data['title']))  ? $data['title']  : null;
 	}
 
 	// Add content to these methods:
-	public function setInputFilter(InputFilterInterface $inputFilter)
-	{
+	public function setInputFilter(InputFilterInterface $inputFilter) {
 		throw new \Exception("Not used");
 	}
 
-	public function getInputFilter()
-	{
+	public function getInputFilter() {
 		if (!$this->inputFilter) {
 			$inputFilter = new InputFilter();
-
 			$inputFilter->add(array(
 					'name'     => 'id_album',
 					'required' => true,
@@ -45,14 +41,9 @@ class AlbumModel implements InputFilterAwareInterface
 							array('name' => 'Int'),
 					),
 			));
-
 			$inputFilter->add(array(
 					'name'     => 'artist',
 					'required' => true,
-					'filters'  => array(
-							array('name' => 'StripTags'),
-							array('name' => 'StringTrim'),
-					),
 					'validators' => array(
 							array(
 									'name'    => 'StringLength',
@@ -64,7 +55,6 @@ class AlbumModel implements InputFilterAwareInterface
 							),
 					),
 			));
-
 			$inputFilter->add(array(
 					'name'     => 'title',
 					'required' => true,
