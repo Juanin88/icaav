@@ -24,6 +24,10 @@ abstract class AbstractActionIcaavController extends AbstractActionController {
 	 * @var EntityManager
 	 */
 	protected $entityManager;
+
+	public function __construct() {
+		$this->setSPs();
+	}
 	
 	/**
 	 * Sets the EntityManager
@@ -167,5 +171,7 @@ abstract class AbstractActionIcaavController extends AbstractActionController {
 				);
 		}
 	}
+
+	protected abstract function setSPs();
 
 }

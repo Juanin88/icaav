@@ -10,6 +10,10 @@ use ReUse\Services\AbstractActionIcaavController;
 class AlbumController extends AbstractActionIcaavController {
 	
 	public function __construct() {
+		parent::__construct();
+	}
+
+	protected function setSPs() {
 		$this->setSP('update_album', array(
 				array('method' => 'post', 'name' => 'id_album'),
 				array('method' => 'post', 'name' => 'artist'),
