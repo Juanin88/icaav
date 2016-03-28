@@ -1,0 +1,1 @@
+auth = angular.module('auth', []);

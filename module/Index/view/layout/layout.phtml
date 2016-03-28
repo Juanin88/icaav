@@ -1,6 +1,6 @@
 <?php echo $this->doctype(); ?>
 
-<html lang="es">
+<html lang="es" ng-app="auth">
     <head>
         <meta charset="utf-8">
         <?php echo $this->headTitle($this->translate('Login - Icaav'))->setSeparator(' - ')->setAutoEscape(false) ?>
@@ -15,10 +15,13 @@
                         ->prependStylesheet($this->basePath() . '/css/main.css')?>
         <!-- Scripts -->
         <?php echo $this->headScript()
-            ->prependFile($this->basePath() . '/js/bootstrap.min.js')
-            ->prependFile($this->basePath() . '/js/jquery.min.js')
-            ->prependFile($this->basePath() . '/js/respond.min.js', 'text/javascript', array('conditional' => 'lt IE 9',))
-            ->prependFile($this->basePath() . '/js/html5shiv.js',   'text/javascript', array('conditional' => 'lt IE 9',))
+            ->appendFile($this->basePath() . '/js/jquery.min.js')
+            ->appendFile($this->basePath() . '/js/bootstrap.min.js')
+            ->appendFile($this->basePath() . '/js/angular/lib/angular.min.js')
+            ->appendFile($this->basePath() . '/js/angular/lib/services.js')
+            ->appendFile($this->basePath() . '/js/angular/modules/auth/controllers/login.js')
+            ->appendFile($this->basePath() . '/js/respond.min.js', 'text/javascript', array('conditional' => 'lt IE 9',))
+            ->appendFile($this->basePath() . '/js/html5shiv.js',   'text/javascript', array('conditional' => 'lt IE 9',))
         ; ?>
 
     </head>
@@ -32,9 +35,9 @@
                     <a class="navbar-brand navbar-logo" href="#"><img src="<?php echo $this->basePath('images/logosuite.svg') ?>"></a>
                 </div>
                 <div class="collapse navbar-collapse" id="navbar">
-                    <form class="navbar-form navbar-right" action="<?php echo $this->basePath('auth/authentication')?>" method="post">
-                        <input type="text" name="user" class="form-control" placeholder="Usuario">
-                        <input type="password" name="password" class="form-control" placeholder="Contraseña">
+                    <form class="navbar-form navbar-right" method="post" ng-controller="login" ng-submit="authentication()">
+                        <input type="text" ng-model="user.user" class="form-control" placeholder="Usuario">
+                        <input type="password" ng-model="user.password" class="form-control" placeholder="Contraseña">
                         <button type="submit" class="btn">ENTRAR</button>
                     </form>
                 </div>
@@ -53,5 +56,6 @@
             </div>
         </footer>
         <?php echo $this->inlineScript() ?>
+        <script> icaav.helpers.setBasePath("<?php echo $this->basePath()?>"); </script>
     </body>
 </html>
