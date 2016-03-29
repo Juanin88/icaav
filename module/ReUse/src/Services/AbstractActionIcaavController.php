@@ -93,18 +93,18 @@ abstract class AbstractActionIcaavController extends AbstractActionController {
 	*	@param {string} $nameSP
 	*/
 	protected function callSPByName($nameSP) {
-		if(isset($this->SPs[$nameSP])) {
+		if (isset($this->SPs[$nameSP])) {
 			$params = $this->getArrayParams($this->SPs[$nameSP]['dataParams']);
 			$valid = true;
 
-			if(
+			if (
 				$this->SPs[$nameSP]['form'] && 
 				$this->SPs[$nameSP]['form'] instanceof Form
 			) {
 				$this->SPs[$nameSP]['form']->setData($params);
 				$valid = $this->SPs[$nameSP]['form']->isValid();
 			}
-
+file_put_contents('c:/data.json', json_encode($this->SPs[$nameSP]['form']->getMessages()));
 			return $valid ? $this->callSP($nameSP, array_values($params)):
 					array('error' => 'Data is not valid');
 		}

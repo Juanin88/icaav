@@ -18,7 +18,7 @@ return array(
        'Admin'       => 'layoutAdmin/layout.phtml',
        'Index'       => 'layout/layout.phtml',
     ),
-    /*'doctrine' => array(
+    'doctrine' => array(
         'connection' => array(
             'orm_default' => array(
                 'driverClass' => 'Doctrine\DBAL\Driver\PDOMySql\Driver',
@@ -27,20 +27,6 @@ return array(
                     'port'     => '3306',
                     'user'     => 'dbadmin',
                     'password' => 'a1s2d3f4',
-                    'dbname'   => 'zf_demo',
-                )
-            )
-        )
-    ),*/
-    'doctrine' => array(
-        'connection' => array(
-            'orm_default' => array(
-                'driverClass' => 'Doctrine\DBAL\Driver\PDOMySql\Driver',
-                'params' => array(
-                    'host'     => '127.0.0.1',
-                    'port'     => '3306',
-                    'user'     => 'root',
-                    'password' => 'RAOR940203',
                     'dbname'   => 'zf_demo',
                 )
             )

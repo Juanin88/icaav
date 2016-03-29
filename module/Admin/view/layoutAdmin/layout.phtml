@@ -74,7 +74,7 @@
       }
     </style>
     </head>
-    <body class="hold-transition skin-blue sidebar-mini fixed" ng-app="app">
+    <body class="hold-transition skin-blue sidebar-mini fixed" ng-app="admin">
       <header class="main-header">
         <!-- Logo -->
         <a href="#" class="logo">
@@ -187,14 +187,30 @@
 
     }]);*/
 
-      angular.module('app', ['ngRoute', 'ngStorage'])
-    .controller('adminC', ['$scope', '$localStorage', function($scope, $localStorage) {
 
-      $scope.input = $localStorage.$default({ val: 'some' });
-      $scope.input2 = $localStorage.$default({
-        varx: {
-          val: 'some'
-        } });
+      angular.module('app', ['ngRoute', 'ngStorage'])
+      .controller('CorporativoController', ['$scope', '$localStorage', '$location', function($scope, $localStorage, $location) {
+
+        $scope.vars = $localStorage.$default({
+          corporativoAdd: {
+            key:  '',
+            name: '',
+            creditLimit: '',
+            active: false,
+          }
+        });
+
+        $scope.routeAdd = function() {
+          $location.path(icaav.helpers.getBasePath() + '/admin/corporativo/add');
+        };
+
+        $scope.routeView = function() {
+          $location.path(icaav.helpers.getBasePath() + '/admin/corporativo');
+        };
+
+        $scope.createCorporativo = function() {
+
+        };
 
     }])
       .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
@@ -278,8 +294,6 @@
 
         $scope.$on('changeTabs', function() {
           $scope.tabs = tabs.getTabs();
-          //$scope.activeMenu();
-          console.log(tabs.getActiveTab());
           $scope.cleanActives(tabs.getActiveTab().name);
         });
 
@@ -325,6 +339,7 @@
         };
 
       }]);
+      angular.module('admin', ['app']);
     </script>
     <script> icaav.helpers.setBasePath("<?php echo $this->basePath()?>"); </script>
     </body>

@@ -10,6 +10,8 @@ namespace Admin\Controller;
 
 use ReUse\Services\AbstractActionIcaavController;
 use Zend\View\Model\ViewModel;
+use Zend\View\Model\JsonModel;
+use Admin\Forms\CorporativoForm;
 
 class CorporativoController extends AbstractActionIcaavController {
 
@@ -17,11 +19,27 @@ class CorporativoController extends AbstractActionIcaavController {
 		parent::__construct();
 	}
 
-	protected function setSPs() { }
+	protected function setSPs() {
+		$this->setSP('create_corporativo', array(
+				array('method' => 'post', 'name' => 'key'),
+				array('method' => 'post', 'name' => 'name'),
+				array('method' => 'post', 'name' => 'creditLimit'),
+				array('method' => 'post', 'name' => 'active'),
+			), new CorporativoForm());
+	}
 
     public function indexAction() {
     	$terminal = $this->params()->fromQuery('terminal');
         return (new ViewModel())->setTerminal($terminal);
+    }
+
+    public function addAction() {
+    	$terminal = $this->params()->fromQuery('terminal');
+        return (new ViewModel())->setTerminal($terminal);
+    }
+
+    public function addAjaxAction() {
+    	return new JsonModel(array($this->callSPByName('create_corporativo')));
     }
 
 }

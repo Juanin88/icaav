@@ -1,0 +1,13 @@
+
+<div ng-controller="CorporativoController">
+	<a href="#" ng-click="routeView()">regresar</a>
+	<form ng-submit="createCorporativo()" name="formCreateCorporativo">
+		<input type="text" class="form-control" name="key" ng-model="vars.corporativoAdd.key" placeholder="Clave" required>
+		<span ng-show="formCreateCorporativo.key.$invalid && formCreateCorporativo.key.$touched" class="text-danger">La clave es requerida.</span>
+		<input type="text" class="form-control" name="name" ng-model="vars.corporativoAdd.name" placeholder="Nombre" required>
+		<span ng-show="formCreateCorporativo.name.$invalid && formCreateCorporativo.name.$touched" class="text-danger">El nombre es requerido.</span>
+		<input type="number" step="any" class="form-control" ng-model="vars.corporativoAdd.creditLimit" placeholder="Limite de credito">
+		<input type="checkbox" ng-model="vars.corporativoAdd.active" placeholder="activo">
+		<button>Registrar</button>
+	</form>
+</div>
