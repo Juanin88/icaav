@@ -12,7 +12,10 @@ use ReUse\Services\AbstractActionIcaavController;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
 use Admin\Forms\CorporativoForm;
-
+/**
+*
+* @author Alan Olivares
+*/
 class CorporativoController extends AbstractActionIcaavController {
 
 	public function __construct() {
@@ -20,26 +23,26 @@ class CorporativoController extends AbstractActionIcaavController {
 	}
 
 	protected function setSPs() {
-		$this->setSP('create_corporativo', array(
+		$this->setSP('sp_fac_i_corporativo', array(
 				array('method' => 'post', 'name' => 'key'),
 				array('method' => 'post', 'name' => 'name'),
 				array('method' => 'post', 'name' => 'creditLimit'),
 				array('method' => 'post', 'name' => 'active'),
-			), new CorporativoForm());
+			), array('@pr_affect_rows', '@pr_message'), new CorporativoForm());
 	}
 
-    public function indexAction() {
-    	$terminal = $this->params()->fromQuery('terminal');
-        return (new ViewModel())->setTerminal($terminal);
-    }
+	public function indexAction() {
+		$terminal = $this->params()->fromQuery('terminal');
+		return (new ViewModel())->setTerminal($terminal);
+	}
 
-    public function addAction() {
-    	$terminal = $this->params()->fromQuery('terminal');
-        return (new ViewModel())->setTerminal($terminal);
-    }
+	public function addAction() {
+		$terminal = $this->params()->fromQuery('terminal');
+		return (new ViewModel())->setTerminal($terminal);
+	}
 
-    public function addAjaxAction() {
-    	return new JsonModel(array($this->callSPByName('create_corporativo')));
-    }
+	public function addAjaxAction() {
+		return new JsonModel($this->callSPByName('sp_fac_i_corporativo'));
+	}
 
 }

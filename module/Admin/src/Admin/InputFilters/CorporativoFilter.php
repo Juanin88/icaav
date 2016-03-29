@@ -46,20 +46,20 @@ class CorporativoFilter implements InputFilterAwareInterface {
 					),
 				),
 			));
-/*
+
 			$inputFilter->add(array(
 				'name'     => 'creditLimit',
-				'filters'  => array(
-					array('name' => 'double'),
+				'validators'  => array(
+					array('name' => 'IsFloat'),
 				),
 			));
+
 			$inputFilter->add(array(
 				'name'     => 'active',
 				'filters'  => array(
 					array('name' => 'Boolean'),
 				),
 			));
-*/
 
 			$this->inputFilter = $inputFilter;
 		}

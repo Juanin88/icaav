@@ -10,7 +10,7 @@ namespace Admin\Forms;
      public function __construct($name = null) {
          // we want to ignore the name passed
          parent::__construct('corporativo');
-         
+
          $this->setAttribute('method', 'post')
          ->setInputFilter((new CorporativoFilter())->getInputFilter());
 
@@ -31,7 +31,7 @@ namespace Admin\Forms;
 
          $this->add(array(
              'name' => 'active',
-             'type' => 'Number',
+             'type' => 'checkbox',
          ));
 
      }

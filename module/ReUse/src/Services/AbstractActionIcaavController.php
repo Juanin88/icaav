@@ -63,13 +63,13 @@ abstract class AbstractActionIcaavController extends AbstractActionController {
 	/**
 	 * This method helps you run a sp. Just you want to say that sp execute
 	 * and the parameters you need and get the result
-	 * Example: callSP('my_sp', array('param1', 2, 'param3'));
+	 * Example: callSimpleSP('my_sp', array('param1', 2, 'param3'));
 	 *
 	 * @author Alan Olivares, Juan Garfias
 	 * @param {string} $nameSP
 	 * @param array $params
 	 */
-	protected function callSP($nameSP , array $params ){
+	protected function callSimpleSP($nameSP , array $params) {
 		$em = $this->getEntityManager();
 		//Assume that you have connected to a database instance...
 		$statement = $em->getConnection();
@@ -78,11 +78,47 @@ abstract class AbstractActionIcaavController extends AbstractActionController {
 						 					array_fill(0,
 						 						count($params),
 						 						'?')
-						 					)
+						 					). (($outputs) ? ','.implode(',', $outputs):'')
 						 				.");",
 										$params);
-
 		return $results->fetchAll();
+	}
+
+	/**
+	 * This method helps you run a sp. Just you want to say that sp execute
+	 * and the parameters you need and get the result
+	 * Example: callSP('my_sp', array(
+	 *				'param1' => 'value1'
+	 *				'param2' => 'value2'
+	 *				), array('@output1', '@myOutPut2')
+	 *			);
+	 *
+	 * @author Alan Olivares
+	 * @param {string} $nameSP
+	 * @param array $params
+	 * @param array $outputs
+	 */
+	protected function callSP($nameSP , array $params, array $outputs = null){
+		$em = $this->getEntityManager();
+
+		$sql = "CALL {$nameSP}(:"
+					.implode(',:',
+	 					array_keys($params)
+	 					).($outputs ? ','.implode(',', array_values($outputs)) : '')
+	 				.");";
+		try {
+			$stmt = $em->getConnection()->prepare($sql);
+
+			foreach ($params as $key => $param) {
+				$stmt->bindParam(':'.$key, $params[$key]);
+			}
+
+			$stmt->execute();
+			$dataCall = $stmt->fetchAll();
+			$stmt->closeCursor();
+		} catch(Exception $e) { return array('error', $e);}
+
+		return $dataCall[0];
 	}
 
 	/**
@@ -104,9 +140,9 @@ abstract class AbstractActionIcaavController extends AbstractActionController {
 				$this->SPs[$nameSP]['form']->setData($params);
 				$valid = $this->SPs[$nameSP]['form']->isValid();
 			}
-file_put_contents('c:/data.json', json_encode($this->SPs[$nameSP]['form']->getMessages()));
-			return $valid ? $this->callSP($nameSP, array_values($params)):
-					array('error' => 'Data is not valid');
+
+			return $valid ? $this->callSP($nameSP, $params, $this->SPs[$nameSP]['outputs']):
+					array('errors' => $this->SPs[$nameSP]['form']->getMessages());
 		}
 
 		return array('error' => 'SP is not defined');
@@ -129,16 +165,11 @@ file_put_contents('c:/data.json', json_encode($this->SPs[$nameSP]['form']->getMe
 		foreach ($dataParams as $dataParam) {
 			$value = null;
 			switch ($dataParam['method']) {
-				case 'route':
-					$value = $this->params()->fromRoute($dataParam['name']);
-					break;
 				case 'post':
-					$value = 
 					$value = $this->params()->fromPost($dataParam['name']);
 					break;
-				case 'get':
-					$value = $value = $this->params()->fromGet($dataParam['name']);
-					break;
+				default:
+					$value = $this->params()->fromQuery($dataParam['name']);
 			}
 
 			if(!empty($value)) {
@@ -156,18 +187,19 @@ file_put_contents('c:/data.json', json_encode($this->SPs[$nameSP]['form']->getMe
 	*			array('method' => 'route', 'name' => 'id_album'),
 	*			array('method' => 'get', 'name' => 'artist'),
 	*			array('method' => 'post', 'name' => 'title'),
-	*		), new MyFormZF2()
+	*		), array('@output1', '@myOutPut2'), new MyFormZF2()
 	*	);
 	*	@author Alan Olivares
 	*	@param {string} $nameSP
 	*	@param array $dataParams
 	*	@param Form $form
 	*/
-	protected function setSP($nameSP, array $dataParams, Form $form = null) {
+	protected function setSP($nameSP, array $dataParams, array $outputs = null, Form $form = null) {
 		if(!empty($nameSP) && !empty($dataParams)) {
 			$this->SPs[$nameSP] = array(
 				'dataParams' => $dataParams,
-				'form' => $form
+				'outputs' => $outputs,
+				'form' => $form,
 				);
 		}
 	}

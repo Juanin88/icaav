@@ -18,7 +18,7 @@ class AlbumController extends AbstractActionIcaavController {
 				array('method' => 'post', 'name' => 'id_album'),
 				array('method' => 'post', 'name' => 'artist'),
 				array('method' => 'post', 'name' => 'title'),
-			), new AlbumForm());
+			), null, new AlbumForm());
 		$this->setSP('delete_album', array(
 				array('method' => 'route', 'name' => 'id'),
 			));
@@ -69,7 +69,7 @@ class AlbumController extends AbstractActionIcaavController {
 			$id = $this->getRequest()->getPost('id_album',null);
 		}
 
-		$album = $this->callSP('select_album', array($id));
+		$album = $this->callSimpleSP('select_album', array($id));
 
 		$form = new AlbumForm();
 		$form->populateValues($album[0]);
@@ -98,7 +98,7 @@ class AlbumController extends AbstractActionIcaavController {
 			return $this->redirect()->toRoute('album');
 		}
 
-		$album = $this->callSP('select_album', array($id));
+		$album = $this->callSimpleSP('select_album', array($id));
 		
 		$request = $this->getRequest();
 		if ($request->isPost()) {

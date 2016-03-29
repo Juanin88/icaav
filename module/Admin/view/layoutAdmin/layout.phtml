@@ -189,8 +189,9 @@
 
 
       angular.module('app', ['ngRoute', 'ngStorage'])
-      .controller('CorporativoController', ['$scope', '$localStorage', '$location', function($scope, $localStorage, $location) {
+      .controller('CorporativoController', ['$scope', '$http', '$localStorage', '$location', function($scope, $http, $localStorage, $location) {
 
+        $scope.httpForm = new icaav.services.HTTPForm($http);
         $scope.vars = $localStorage.$default({
           corporativoAdd: {
             key:  '',
@@ -209,7 +210,10 @@
         };
 
         $scope.createCorporativo = function() {
-
+          $scope.httpForm.post(icaav.helpers.getBasePath() + '/admin/corporativo/addAjax', $scope.vars.corporativoAdd)
+          .success(function(data) {
+            console.log(data);
+          });
         };
 
     }])
