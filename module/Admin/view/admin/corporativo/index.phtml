@@ -3,5 +3,19 @@
 		<h3>Corporativo controller</h3>
 		<p>Show corporativos</p>
 		<a href="#" ng-click="routeAdd()">add</a>
+		<div ng-init="getCorporativos()">
+			<table class="table">
+				<thead>
+					<th>Clave</th>
+					<th>Nombre</th>
+				</thead>
+				<tbody>
+					<tr ng-repeat="corporativo in corporativos">
+						<td>{{corporativo.id_corporativo}}</td>
+						<td>{{corporativo.nombre_corporativo}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	</div>
 </div>

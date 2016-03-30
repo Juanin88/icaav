@@ -25,9 +25,9 @@ return array(
                 'params' => array(
                     'host'     => '192.168.20.4',
                     'port'     => '3306',
-                    'user'     => 'dbadmin',
-                    'password' => 'a1s2d3f4',
-                    'dbname'   => 'zf_demo',
+                    'user'     => 'suite_aplicativo',
+                    'password' => 'Apli$uite&11',
+                    'dbname'   => 'icaav_facturacion',
                 )
             )
         )

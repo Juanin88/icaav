@@ -62,6 +62,14 @@ var icaav = (function () {
 
 	};
 
+	icaav.services.Location = function($location) {
+
+		this.path = function(url) {
+			$location.path(icaav.helpers.getBasePath() + url);
+		};
+
+	};
+
 	icaav.helpers.getFormData = function(jsonData) {
 		var formData = new FormData();
 		for(var i in jsonData) {

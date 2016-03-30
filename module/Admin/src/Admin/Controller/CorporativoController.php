@@ -28,7 +28,12 @@ class CorporativoController extends AbstractActionIcaavController {
 				array('method' => 'post', 'name' => 'name'),
 				array('method' => 'post', 'name' => 'creditLimit'),
 				array('method' => 'post', 'name' => 'active'),
-			), array('@pr_affect_rows', '@pr_message'), new CorporativoForm());
+			), array('@pr_affect_rows', '@pr_message'), new CorporativoForm(), self::OUTPUTS);
+
+		$this->setSP('sp_fac_c_corporativo', array(
+				array('method' => 'post', 'name' => 'start_pag'),
+				array('method' => 'post', 'name' => 'end_pag'),
+			), array('@pr_affect_rows', '@pr_message'), null, self::ALL);
 	}
 
 	public function indexAction() {
@@ -43,6 +48,10 @@ class CorporativoController extends AbstractActionIcaavController {
 
 	public function addAjaxAction() {
 		return new JsonModel($this->callSPByName('sp_fac_i_corporativo'));
+	}
+
+	public function getCorporativosAction() {
+		return new JsonModel($this->callSPByName('sp_fac_c_corporativo'));
 	}
 
 }

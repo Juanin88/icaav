@@ -165,6 +165,7 @@
           </ul>
         </div>
         <div class="container">
+          <?php //echo $this->content; ?>
           <div ng-view></div>
         </div>
       </div>
@@ -189,9 +190,10 @@
 
 
       angular.module('app', ['ngRoute', 'ngStorage'])
-      .controller('CorporativoController', ['$scope', '$http', '$localStorage', '$location', function($scope, $http, $localStorage, $location) {
+      .controller('CorporativoController', ['$scope', '$http', '$localStorage', '$location', '$timeout', function($scope, $http, $localStorage, $location, $timeout) {
 
         $scope.httpForm = new icaav.services.HTTPForm($http);
+        $scope.location = new icaav.services.Location($location);
         $scope.vars = $localStorage.$default({
           corporativoAdd: {
             key:  '',
@@ -202,17 +204,36 @@
         });
 
         $scope.routeAdd = function() {
-          $location.path(icaav.helpers.getBasePath() + '/admin/corporativo/add');
+          $scope.location.path('/admin/corporativo/add');
         };
 
         $scope.routeView = function() {
-          $location.path(icaav.helpers.getBasePath() + '/admin/corporativo');
+          $scope.location.path('/admin/corporativo');
+        };
+
+        $scope.getCorporativos = function() {
+          $scope.httpForm.post(icaav.helpers.getBasePath() +'/admin/corporativo/get-corporativos', {
+            start_pag: 1,
+            end_pag: 100
+          }).success(function(data) {
+            if(data['@pr_affect_rows']) {
+              $scope.corporativos = data.results;
+              console.log($scope.corporativos);
+            }
+          });
         };
 
         $scope.createCorporativo = function() {
           $scope.httpForm.post(icaav.helpers.getBasePath() + '/admin/corporativo/addAjax', $scope.vars.corporativoAdd)
           .success(function(data) {
-            console.log(data);
+            if(data['@pr_message'] == 'SUCCESS' && data['@pr_affect_rows']) {
+              $timeout(function() {
+                delete $scope.vars.corporativoAdd;
+              },0);
+              $scope.location.path('/admin/corporativo');
+            } else {
+              alert('No se pudo crear el corporativo');
+            }
           });
         };
 
@@ -222,6 +243,7 @@
         $routeProvider
         .when(basePath + '/admin', {templateUrl : basePath + '/admin?terminal=true'})
         .when(basePath + '/admin/corporativo', {templateUrl : basePath + '/admin/corporativo?terminal=true'})
+        .when(basePath + '/admin/corporativo/add', {templateUrl : basePath + '/admin/corporativo/add?terminal=true'})
         .when(basePath + '/admin/unidad-negocio', {templateUrl : basePath + '/admin/unidad-negocio?terminal=true'})
         .otherwise({
           templateUrl: window.location.href + '?terminal=true'

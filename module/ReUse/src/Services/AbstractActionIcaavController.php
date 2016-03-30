@@ -18,7 +18,10 @@ use Album\Model\AlbumModel;
 */
 abstract class AbstractActionIcaavController extends AbstractActionController {
 
-	private $SPs = array();	
+	const ONLY_RESULT 	= 1;
+	const OUTPUTS 		= 2;
+	const ALL 			= 3;
+	private $SPs 		= array();
 	
 	/**
 	 * @var EntityManager
@@ -78,7 +81,7 @@ abstract class AbstractActionIcaavController extends AbstractActionController {
 						 					array_fill(0,
 						 						count($params),
 						 						'?')
-						 					). (($outputs) ? ','.implode(',', $outputs):'')
+						 					)
 						 				.");",
 										$params);
 		return $results->fetchAll();
@@ -90,22 +93,26 @@ abstract class AbstractActionIcaavController extends AbstractActionController {
 	 * Example: callSP('my_sp', array(
 	 *				'param1' => 'value1'
 	 *				'param2' => 'value2'
-	 *				), array('@output1', '@myOutPut2')
+	 *				), array('@output1', '@myOutPut2', self::ONLY_RESULT)
 	 *			);
 	 *
 	 * @author Alan Olivares
 	 * @param {string} $nameSP
 	 * @param array $params
 	 * @param array $outputs
+	 * @param int   $expectedResult -> posible values: contants in this class {ONLY_RESULT, OUTPUTS, ALL}
 	 */
-	protected function callSP($nameSP , array $params, array $outputs = null){
-		$em = $this->getEntityManager();
+	protected function callSP($nameSP , array $params, array $outputs = null, $expectedResult){
+		$dataOutputs = array();
+		$dataCall 	 = array();
+		$em 		 = $this->getEntityManager();
 
 		$sql = "CALL {$nameSP}(:"
 					.implode(',:',
 	 					array_keys($params)
 	 					).($outputs ? ','.implode(',', array_values($outputs)) : '')
 	 				.");";
+
 		try {
 			$stmt = $em->getConnection()->prepare($sql);
 
@@ -113,12 +120,23 @@ abstract class AbstractActionIcaavController extends AbstractActionController {
 				$stmt->bindParam(':'.$key, $params[$key]);
 			}
 
-			$stmt->execute();
-			$dataCall = $stmt->fetchAll();
-			$stmt->closeCursor();
+			$execute = $stmt->execute();
+			if($execute && ($expectedResult == self::ONLY_RESULT || $expectedResult == self::ALL)) {
+				$dataCall = array('results' => $stmt->fetchAll());
+				$stmt->closeCursor();
+			}
+
+			if($execute && ($expectedResult == self::OUTPUTS || $expectedResult == self::ALL)) {
+				$query = 'SELECT '.implode(',', array_values($outputs));
+				$stmtOutputs = $em->getConnection()->prepare($query);
+				$stmtOutputs->execute();
+				$dataOutputs = $stmtOutputs->fetch();
+				$stmtOutputs->closeCursor();
+			}
+
 		} catch(Exception $e) { return array('error', $e);}
 
-		return $dataCall[0];
+		return array_merge($dataOutputs, $dataCall);
 	}
 
 	/**
@@ -141,7 +159,7 @@ abstract class AbstractActionIcaavController extends AbstractActionController {
 				$valid = $this->SPs[$nameSP]['form']->isValid();
 			}
 
-			return $valid ? $this->callSP($nameSP, $params, $this->SPs[$nameSP]['outputs']):
+			return $valid ? $this->callSP($nameSP, $params, $this->SPs[$nameSP]['outputs'], $this->SPs[$nameSP]['expectedResult']):
 					array('errors' => $this->SPs[$nameSP]['form']->getMessages());
 		}
 
@@ -187,20 +205,22 @@ abstract class AbstractActionIcaavController extends AbstractActionController {
 	*			array('method' => 'route', 'name' => 'id_album'),
 	*			array('method' => 'get', 'name' => 'artist'),
 	*			array('method' => 'post', 'name' => 'title'),
-	*		), array('@output1', '@myOutPut2'), new MyFormZF2()
+	*		), array('@output1', '@myOutPut2'), new MyFormZF2(), self::ONLY_RESULT
 	*	);
 	*	@author Alan Olivares
 	*	@param {string} $nameSP
 	*	@param array $dataParams
 	*	@param Form $form
+	*	@param int $expectedResult -> posible values: contants in this class {ONLY_RESULT, OUTPUTS, ALL}
 	*/
-	protected function setSP($nameSP, array $dataParams, array $outputs = null, Form $form = null) {
+	protected function setSP($nameSP, array $dataParams, array $outputs = null, Form $form = null, $expectedResult = null) {
 		if(!empty($nameSP) && !empty($dataParams)) {
 			$this->SPs[$nameSP] = array(
-				'dataParams' => $dataParams,
-				'outputs' => $outputs,
-				'form' => $form,
-				);
+				'dataParams' 		 => $dataParams,
+				'outputs' 	 		 => $outputs,
+				'form' 		 		 => $form,
+				'expectedResult' 	 => $expectedResult,
+			);
 		}
 	}
 
