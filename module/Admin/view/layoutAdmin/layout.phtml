@@ -213,7 +213,7 @@
 
         $scope.getCorporativos = function() {
           $scope.httpForm.post(icaav.helpers.getBasePath() +'/admin/corporativo/get-corporativos', {
-            start_pag: 1,
+            start_pag: 0,
             end_pag: 100
           }).success(function(data) {
             if(data['@pr_affect_rows']) {

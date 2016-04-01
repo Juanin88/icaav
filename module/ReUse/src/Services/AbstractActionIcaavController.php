@@ -190,7 +190,7 @@ abstract class AbstractActionIcaavController extends AbstractActionController {
 					$value = $this->params()->fromQuery($dataParam['name']);
 			}
 
-			if(!empty($value)) {
+			if(is_numeric($value) || !empty($value)) {
 				$params[$dataParam['name']] = $value;
 			}
 		}
