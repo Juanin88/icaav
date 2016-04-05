@@ -57,7 +57,7 @@ class CorporativoFilter implements InputFilterAwareInterface {
 			$inputFilter->add(array(
 				'name'     => 'active',
 				'filters'  => array(
-					array('name' => 'Boolean'),
+					array('name' => 'Int'),
 				),
 			));
 

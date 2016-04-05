@@ -21,7 +21,7 @@ class AlbumController extends AbstractActionIcaavController {
 			), null, new AlbumForm());
 		$this->setSP('delete_album', array(
 				array('method' => 'route', 'name' => 'id'),
-			));
+			), null, null, self::ONLY_RESULT);
 	}
 	
 	public function indexAction() {

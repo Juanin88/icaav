@@ -22,19 +22,3 @@ body {
   position: fixed;
   bottom: 0;
 }
-
-input[type="text"], input[type="password"] {
-	background-color: transparent !important;
-	border: 0;
-  box-shadow: none !important;
-  &:focus {
-    border: 0;
-    box-shadow: none !important;
-    &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-      color: #fff;
-    }
-  }
-  &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-      font-weight: bold;
-  }
-}

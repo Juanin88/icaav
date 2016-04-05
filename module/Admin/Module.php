@@ -20,6 +20,10 @@ class Module {
 
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
+
+        /*$eventManager->attach(\Zend\Mvc\MvcEvent::EVENT_DISPATCH_ERROR, array($this, 'handleError'));
+        //handle the view render error (exception) 
+        $eventManager->attach(\Zend\Mvc\MvcEvent::EVENT_RENDER_ERROR, array($this, 'handleError'));*/
     }
 
     public function getConfig() {
@@ -34,6 +38,12 @@ class Module {
                 ),
             ),
         );
+    }
+
+    public function handleError(MvcEvent $e) {
+        //get the exception
+        $exception = $e->getParam('exception');
+        return $exception->getMessage();exit();
     }
 
 }

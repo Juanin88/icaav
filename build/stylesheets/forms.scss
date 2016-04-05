@@ -1,0 +1,142 @@
+/*
+ * Component: Form
+ * ---------------
+ */
+.form-control {
+  //@include border-radius($input-radius);
+  box-shadow: none;
+  border-color: $gray;
+  &:focus {
+    border-color: $light-blue;
+    box-shadow: none;
+  }
+  &::-moz-placeholder,
+  &:-ms-input-placeholder,
+  &::-webkit-input-placeholder {
+    color: #bbb;
+    opacity: 1;
+  }
+
+  &:not(select) {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
+}
+
+.form-group {
+  &.has-success {
+    label {
+      color: $green;
+    }
+    .form-control {
+      border-color: $green;
+      box-shadow: none;
+    }
+  }
+
+  &.has-warning {
+    label {
+      color: $yellow;
+    }
+    .form-control {
+      border-color: $yellow;
+      box-shadow: none;
+    }
+  }
+
+  &.has-error {
+    label {
+      color: $red;
+    }
+    .form-control {
+      border-color: $red;
+      box-shadow: none;
+    }
+  }
+}
+
+/* Input group */
+.input-group {
+  .input-group-addon {
+    //@include border-radius($input-radius);
+    border-color: $gray;
+    background-color: #fff;
+  }
+}
+/* button groups */
+.btn-group-vertical {
+  .btn {
+    &.btn-flat:first-of-type, &.btn-flat:last-of-type {
+      //@include border-radius(0);
+    }
+  }
+}
+
+.icheck > label {
+  padding-left: 0;
+}
+
+/* support Font Awesome icons in form-control */
+.form-control-feedback.fa {
+    line-height: $input-height-base;
+}
+
+.input-lg + .form-control-feedback.fa,
+.input-group-lg + .form-control-feedback.fa,
+.form-group-lg .form-control + .form-control-feedback.fa {
+  line-height: $input-height-large;
+}
+.input-sm + .form-control-feedback.fa,
+.input-group-sm + .form-control-feedback.fa,
+.form-group-sm .form-control + .form-control-feedback.fa {
+  line-height: $input-height-small;
+}
+
+.input-login {
+  background-color: transparent !important;
+  border: 0;
+  box-shadow: none !important;
+  height: $navbar-height;
+  font-size: 17px;
+  font-weight: bold;
+  color: #fff;
+  transition-duration: .3s;
+  transition-timing-function: linear;
+  //box-shadow: 0px -23px 20px -3px rgba(0, 0, 0, 1) inset !important;
+  //box-shadow: 0px -20px 10px -10px rgba(213, 208, 208, .7) inset !important;
+  background-image: radial-gradient(ellipse farthest-corner at 100px 70px, rgba(218, 223, 226, 0.7) 10%, rgba(213, 208, 208, 0) 50%);
+  border-bottom: solid 1px rgba(218, 223, 226, 0.7);
+  width: 200px;
+  margin: 0px 15px;
+  text-align: center;
+  color: rgb(202, 202, 202);
+
+  &:focus {
+      border: 0;
+      box-shadow: none !important;
+      //box-shadow: 0px -20px 10px -10px rgba(56, 164, 222, .7) inset !important;
+      background-image: radial-gradient(ellipse farthest-corner at 100px 70px, rgba(86, 150, 255, .4) 10%, rgba(213, 208, 208, 0) 50%);
+      border-bottom: solid 1px rgba(86, 150, 255, .4) !important;
+      color: rgb(255, 255, 255);
+
+      &::-webkit-input-placeholder {
+          /* Chrome/Opera/Safari */
+          color: #fff;
+      }
+  }
+  &:active {
+      border: 0;
+      box-shadow: none !important;
+      color: rgb(255, 255, 255);
+      &::-webkit-input-placeholder {
+          /* Chrome/Opera/Safari */
+          color: #fff;
+      }
+  }
+
+  &::-webkit-input-placeholder {
+      /* Chrome/Opera/Safari */
+      font-weight: bold;
+  }
+}

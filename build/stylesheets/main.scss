@@ -5,7 +5,57 @@
  */
 
 @import "../bootstrap-sass-3.3.6/assets/stylesheets/_bootstrap";
+@import "mixins";
+@import "variables";
+@import "core";
+@import "header";
+@import "navs";
+@import "control-sidebar";
+@import "sidebar";
+@import "sidebar-mini";
 @import "_/_footers";
 @import "_/_navbar";
 @import "_/_errors";
 @import "_/_sections";
+@import "skin-blue";
+@import "forms";
+@import "tabs";
+
+
+.catalog-title-group {
+	background: #ECECEC;
+	border-radius: 20px;
+	padding: 10px 10px 10px 10px !important;
+	h3 {
+		color: #137CE9;
+		font-family: lato, sans serif;
+	}
+	div {
+		h3 {
+
+		}
+		.input-group {
+			.input-group-addon {
+				background: transparent !important;
+				border: none !important;
+				position: absolute;
+				z-index: 5;
+			}
+			.input-group-btn {
+				button {
+					height: 48px;
+				}
+			}
+			position: absolute;
+			right: 0;
+			top: 0;
+			input {
+				position: absolute;
+				right: 0;
+				top: -13px;
+				height: 48px;
+			}
+		}
+	}
+}
+

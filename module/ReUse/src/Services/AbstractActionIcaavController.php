@@ -18,27 +18,21 @@ use Album\Model\AlbumModel;
 */
 abstract class AbstractActionIcaavController extends AbstractActionController {
 
+	// VARIABLES FOR OPTIONS CALL SPs
+	const CALL_ARRAY	= 1;
+	const CALL_ASSOC	= 2;
+	// VARIABLES FOR GET OPTIONS RESULT FROM QUERY
 	const ONLY_RESULT 	= 1;
-	const OUTPUTS 		= 2;
+	const OUTS 			= 2;
 	const ALL 			= 3;
-	private $SPs 		= array();
-	
-	/**
-	 * @var EntityManager
-	 */
-	protected $entityManager;
+
+	private 	$SPs 	= array();
+	protected 	$entityManager;
 
 	public function __construct() {
 		$this->setSPs();
 	}
-	
-	/**
-	 * Sets the EntityManager
-	 *
-	 * @param EntityManager $em
-	 * @access protected
-	 * @return AbstractActionIcaavController
-	 */
+
 	protected function setEntityManager(EntityManager $em) {
 		$this->entityManager = $em;
 		return $this;
@@ -50,7 +44,6 @@ abstract class AbstractActionIcaavController extends AbstractActionController {
 	 * Fetches the EntityManager from ServiceLocator if it has not been initiated
 	 * and then returns it
 	 *
-	 * @access protected
 	 * @return EntityManager
 	 */
 	protected function getEntityManager() {
@@ -72,18 +65,14 @@ abstract class AbstractActionIcaavController extends AbstractActionController {
 	 * @param {string} $nameSP
 	 * @param array $params
 	 */
-	protected function callSimpleSP($nameSP , array $params) {
+	protected function callSimpleSP($nameSP, array $params, array $outs = null) {
 		$em = $this->getEntityManager();
 		//Assume that you have connected to a database instance...
 		$statement = $em->getConnection();
-		$results = $statement->executeQuery("CALL {$nameSP}("
-						 				.implode(',',
-						 					array_fill(0,
-						 						count($params),
-						 						'?')
-						 					)
-						 				.");",
-										$params);
+		$sql = $this->getQueryCallSP($nameSP, $params, $outs, self::CALL_ARRAY);
+
+		$results = $statement->executeQuery($sql, $params);
+
 		return $results->fetchAll();
 	}
 
@@ -93,28 +82,24 @@ abstract class AbstractActionIcaavController extends AbstractActionController {
 	 * Example: callSP('my_sp', array(
 	 *				'param1' => 'value1'
 	 *				'param2' => 'value2'
-	 *				), array('@output1', '@myOutPut2', self::ONLY_RESULT)
+	 *				), array('@out1', '@myOut2', self::ONLY_RESULT)
 	 *			);
 	 *
 	 * @author Alan Olivares
 	 * @param {string} $nameSP
 	 * @param array $params
-	 * @param array $outputs
-	 * @param int   $expectedResult -> posible values: contants in this class {ONLY_RESULT, OUTPUTS, ALL}
+	 * @param array $outs
+	 * @param int   $expectedResult -> posible values: contants in this class {ONLY_RESULT, OUTS, ALL}
 	 */
-	protected function callSP($nameSP , array $params, array $outputs = null, $expectedResult){
-		$dataOutputs = array();
+	protected function callSP($nameSP , array $params, array $outs = null, $expectedResult){
+		$dataOuts 	 = array();
 		$dataCall 	 = array();
-		$em 		 = $this->getEntityManager();
-
-		$sql = "CALL {$nameSP}(:"
-					.implode(',:',
-	 					array_keys($params)
-	 					).($outputs ? ','.implode(',', array_values($outputs)) : '')
-	 				.");";
+		$em			 = $this->getEntityManager();
+		$sql		 = $this->getQueryCallSP($nameSP, $params, $outs, self::CALL_ASSOC);
 
 		try {
-			$stmt = $em->getConnection()->prepare($sql);
+			$connection = $em->getConnection();
+			$stmt = $connection->prepare($sql);
 
 			foreach ($params as $key => $param) {
 				$stmt->bindParam(':'.$key, $params[$key]);
@@ -126,31 +111,71 @@ abstract class AbstractActionIcaavController extends AbstractActionController {
 				$stmt->closeCursor();
 			}
 
-			if($execute && ($expectedResult == self::OUTPUTS || $expectedResult == self::ALL)) {
-				$query = 'SELECT '.implode(',', array_values($outputs));
-				$stmtOutputs = $em->getConnection()->prepare($query);
-				$stmtOutputs->execute();
-				$dataOutputs = $stmtOutputs->fetch();
-				$stmtOutputs->closeCursor();
+			if($execute && ($expectedResult == self::OUTS || $expectedResult == self::ALL)) {
+				$dataOuts = $this->getDataOuts($connection, $outs);
 			}
 
 		} catch(Exception $e) { return array('error', $e);}
 
-		return array_merge($dataOutputs, $dataCall);
+		return array_merge($dataOuts, $dataCall);
+	}
+
+	private function getQueryCallSP($nameSP, array $params, array $outs = null, $optionCall) {
+
+		return "CALL $nameSP("
+				// Set params
+				.$this->getParamsForCallSP($params, $optionCall)
+				// Set outs if exist
+				.($outs ? ','.implode(',', array_values($outs)) : '')
+				.');';
+	}
+
+	private function getParamsForCallSP($params, $optionCall) {
+		$paramsForCall = null;
+
+		switch ($optionCall) {
+			case self::CALL_ARRAY:
+				$paramsForCall = implode(',',
+						 		array_fill(0,
+						 			count($params),
+						 			'?'
+						 		)
+						 	);
+				break;
+			case self::CALL_ASSOC;
+				$paramsForCall = ":"
+						.implode(',:',
+	 						array_keys($params)
+	 					);
+				break;
+			default:
+				throw new Exception("ERROR: Call option is not valid", 1);
+		}
+
+		return $paramsForCall;
+	}
+
+	private function getDataOuts($connection, $outs) {
+		$query = 'SELECT '.implode(',', array_values($outs));
+		$stmtOuts = $connection->prepare($query);
+		$stmtOuts->execute();
+		$dataOuts = $stmtOuts->fetch();
+		$stmtOuts->closeCursor();
+
+		return $dataOuts;
 	}
 
 	/**
 	*	Having added a sp to the list with the method setSP () call you can send your sp
 	*	Example:  callSPByName('my_sp');
 	*
-	*	@author Alan Olivares Ruiz
+	*	@author Alan Olivares
 	*	@param {string} $nameSP
 	*/
 	protected function callSPByName($nameSP) {
 		if (isset($this->SPs[$nameSP])) {
 			$params = $this->getArrayParams($this->SPs[$nameSP]['dataParams']);
 			$valid = true;
-
 			if (
 				$this->SPs[$nameSP]['form'] && 
 				$this->SPs[$nameSP]['form'] instanceof Form
@@ -159,7 +184,7 @@ abstract class AbstractActionIcaavController extends AbstractActionController {
 				$valid = $this->SPs[$nameSP]['form']->isValid();
 			}
 
-			return $valid ? $this->callSP($nameSP, $params, $this->SPs[$nameSP]['outputs'], $this->SPs[$nameSP]['expectedResult']):
+			return $valid ? $this->callSP($nameSP, $params, $this->SPs[$nameSP]['outs'], $this->SPs[$nameSP]['expectedResult']):
 					array('errors' => $this->SPs[$nameSP]['form']->getMessages());
 		}
 
@@ -175,7 +200,7 @@ abstract class AbstractActionIcaavController extends AbstractActionController {
 	*			array('method' => 'get', 'name' => 'artist'),
 	*			array('method' => 'post', 'name' => 'title'),
 	*		)
-	*	@author Alan Olivares Ruiz
+	*	@author Alan Olivares
 	*	@param array $dataParams
 	*/
 	private function getArrayParams($dataParams) {
@@ -186,17 +211,26 @@ abstract class AbstractActionIcaavController extends AbstractActionController {
 				case 'post':
 					$value = $this->params()->fromPost($dataParam['name']);
 					break;
+				case 'route':
+					$value = $this->params()->fromRoute($dataParam['name']);
+						break;
 				default:
 					$value = $this->params()->fromQuery($dataParam['name']);
 			}
 
 			if(is_numeric($value) || !empty($value)) {
-				$params[$dataParam['name']] = $value;
+				$params[$dataParam['name']] = 
+						isset($dataParam['extra_operation_value']) &&
+						is_callable($dataParam['extra_operation_value']) ?
+							$dataParam['extra_operation_value']($value) : $value;
+			} elseif(isset($dataParam['default'])) {
+				$params[$dataParam['name']] = $dataParam['default'];
 			}
 		}
 
 		return $params;
 	}
+
 
 	/**
 	*	Add a SP to list SPs
@@ -205,25 +239,28 @@ abstract class AbstractActionIcaavController extends AbstractActionController {
 	*			array('method' => 'route', 'name' => 'id_album'),
 	*			array('method' => 'get', 'name' => 'artist'),
 	*			array('method' => 'post', 'name' => 'title'),
-	*		), array('@output1', '@myOutPut2'), new MyFormZF2(), self::ONLY_RESULT
+	*		), array('@out1', '@myOut2'), new MyFormZF2(), self::ONLY_RESULT
 	*	);
 	*	@author Alan Olivares
 	*	@param {string} $nameSP
 	*	@param array $dataParams
 	*	@param Form $form
-	*	@param int $expectedResult -> posible values: contants in this class {ONLY_RESULT, OUTPUTS, ALL}
+	*	@param int $expectedResult -> posible values: contants in this class {ONLY_RESULT, OUTS, ALL}
 	*/
-	protected function setSP($nameSP, array $dataParams, array $outputs = null, Form $form = null, $expectedResult = null) {
+	protected function setSP($nameSP, array $dataParams, array $outs = null, Form $form = null, $expectedResult = null) {
 		if(!empty($nameSP) && !empty($dataParams)) {
 			$this->SPs[$nameSP] = array(
-				'dataParams' 		 => $dataParams,
-				'outputs' 	 		 => $outputs,
-				'form' 		 		 => $form,
-				'expectedResult' 	 => $expectedResult,
+				'dataParams'		=> $dataParams,
+				'outs'				=> $outs,
+				'form'				=> $form,
+				'expectedResult'	=> $expectedResult,
 			);
 		}
 	}
 
+	/**
+	* this method should take care to SETUP SPs
+	**/
 	protected abstract function setSPs();
 
 }
