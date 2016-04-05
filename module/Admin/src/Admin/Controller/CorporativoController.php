@@ -43,6 +43,10 @@ class CorporativoController extends AbstractActionIcaavController {
 						return $active == 'true' ? 1 : 0;
 					}),
 			), array('@pr_affect_rows', '@pr_message'), null, self::ALL);
+		
+		$this->setSP('sp_fac_d_corporativo', array(
+				array('method' => 'post', 'name' => 'id_corporativo'),
+		), array('@pr_affect_rows', '@pr_message'), null, self::OUTS);
 	}
 
 	public function indexAction() {
@@ -62,6 +66,11 @@ class CorporativoController extends AbstractActionIcaavController {
 	public function editAjaxAction() {
 		return new JsonModel($this->callSPByName('sp_fac_u_corporativo'));
 	}
+	
+	public function deleteAjaxAction() {
+		return new JsonModel($this->callSPByName('sp_fac_d_corporativo'));
+	}
+	
 
 	public function getCorporativosAction() {
 		return new JsonModel($this->callSPByName('sp_fac_c_corporativo'));

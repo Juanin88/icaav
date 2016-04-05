@@ -18,7 +18,7 @@ return array(
        'Admin'       => 'layoutAdmin/layout.phtml',
        'Index'       => 'layout/layout.phtml',
     ),
-    /*'doctrine' => array(
+    'doctrine' => array(
         'connection' => array(
             'orm_default' => array(
                 'driverClass' => 'Doctrine\DBAL\Driver\PDOMySql\Driver',
@@ -31,7 +31,7 @@ return array(
                 )
             )
         )
-    ),*/
+    ),/*
     'doctrine' => array(
         'connection' => array(
             'orm_default' => array(
@@ -45,5 +45,5 @@ return array(
                 )
             )
         )
-    ),
+    ),*/
 );

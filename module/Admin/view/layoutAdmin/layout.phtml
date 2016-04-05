@@ -122,7 +122,7 @@
           </ul>
         </div>
         <div style="padding-top:15px;">
-          <?php //echo $this->content; ?>
+          <?php echo $this->content; ?>
           <div ng-view></div>
         </div>
       </div>
@@ -178,6 +178,19 @@
               console.log($scope.corporativos);
             }
           });
+        };
+
+        $scope.deleteCorporativo = function(id) {
+            $scope.httpForm.post(icaav.helpers.getBasePath() + '/admin/corporativo/delete-ajax', {
+					id_corporativo: id
+             }).success(function(data) {
+                 console.log(data);
+              if(data['@pr_message'] == 'SUCCESS' && data['@pr_affect_rows']) {
+            	  $scope.getCorporativos();
+              } else {
+                alert('No se pudo eliminar el corporativo');
+              }
+            });
         };
 
         $scope.createCorporativo = function() {

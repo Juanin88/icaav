@@ -21,12 +21,16 @@
 			<input ng-model="corp">
 			<table class="table">
 				<thead>
+					<th></th>
 					<th>Clave</th>
 					<th>Nombre</th>
 					<th>Limite de credito</th>
 				</thead>
 				<tbody>
 					<tr ng-repeat="corporativo in corporativos | filter:corp">
+						<td>
+						<a href="#" ng-click="deleteCorporativo(corporativo.id_corporativo)">Eliminar</a>
+						</td>
 						<td>{{corporativo.id_corporativo}}</td>
 						<td>{{corporativo.nombre_corporativo}}</td>
 						<td>{{corporativo.nombre_corporativo}}</td>
