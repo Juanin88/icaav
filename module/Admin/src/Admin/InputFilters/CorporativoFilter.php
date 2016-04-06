@@ -18,7 +18,7 @@ class CorporativoFilter implements InputFilterAwareInterface {
 			$inputFilter = new InputFilter();
 
 			$inputFilter->add(array(
-				'name'     => 'key',
+				'name'     => 'id_corporativo',
 				'required' => true,
 				'validators' => array(
 					array(
@@ -33,7 +33,7 @@ class CorporativoFilter implements InputFilterAwareInterface {
 			));
 
 			$inputFilter->add(array(
-				'name'     => 'name',
+				'name'     => 'nombre_corporativo',
 				'required' => true,
 				'validators' => array(
 					array(
@@ -48,14 +48,14 @@ class CorporativoFilter implements InputFilterAwareInterface {
 			));
 
 			$inputFilter->add(array(
-				'name'     => 'creditLimit',
+				'name'     => 'limite_credito',
 				'validators'  => array(
 					array('name' => 'IsFloat'),
 				),
 			));
 
 			$inputFilter->add(array(
-				'name'     => 'active',
+				'name'     => 'estatus_corporativo',
 				'filters'  => array(
 					array('name' => 'Int'),
 				),

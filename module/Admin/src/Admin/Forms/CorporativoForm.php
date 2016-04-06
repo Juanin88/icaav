@@ -15,22 +15,22 @@ namespace Admin\Forms;
          ->setInputFilter((new CorporativoFilter())->getInputFilter());
 
          $this->add(array(
-             'name' => 'key',
+             'name' => 'id_corporativo',
              'type' => 'Text',
          ));
 
          $this->add(array(
-             'name' => 'name',
+             'name' => 'nombre_corporativo',
              'type' => 'Text',
          ));
 
          $this->add(array(
-             'name' => 'creditLimit',
+             'name' => 'limite_credito',
              'type' => 'Number',
          ));
 
          $this->add(array(
-             'name' => 'active',
+             'name' => 'estatus_corporativo',
              'type' => 'checkbox',
          ));
 

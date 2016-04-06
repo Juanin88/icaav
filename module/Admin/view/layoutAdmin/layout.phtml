@@ -114,7 +114,6 @@
           <ul class="nav nav-tabs tabs-window" role="tablist">
             <li ng-repeat="tab in tabs" role="presentation" class="{{tab.isActive?'active':''}}">
               <a href="{{tab.url}}" ng-click="setTab(tab)" class="content-tabs-window">
-                <i class="{{tab.classIcon ? tab.classIcon : ''}}"></i>
                 {{tab.name}}
               </a>
                 <i class="fa fa-remove pull right close-tab-window" ng-click="removeTab(tab.name)" ng-show="!tab.isActive"></i>
@@ -122,7 +121,7 @@
           </ul>
         </div>
         <div style="padding-top:15px;">
-          <?php echo $this->content; ?>
+          <?php //echo $this->content; ?>
           <div ng-view></div>
         </div>
       </div>
@@ -151,14 +150,20 @@
 
         $scope.httpForm = new icaav.services.HTTPForm($http);
         $scope.location = new icaav.services.Location($location);
+        $scope.corporativoEdit = {};
         $scope.vars = $localStorage.$default({
           corporativoAdd: {
-            key:  '',
-            name: '',
-            creditLimit: '',
-            active: false,
+            id_corporativo:  '',
+            nombre_corporativo: '',
+            limite_credito: '',
+            estatus_corporativo: false,
           }
         });
+
+        $scope.setDataEditCorportativo = function(corporativo) {
+          $scope.corporativoEdit = new Object(corporativo);
+          $scope.corporativoEdit.estatus_corporativo = $scope.corporativoEdit.estatus_corporativo == 1;
+        };
 
         $scope.routeAdd = function() {
           $scope.location.path('/admin/corporativo/add');
@@ -194,7 +199,7 @@
         };
 
         $scope.createCorporativo = function() {
-          $scope.httpForm.post(icaav.helpers.getBasePath() + '/admin/corporativo/addAjax', $scope.vars.corporativoAdd)
+          $scope.httpForm.post(icaav.helpers.getBasePath() + '/admin/corporativo/add-ajax', $scope.vars.corporativoAdd)
           .success(function(data) {
             if(data['@pr_message'] == 'SUCCESS' && data['@pr_affect_rows']) {
               $timeout(function() {
@@ -203,6 +208,18 @@
               $scope.location.path('/admin/corporativo');
             } else {
               alert('No se pudo crear el corporativo');
+            }
+          });
+        };
+
+        $scope.updateCorporativo = function() {
+          $scope.httpForm.post(icaav.helpers.getBasePath() + '/admin/corporativo/edit-ajax', $scope.corporativoEdit)
+          .success(function(data) {
+            if(data['@pr_message'] == 'SUCCESS' && data['@pr_affect_rows']) {
+              $scope.getCorporativos();
+              $scope.corporativoEdit = {};
+            } else {
+              alert('No se pudo editar el corporativo');
             }
           });
         };

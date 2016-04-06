@@ -17,33 +17,30 @@ class CorporativoController extends AbstractActionIcaavController {
 	}
 
 	protected function setSPs() {
+		// SET INSERT SP
 		$this->setSP('sp_fac_i_corporativo', array(
-				array('method' => 'post', 'name' => 'key'),
-				array('method' => 'post', 'name' => 'name'),
-				array('method' => 'post', 'name' => 'creditLimit'),
-				array('method' => 'post', 'name' => 'active',
-					  'default' => 1,
+				array('method' => 'post', 'name' => 'id_corporativo'),
+				array('method' => 'post', 'name' => 'nombre_corporativo'),
+				array('method' => 'post', 'name' => 'limite_credito'),
+				array('method' => 'post', 'name' => 'estatus_corporativo',
+					  'default' => 0,
 					  'extra_operation_value' => function($active) {
 							return $active == 'true' ? 1 : 0;
 						}),
 			), array('@pr_affect_rows', '@pr_message'), new CorporativoForm(), self::OUTS);
-
+		// SET UPDATE SP
+		$this->setSP('sp_fac_u_corporativo', array(
+				array('method' => 'post', 'name' => 'id_corporativo'),
+				array('method' => 'post', 'name' => 'nombre_corporativo'),
+				array('method' => 'post', 'name' => 'limite_credito'),
+				array('method' => 'post', 'name' => 'estatus_corporativo'),
+			), array('@pr_affect_rows', '@pr_message'), new CorporativoForm(), self::OUTS);
+		// SET SELECT SP
 		$this->setSP('sp_fac_c_corporativo', array(
 				array('method' => 'post', 'name' => 'start_pag'),
 				array('method' => 'post', 'name' => 'end_pag'),
 			), array('@pr_affect_rows', '@pr_message'), null, self::ALL);
-
-		$this->setSP('sp_fac_u_corporativo', array(
-				array('method' => 'post', 'name' => 'new'),
-				array('method' => 'post', 'name' => 'key'),
-				array('method' => 'post', 'name' => 'name'),
-				array('method' => 'post', 'name' => 'creditLimit'),
-				array('method' => 'post', 'name' => 'active', 'default' => true,
-					'extra_operation_value' => function($active) {
-						return $active == 'true' ? 1 : 0;
-					}),
-			), array('@pr_affect_rows', '@pr_message'), null, self::ALL);
-		
+		// SET DELETE SP
 		$this->setSP('sp_fac_d_corporativo', array(
 				array('method' => 'post', 'name' => 'id_corporativo'),
 		), array('@pr_affect_rows', '@pr_message'), null, self::OUTS);

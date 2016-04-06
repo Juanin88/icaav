@@ -2233,6 +2233,15 @@ th {
 .table-condensed > tfoot > tr > td {
   padding: 5px; }
 
+.table-line-height-0 > thead > tr > th,
+.table-line-height-0 > tbody > tr > th,
+.table-line-height-0 > tfoot > tr > th {
+  line-height: 3; }
+.table-line-height-0 > thead > tr > td,
+.table-line-height-0 > tbody > tr > td,
+.table-line-height-0 > tfoot > tr > td {
+  line-height: 0; }
+
 .table-bordered {
   border: 1px solid #ddd; }
   .table-bordered > thead > tr > th,
@@ -6983,11 +6992,14 @@ body {
       color: #fff !important;
       border-bottom: solid 2px #1d80ec !important;
       box-shadow: 0px -7px 10px -6px #1d80ec inset;
-      padding-top: 7px;
-      padding-bottom: 7px; }
+      padding-top: 3px;
+      padding-bottom: 3px; }
   .tabs-window li a {
-    padding-top: 7px;
-    padding-bottom: 7px; }
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 12px; }
   .tabs-window li:hover {
     border: solid 1px transparent;
     border-top-width: 0;
@@ -7024,13 +7036,22 @@ body {
       background: transparent !important;
       border: none !important;
       position: absolute;
-      z-index: 5; }
+      z-index: 5;
+      left: -15px;
+      top: -9px;
+      font-size: 23px; }
     .catalog-title-group div .input-group .input-group-btn button {
-      height: 48px; }
+      height: 47px;
+      width: 47px;
+      margin-top: -11px;
+      margin-right: -3px;
+      z-index: 3; }
     .catalog-title-group div .input-group input {
       position: absolute;
-      right: 0;
-      top: -13px;
-      height: 48px; }
+      right: 18px;
+      top: -11px;
+      height: 47px;
+      padding-left: 40px !important;
+      padding-right: 32px !important; }
 
 /*# sourceMappingURL=main.css.map */

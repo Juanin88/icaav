@@ -9,31 +9,54 @@
 				  <span class="input-group-addon" id="search-corporativo">
 				  	<i class="fa fa-search"></i>
 				  </span>
-				  <input type="text" class="form-control" aria-describedby="search-corporativo">
+				  <input type="text" class="form-control" ng-model="searchCorporativo" aria-describedby="search-corporativo">
 				  <span class="input-group-btn">
-			        <button class="btn btn-primary" type="button" style="border-radius:50%">+</button>
+			        <button class="btn btn-primary" type="button" style="border-radius:50%" ng-click="routeAdd()">+</button>
 			      </span>
 				</div>
 			</div>
 		</div>
+		<br>
 		<div ng-init="getCorporativos()">
-			<a href="#" ng-click="routeAdd()">add</a>
-			<input ng-model="corp">
-			<table class="table">
+			<table class="table table-line-height-0">
 				<thead>
-					<th></th>
-					<th>Clave</th>
-					<th>Nombre</th>
-					<th>Limite de credito</th>
+					<tr>
+						<th width="10px"></th>
+						<th width="100px">Clave</th>
+						<th width="250px">Nombre</th>
+						<th width="200px">Limite de credito</th>
+						<th>Estatus</th>
+						<th width="10px"></th>
+					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="corporativo in corporativos | filter:corp">
+					<tr ng-repeat="corporativo in corporativos | filter:searchCorporativo">
 						<td>
-						<a href="#" ng-click="deleteCorporativo(corporativo.id_corporativo)">Eliminar</a>
+						<a href="#" ng-click="deleteCorporativo(corporativo.id_corporativo)">
+							<i class="fa fa-trash"></i>
+						</a>
 						</td>
-						<td>{{corporativo.id_corporativo}}</td>
-						<td>{{corporativo.nombre_corporativo}}</td>
-						<td>{{corporativo.nombre_corporativo}}</td>
+						<td>
+							<p ng-dblclick="setDataEditCorportativo(corporativo)" ng-show="corporativoEdit.id_corporativo != corporativo.id_corporativo">{{corporativo.id_corporativo}}</p>
+							<input type="text" ng-model="corporativoEdit.id_corporativo" ng-show="corporativoEdit.id_corporativo == corporativo.id_corporativo">
+						</td>
+						<td>
+							<p ng-dblclick="setDataEditCorportativo(corporativo)" ng-show="corporativoEdit.id_corporativo != corporativo.id_corporativo">{{corporativo.nombre_corporativo}}</p>
+							<input type="text" ng-model="corporativoEdit.nombre_corporativo" ng-show="corporativoEdit.id_corporativo == corporativo.id_corporativo">
+						</td>
+						<td>
+							<p ng-dblclick="setDataEditCorportativo(corporativo)" ng-show="corporativoEdit.id_corporativo != corporativo.id_corporativo">{{corporativo.limite_credito}}</p>
+							<input type="text" ng-model="corporativoEdit.limite_credito" ng-show="corporativoEdit.id_corporativo == corporativo.id_corporativo">
+						</td>
+						<td>
+							<p ng-dblclick="setDataEditCorportativo(corporativo)" ng-show="corporativoEdit.id_corporativo != corporativo.id_corporativo">{{corporativo.estatus_corporativo == 1 ? 'Activo' : 'Inactivo'}}</p>
+							<input type="checkbox" ng-model="corporativoEdit.estatus_corporativo" ng-show="corporativoEdit.id_corporativo == corporativo.id_corporativo">
+						</td>
+						<td>
+							<a href="#" ng-show="corporativoEdit.id_corporativo == corporativo.id_corporativo" ng-click="updateCorporativo()">
+								<i class="fa fa-pencil"></i>
+							</a>
+						</td>
 					</tr>
 				</tbody>
 			</table>

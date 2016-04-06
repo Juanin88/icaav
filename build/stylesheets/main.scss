@@ -40,10 +40,17 @@
 				border: none !important;
 				position: absolute;
 				z-index: 5;
+				left: -15px;
+			    top: -9px;
+			    font-size: 23px;
 			}
 			.input-group-btn {
 				button {
-					height: 48px;
+					height: 47px;
+					width: 47px;
+					margin-top: -11px;
+					margin-right: -3px;
+					z-index: 3;
 				}
 			}
 			position: absolute;
@@ -51,9 +58,11 @@
 			top: 0;
 			input {
 				position: absolute;
-				right: 0;
-				top: -13px;
-				height: 48px;
+				right: 18px;
+				top: -11px;
+				height: 47px;
+				padding-left: 40px !important;
+				padding-right: 32px !important;
 			}
 		}
 	}

@@ -80,6 +80,22 @@ th {
   }
 }
 
+.table-line-height-0 {
+  // Cells
+  > thead,
+  > tbody,
+  > tfoot {
+    > tr {
+      > th {
+        line-height: 3;
+      }
+      > td {
+        line-height: 0;
+      }
+    }
+  }
+}
+
 
 // Bordered version
 //
