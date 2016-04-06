@@ -186,6 +186,7 @@
         };
 
         $scope.deleteCorporativo = function(id) {
+          if(confirm("¿Esta seguro de eliminar el corporativo?")) {
             $scope.httpForm.post(icaav.helpers.getBasePath() + '/admin/corporativo/delete-ajax', {
 					id_corporativo: id
              }).success(function(data) {
@@ -196,6 +197,7 @@
                 alert('No se pudo eliminar el corporativo');
               }
             });
+          }
         };
 
         $scope.createCorporativo = function() {

@@ -33,7 +33,10 @@ class CorporativoController extends AbstractActionIcaavController {
 				array('method' => 'post', 'name' => 'id_corporativo'),
 				array('method' => 'post', 'name' => 'nombre_corporativo'),
 				array('method' => 'post', 'name' => 'limite_credito'),
-				array('method' => 'post', 'name' => 'estatus_corporativo'),
+				array('method' => 'post', 'name' => 'estatus_corporativo',
+					'extra_operation_value' => function($active) {
+							return $active == 'true' ? 1 : 0;
+						}),
 			), array('@pr_affect_rows', '@pr_message'), new CorporativoForm(), self::OUTS);
 		// SET SELECT SP
 		$this->setSP('sp_fac_c_corporativo', array(
