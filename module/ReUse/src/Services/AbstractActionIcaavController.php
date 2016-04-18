@@ -227,7 +227,7 @@ abstract class AbstractActionIcaavController extends AbstractActionController {
 				$params[$dataParam['name']] = $dataParam['default'];
 			}
 		}
-
+return array();
 		return $params;
 	}
 

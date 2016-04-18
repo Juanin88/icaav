@@ -130,8 +130,13 @@
           </ul>
         </div>
         <div style="padding-top:15px;">
-          <?php //echo $this->content; ?>
-          <div ng-view></div>
+          <?php
+            if($this->errorInView) {
+              echo $this->content;
+            } else {
+              echo '<div ng-view></div>';
+            }
+          ?>
         </div>
       </div>
       <footer class="main-footer">
