@@ -13,6 +13,7 @@ var icaav = (function () {
 	var icaav = {
 		services: {},
 		helpers: {},
+		angular_filters: {},
 	};
 
 	icaav.services.HTTPForm = function($http) {
@@ -91,6 +92,21 @@ var icaav = (function () {
 		return basePath;
 	};
 
+	icaav.angular_filters.paginate = function() {
+		return function(inputs, start, end) {
+			return inputs ? inputs.slice(start, end) : [];
+		};
+	};
+
+	icaav.angular_filters.sortBy = function() {
+		return function(inputs, by) {
+			return inputs ? inputs.sort(function(a, b) {
+				
+			}) : [];
+		};
+	};
+
 	return icaav;
 
 })();
+

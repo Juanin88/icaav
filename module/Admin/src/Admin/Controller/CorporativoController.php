@@ -70,7 +70,6 @@ class CorporativoController extends AbstractActionIcaavController {
 	public function deleteAjaxAction() {
 		return new JsonModel($this->callSPByName('sp_fac_d_corporativo'));
 	}
-	
 
 	public function getCorporativosAction() {
 		return new JsonModel($this->callSPByName('sp_fac_c_corporativo'));
