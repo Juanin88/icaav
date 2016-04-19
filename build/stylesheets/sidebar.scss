@@ -39,6 +39,23 @@
 .sidebar {
   padding-bottom: 10px;
 }
+
+.logo-suite-sidebar {
+  width: 40%;
+  margin: auto;
+  position: absolute;
+  bottom: 50px;
+  right: 29%;
+}
+.sidebar-collapse {
+  .sidebar {
+    .logo-suite-sidebar {
+      width: 80%;
+      right: 10%;
+    }
+  }
+}
+
 // remove border from form
 .sidebar-form {
   input:focus {

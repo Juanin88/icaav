@@ -1,7 +1,5 @@
 angular.module('core', ['ngRoute', 'ngStorage'])
-.filter('paginate', icaav.angular_filters.paginate)
-.filter('sortBy', icaav.angular_filters.sortBy)
-.controller('main', ['$scope', 'tabs', '$location', '$localStorage', function($scope, tabs, $location, $localStorage) {
+.controller('main', ['$scope', '$rootScope', 'tabs', '$location', '$localStorage', function($scope, $rootScope, tabs, $location, $localStorage) {
   var basePath = icaav.helpers.getBasePath();
   $scope.menu = [{
     url: basePath + '/admin',
@@ -26,6 +24,10 @@ angular.module('core', ['ngRoute', 'ngStorage'])
   $scope.$on('changeTabs', function() {
     $scope.tabs = tabs.getTabs();
     $scope.cleanActives(tabs.getActiveTab().name);
+  });
+
+  $rootScope.$on( "$routeChangeStart", function(event, next, current) {
+    tabs.updatePathSelectedTab($location.path());
   });
 
   $scope.setDefaultTab = function() {
@@ -114,6 +116,17 @@ angular.module('core', ['ngRoute', 'ngStorage'])
       return tabs;
     }, getActiveTab: function() {
       return this.activeTab;
+    }, updatePathSelectedTab: function(newPath) {
+      if(this.activeTab) {
+        for(i = 0; i < tabs.length; i++) {
+          if(tabs[i].url === newPath && tabs[i].name != this.activeTab.name) {
+            this.activeTab.isActive = false;
+            this.activeTab = tabs[i];
+            this.activeTab.isActive = true;
+          }
+        }
+        this.activeTab.url = newPath;
+      }
     }
   };
 });
