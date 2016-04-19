@@ -61,8 +61,12 @@ angular.module('core', ['ngRoute', 'ngStorage'])
   }
 
   $scope.setTab = function(tab) {
-    if(tab.url) {
-      $location.path(tab.url);
+    if(!tab.li && tab.name) {
+      if(tab.url && $location.path() != tab.url) {
+        $location.path(tab.url);
+      } else {
+        tab.url = $location.path();
+      }
       tabs.set(tab);
     }
   };

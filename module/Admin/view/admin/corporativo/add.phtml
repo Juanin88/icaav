@@ -1,4 +1,7 @@
-
+<div ng-controller="main" ng-init="setTab({
+        name: 'Corporativos',
+        classIcon: 'fa fa-suitcase'
+      })"></div>
 <div ng-controller="CorporativoController">
 	<a href="#" ng-click="routeView()">regresar</a>
 	<form ng-submit="createCorporativo()" name="formCreateCorporativo">
