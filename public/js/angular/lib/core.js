@@ -1,5 +1,5 @@
 angular.module('core', ['ngRoute', 'ngStorage'])
-.controller('main', ['$scope', '$rootScope', 'tabs', '$location', '$localStorage', function($scope, $rootScope, tabs, $location, $localStorage) {
+.controller('main', ['$scope', '$rootScope', 'tabs', '$location', '$localStorage', function($scope, $rootScope, tabs, $location, $localStorage, NgTableParams, ngTableSimpleMediumList) {
   var basePath = icaav.helpers.getBasePath();
   $scope.menu = [{
     url: basePath + '/admin',

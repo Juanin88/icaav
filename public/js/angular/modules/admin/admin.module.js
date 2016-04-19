@@ -1,1 +1,1 @@
-var admin = angular.module('admin', ['core', 'datatables']);
+var admin = angular.module('admin', ['core', 'ngTable']);

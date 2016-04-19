@@ -1,4 +1,26 @@
-admin.controller('CorporativoController', ['$scope', '$http', '$localStorage', '$location', '$timeout', function($scope, $http, $localStorage, $location, $timeout) {
+admin.controller('CorporativoController', ['$scope', '$http', '$localStorage', '$location', '$timeout', 'NgTableParams', 'ngTableSimpleMediumList', function($scope, $http, $localStorage, $location, $timeout, NgTableParams, ngTableSimpleMediumList) {
+
+
+  this.defaultConfigTableParams = new NgTableParams({}, { dataset: simpleList});
+    this.customConfigParams = createUsingFullOptions();
+
+    function createUsingFullOptions() {
+      var initialParams = {
+        count: 5 // initial page size
+      };
+      var initialSettings = {
+        // page size buttons (right set of buttons in demo)
+        counts: [],
+        // determines the pager buttons (left set of buttons in demo)
+        paginationMaxBlocks: 13,
+        paginationMinBlocks: 2,
+        dataset: simpleList
+      };
+      return new NgTableParams(initialParams, initialSettings);
+    }
+
+
+    
 
   $scope.httpForm = new icaav.services.HTTPForm($http);
   $scope.location = new icaav.services.Location($location);
