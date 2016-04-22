@@ -48,7 +48,7 @@ class Module {
         $viewModel = $e->getApplication()->getMvcEvent()->getViewModel();
         $viewModel->errorInView = true;
 
-        return $exception->getMessage();
+        return $exception;
     }
 
 }

@@ -27,6 +27,9 @@ namespace Admin\Forms;
          $this->add(array(
              'name' => 'limite_credito',
              'type' => 'Number',
+             'attributes' => array(
+                    'step' => 'any',
+             )
          ));
 
          $this->add(array(

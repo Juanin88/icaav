@@ -18,21 +18,6 @@ class CorporativoFilter implements InputFilterAwareInterface {
 			$inputFilter = new InputFilter();
 
 			$inputFilter->add(array(
-				'name'     => 'id_corporativo',
-				'required' => true,
-				'validators' => array(
-					array(
-						'name'    => 'StringLength',
-						'options' => array(
-								'encoding' => 'UTF-8',
-								'min'      => 5,
-								'max'      => 50,
-						),
-					),
-				),
-			));
-
-			$inputFilter->add(array(
 				'name'     => 'nombre_corporativo',
 				'required' => true,
 				'validators' => array(

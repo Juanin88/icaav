@@ -16,11 +16,12 @@
       border: none !important;
       a, a:focus, a:hover {
         background: -webkit-linear-gradient($nav-bar-a, $nav-bar-b) !important;
+        background: -moz-linear-gradient($nav-bar-a, $nav-bar-b) !important;
+        background: -o-linear-gradient($nav-bar-a, $nav-bar-b) !important;
+        background: -ms-linear-gradient($nav-bar-a, $nav-bar-b) !important;
         color: #fff !important;
         border-bottom: solid 2px rgb(29, 128, 236) !important;
         box-shadow: 0px -7px 10px -6px #1d80ec inset;
-        //padding-top: 7px;
-        //padding-bottom: 7px;
         padding-top: 3px;
         padding-bottom: 3px;
       }

@@ -19,9 +19,8 @@ class CorporativoController extends AbstractActionIcaavController {
 	protected function setSPs() {
 		// SET INSERT SP
 		$this->setSP('sp_fac_i_corporativo', array(
-				array('method' => 'post', 'name' => 'id_corporativo'),
 				array('method' => 'post', 'name' => 'nombre_corporativo'),
-				array('method' => 'post', 'name' => 'limite_credito'),
+				array('method' => 'post', 'name' => 'limite_credito', 'default' => 0),
 				array('method' => 'post', 'name' => 'estatus_corporativo',
 					  'default' => 0,
 					  'extra_operation_value' => function($active) {
@@ -32,7 +31,7 @@ class CorporativoController extends AbstractActionIcaavController {
 		$this->setSP('sp_fac_u_corporativo', array(
 				array('method' => 'post', 'name' => 'id_corporativo'),
 				array('method' => 'post', 'name' => 'nombre_corporativo'),
-				array('method' => 'post', 'name' => 'limite_credito'),
+				array('method' => 'post', 'name' => 'limite_credito', 'default' => 0),
 				array('method' => 'post', 'name' => 'estatus_corporativo',
 					'extra_operation_value' => function($active) {
 							return $active == 'true' ? 1 : 0;

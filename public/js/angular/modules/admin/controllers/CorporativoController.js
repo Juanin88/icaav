@@ -1,30 +1,11 @@
-admin.controller('CorporativoController', ['$scope', '$http', '$localStorage', '$location', '$timeout', 'NgTableParams', 'ngTableSimpleMediumList', function($scope, $http, $localStorage, $location, $timeout, NgTableParams, ngTableSimpleMediumList) {
-
-
-  this.defaultConfigTableParams = new NgTableParams({}, { dataset: simpleList});
-    this.customConfigParams = createUsingFullOptions();
-
-    function createUsingFullOptions() {
-      var initialParams = {
-        count: 5 // initial page size
-      };
-      var initialSettings = {
-        // page size buttons (right set of buttons in demo)
-        counts: [],
-        // determines the pager buttons (left set of buttons in demo)
-        paginationMaxBlocks: 13,
-        paginationMinBlocks: 2,
-        dataset: simpleList
-      };
-      return new NgTableParams(initialParams, initialSettings);
-    }
-
-
-    
+admin.controller('CorporativoController', ['$scope', '$http', '$localStorage', '$location', '$timeout', 'NgTableParams', 'CorporativoService', '$filter', function($scope, $http, $localStorage, $location, $timeout, NgTableParams, CorporativoService, $filter) {
 
   $scope.httpForm = new icaav.services.HTTPForm($http);
   $scope.location = new icaav.services.Location($location);
+  $scope.page = 1;
+  $scope.countPerPage = 5;
   $scope.corporativoEdit = {};
+  /*
   $scope.vars = $localStorage.$default({
     corporativoAdd: {
       id_corporativo:  '',
@@ -33,10 +14,40 @@ admin.controller('CorporativoController', ['$scope', '$http', '$localStorage', '
       estatus_corporativo: false,
     }
   });
+  */
+  $scope.tableCorporativos = null;
+  $scope.cols = {
+      nombre_corporativo: {name: 'Nombre corporativo', show: true},
+      limite_credito: {name: 'Limite de credito', show: true},
+      estatus_corporativo: {name: 'Estatus del corporativo', show: true},
+    };
+  $scope.disabledCols = false;
+  $scope.corporativos = [];
+  $scope.filteredCorporativos = [];
+  $scope.searchingCorporativos = false;
+  $scope.corporativo = {};
+  $scope.optionsCorporativo = {
+    create: true
+  };
+  $scope.deleteIdCorporativo = null;
 
   $scope.setDataEditCorportativo = function(corporativo) {
     $scope.corporativoEdit = new Object(corporativo);
     $scope.corporativoEdit.estatus_corporativo = $scope.corporativoEdit.estatus_corporativo == 1;
+  };
+
+  $scope.verify = function() {
+    count = 0
+    angular.forEach(Object.keys($scope.cols), function(value, key) {
+      count += $scope.cols[value].show ? 1 : 0;
+    });
+    $scope.disabledCols = count == 1;
+  };
+
+  $scope.initFilterColumns = function() {
+    $(document).ready(function(){
+        $('#filterColumnsCorporativos').popover(); 
+    });
   };
 
   $scope.routeAdd = function() {
@@ -48,57 +59,100 @@ admin.controller('CorporativoController', ['$scope', '$http', '$localStorage', '
   };
 
   $scope.getCorporativos = function() {
-    $scope.httpForm.post(icaav.helpers.getBasePath() +'/admin/corporativo/get-corporativos', {
-      start_pag: 0,
-      end_pag: 100
-    }).success(function(data) {
+      $scope.searchingCorporativos = true;
+      CorporativoService.getAll({
+        start_pag: 0,
+        end_pag: 100
+      }).success(function(data) {
       if(data['@pr_affect_rows']) {
+        $scope.searchingCorporativos = false;
         $scope.corporativos = data.results;
+        $scope.tableCorporativos = new NgTableParams({
+            page: $scope.page,
+            count: $scope.countPerPage
+          }, {
+            filterSwitch: true,
+            counts: [5, 10, 50 ,100],
+            paginationMaxBlocks: 4,
+            paginationMinBlocks: 1,
+            getData: function(params) {
+              filteredData    = params.filter()  ? $filter('filter')($scope.corporativos, params.filter()) : $scope.corporativos;
+              orderedData = params.sorting() ? $filter('orderBy')(filteredData, params.orderBy()) : filteredData;
+              $scope.filteredCorporativos = orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count());
+              params.total(orderedData.length);
+              $scope.page = params.page();
+              $scope.countPerPage = params.count();
+              return $scope.filteredCorporativos;
+            }
+        });
       }
     });
   };
 
-  $scope.deleteCorporativo = function(id) {
-    if(confirm("¿Esta seguro de eliminar el corporativo?")) {
-      $scope.httpForm.post(icaav.helpers.getBasePath() + '/admin/corporativo/delete-ajax', {
-        id_corporativo: id
-      }).success(function(data) {
-        console.log(data);
-        if(data['@pr_message'] == 'SUCCESS' && data['@pr_affect_rows']) {
-          $scope.getCorporativos();
-        } else {
-          alert('No se pudo eliminar el corporativo');
-        }
-      });
+  $scope.prepareUpdate = function(corporativo) {
+    $scope.corporativo = Object.create(corporativo);
+    $scope.corporativo.limite_credito = parseFloat(corporativo.limite_credito);
+    $scope.corporativo.estatus_corporativo = corporativo.estatus_corporativo == 1;
+    $scope.optionsCorporativo.create = false;
+    $('#modalCorporativo').modal();
+  };
+
+  $scope.optionSubmitCorporativo = function() {
+    if($scope.optionsCorporativo.create) {
+      $scope.createCorporativo();
+    } else {
+      $scope.updateCorporativo();
     }
+  }
+
+  $scope.prepareDelete = function(id) {
+    $("#modalDeleteCorporativo").modal('show');
+    $scope.deleteIdCorporativo = id;
+  };
+
+  $scope.deleteCorporativo = function(id) {
+    CorporativoService.delete({
+      id_corporativo: id
+    }).success(function(data) {
+      if(data['@pr_message'] == 'SUCCESS' && data['@pr_affect_rows']) {
+        $scope.getCorporativos();
+        $("#modalDeleteCorporativo").modal('hide');
+        toastr.success("Corporativo eliminado correctamente");
+      } else {
+        toastr.error("No se pudo eliminar el corporativo");
+      }
+    });
   };
 
 $scope.createCorporativo = function() {
-  $scope.httpForm.post(icaav.helpers.getBasePath() + '/admin/corporativo/add-ajax', $scope.vars.corporativoAdd)
+  CorporativoService.create($scope.corporativo)
   .success(function(data) {
     if(data['@pr_message'] == 'SUCCESS' && data['@pr_affect_rows']) {
       $timeout(function() {
-        delete $scope.vars.corporativoAdd;
+        $scope.corporativo = {};
       }, 0);
-      $scope.location.path('/admin/corporativo');
+      toastr.success("Corporativo creado correctamente");
+      $("#modalCorporativo").modal('hide');
+      $scope.getCorporativos();
     } else {
-      alert('No se pudo crear el corporativo');
+      toastr.error("No se pudo crear el corporativo");
     }
   });
 };
 
 $scope.updateCorporativo = function() {
-  $scope.httpForm.post(icaav.helpers.getBasePath() + '/admin/corporativo/edit-ajax', $scope.corporativoEdit)
+  CorporativoService.update($scope.corporativo)
   .success(function(data) {
     if(data['@pr_message'] == 'SUCCESS' && data['@pr_affect_rows']) {
+      toastr.success("Corporativo actualizado correctamente");
+      $("#modalCorporativo").modal('hide');
       $scope.getCorporativos();
-      $scope.corporativoEdit = {};
+      $scope.corporativo = {};
     } else {
-      alert('No se pudo editar el corporativo');
+      toastr.error("No se pudo actualizar el corporativo");
     }
   });
 };
-
 }])
 .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
   var basePath = icaav.helpers.getBasePath();
@@ -111,4 +165,19 @@ $scope.updateCorporativo = function() {
     templateUrl: window.location.href + '?terminal=true'
   });
   $locationProvider.html5Mode(true);
+}])
+.factory('CorporativoService', ['$http', function($http) {
+  httpForm = new icaav.services.HTTPForm($http);
+  basePath = icaav.helpers.getBasePath();
+  return {
+    getAll: function(data) {
+      return httpForm.post(basePath + '/admin/corporativo/get-corporativos', data);
+    }, create: function(data) {
+      return httpForm.post(basePath + '/admin/corporativo/add-ajax', data);
+    }, update: function(data) {
+      return httpForm.post(basePath + '/admin/corporativo/edit-ajax', data);
+    }, delete: function(data) {
+      return httpForm.post(basePath + '/admin/corporativo/delete-ajax', data);
+    }
+  }
 }]);

@@ -1,69 +1,131 @@
 <div ng-controller="main" ng-init="setTab({
         name: 'Corporativos',
         classIcon: 'fa fa-suitcase'
-      })"></div>
+      })">
+</div>
 <div class="container">
 	<div ng-controller="CorporativoController">
 		<div class="catalog-title-group row" style="padding:0;margin:0">
-			<div class="col-md-6">
+			<div class="col-md-6 col-sm-7 col-xs-12">
 				<h3 style="padding:0;margin:0">Cat&aacute;logo de corporativos</h3>
 			</div>
-			<div class="col-md-6">
-				<div class="input-group">
-				  <span class="input-group-addon" id="search-corporativo">
-				  	<i class="fa fa-search"></i>
-				  </span>
-				  <input type="text" class="form-control" ng-model="searchCorporativo" aria-describedby="search-corporativo">
-				  <span class="input-group-btn">
-			        <button class="btn btn-primary" type="button" style="border-radius:50%" ng-click="routeAdd()">+</button>
-			      </span>
+			<div class="col-md-3 col-sm-5 col-xs-12 pull-right">
+				<div class="input-group group-input-search">
+					<span class="icon-input-search" id="search-corporativo">
+						<i class="fa fa-search"></i>
+					</span>
+					<input type="text" class="form-control input-search" ng-model="searchCorporativo" aria-describedby="search-corporativo" ng-keyup="tableCorporativos.filter({ $: searchCorporativo })" placeholder="Buscar...">
+					<span class="input-group-btn">
+						<button class="btn btn-gray" type="button" style="border-radius:50%" ng-click="getCorporativos()">
+							<i class="fa fa-refresh {{searchingCorporativos ? 'fa-spin' : ''}}"></i>
+						</button>
+					</span>
+					<span class="input-group-btn">
+						<div class="dropdown">
+							<button class="btn btn-gray dropdown-toggle" type="button" id="filterColumnsCorporativos"  title="Popover Header" data-placement="bottom"  data-toggle="popover" data-template="#test" aria-haspopup="true" aria-expanded="true" ng-init="initFilterColumns()">
+								<i class="fa fa-thumb-tack"></i>
+							</button>
+							<ul class="dropdown-menu" id="test" aria-labelledby="dropdownMenu1">
+								<li></li>
+								<li ng-repeat="col in cols">
+									<div class="checkbox">
+										<label for="{{col.name}}">
+											<input type="checkbox" ng-model="col.show" id="{{col.name}}" ng-click="verify()" ng-disabled="disabledCols && col.show">
+											{{col.name}}
+										</label>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</span>
+					<span class="input-group-btn">
+						<!--
+						<button class="btn btn-primary" type="button" style="border-radius:50%" ng-click="routeAdd()">
+							<i class="fa fa-plus"></i>
+						</button>
+						-->
+						<button class="btn btn-primary" type="button" style="border-radius:50%" data-toggle="modal" data-target="#modalCorporativo" ng-click="optionsCorporativo.create=true;corporativo={}">
+							<i class="fa fa-plus"></i>
+						</button>
+					</span>
 				</div>
 			</div>
 		</div>
 		<br>
-		<div ng-init="getCorporativos()">
-			<table class="table table-line-height-0">
-				<thead>
-					<tr>
-						<th width="10px"></th>
-						<th width="100px">Clave</th>
-						<th width="250px">Nombre</th>
-						<th width="200px">Limite de credito</th>
-						<th width="50px">Estatus</th>
-						<th width="10px"></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr ng-repeat="corporativo in corporativos | filter:searchCorporativo">
-						<td>
-						<a href="#" ng-click="deleteCorporativo(corporativo.id_corporativo)">
+		<div loading-container="tableCorporativos.settings().$loading" ng-init="getCorporativos()">
+			<table class="table table-condensed" ng-table="tableCorporativos" show-filter="false">
+				<tr ng-repeat="corporativo in $data" ng-dblclick="prepareUpdate(corporativo)">
+					<td width="1">
+						<a href="#" class="icon-float-hover" ng-click="prepareDelete(corporativo.id_corporativo)">
 							<i class="fa fa-trash"></i>
 						</a>
-						</td>
-						<td>
-							<p ng-dblclick="setDataEditCorportativo(corporativo)" ng-show="corporativoEdit.id_corporativo != corporativo.id_corporativo">{{corporativo.id_corporativo}}</p>
-							<input type="text" ng-model="corporativoEdit.id_corporativo" ng-show="corporativoEdit.id_corporativo == corporativo.id_corporativo">
-						</td>
-						<td>
-							<p ng-dblclick="setDataEditCorportativo(corporativo)" ng-show="corporativoEdit.id_corporativo != corporativo.id_corporativo">{{corporativo.nombre_corporativo}}</p>
-							<input type="text" ng-model="corporativoEdit.nombre_corporativo" ng-show="corporativoEdit.id_corporativo == corporativo.id_corporativo">
-						</td>
-						<td>
-							<p ng-dblclick="setDataEditCorportativo(corporativo)" ng-show="corporativoEdit.id_corporativo != corporativo.id_corporativo">{{corporativo.limite_credito}}</p>
-							<input type="text" ng-model="corporativoEdit.limite_credito" ng-show="corporativoEdit.id_corporativo == corporativo.id_corporativo">
-						</td>
-						<td>
-							<p ng-dblclick="setDataEditCorportativo(corporativo)" ng-show="corporativoEdit.id_corporativo != corporativo.id_corporativo">{{corporativo.estatus_corporativo == 1 ? 'Activo' : 'Inactivo'}}</p>
-							<input type="checkbox" ng-model="corporativoEdit.estatus_corporativo" ng-show="corporativoEdit.id_corporativo == corporativo.id_corporativo">
-						</td>
-						<td>
-							<a href="#" ng-show="corporativoEdit.id_corporativo == corporativo.id_corporativo" ng-click="updateCorporativo()">
-								<i class="fa fa-pencil"></i>
-							</a>
-						</td>
-					</tr>
-				</tbody>
+					</td>
+					<td data-title="'Nombre'" sortable="'nombre_corporativo'" ng-if="cols.nombre_corporativo.show">
+						{{corporativo.nombre_corporativo}}
+					</td>
+					<td data-title="'Límite de crédito'" sortable="'limite_credito'" ng-if="cols.limite_credito.show">
+						{{corporativo.limite_credito}}
+					</td>
+					<td data-title="'Estatus'"  sortable="'estatus_corporativo'" ng-if="cols.estatus_corporativo.show">
+						{{corporativo.estatus_corporativo == 1 ? 'Activo' : 'Inactivo'}}
+					</td>
+				</tr>
+				<tr ng-show="!filteredCorporativos.length">
+					<td colspan="5" align="center" class="icon-float-hover">No se encontraron resultados <i class="fa fa-frown-o"></i> </td>
+				</tr>
 			</table>
 		</div>
+		<!-- START Modal Corporativo -->
+		<div class="modal fade dark-modal" id="modalCorporativo" tabindex="-1" role="dialog" aria-labelledby="ModalCorporativo">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">
+		        	<i class="fa fa-circle"></i>
+		        </span></button>
+		        <h4 class="modal-title" id="ModalCorporativo">{{ optionsCorporativo.create ? 'Nuevo' : 'Editar'}} corporativo</h4>
+		      </div>
+		      <div class="modal-body">
+		      	<div class="row">
+		      		<form ng-submit="optionSubmitCorporativo()">
+				      	<div class="col-md-12">
+				        	<input type="text" class="dark-form" placeholder="Corporativo" ng-model="corporativo.nombre_corporativo" required maxlength="30">
+				      	</div>
+				      	<div class="col-md-7">
+				        	<input type="number" class="dark-form" placeholder="Limite de crédito" step="any" ng-model="corporativo.limite_credito" max="1000000" required>
+				      	</div>
+				      	<div class="col-md-3 col-sm-3 col-xs-6 col-sm-offset-7 col-md-offset-0" style="display:-webkit-inline-box;display:-moz-inline-box;display:-ms-inline-box;padding:10px">
+				        	<input class="tgl tgl-ios" id="cb2" type="checkbox" ng-model="corporativo.estatus_corporativo">
+						    <label class="tgl-btn" for="cb2"></label>&nbsp;
+				        	<span style="color:rgba(148, 144, 144, 1)">
+					        	<b> Activo</b>
+				        	</span>
+				      	</div>
+				      	<div class="col-md-2 col-sm-2 col-xs-6">
+				        	<button class="btn btn-blue btn-modal-submit pull-right">{{ optionsCorporativo.create ? 'Crear' : 'Actualizar'}}</button>
+				      	</div>
+		      		</form>
+		      	</div>
+		      </div>
+		    </div>
+		  </div>
+		</div><!-- END Modal Corporativo -->
+		<!-- START Modal DELETE Corporativo -->
+		<div class="modal fade dark-modal" id="modalDeleteCorporativo" tabindex="-1" role="dialog" aria-labelledby="ModalCorporativo">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">
+		        	<i class="fa fa-circle"></i>
+		        </span></button>
+		        <h4 class="modal-title" id="ModalCorporativo">¿Esta seguro de eliminar el corporativo?</h4>
+		      </div>
+		      <div class="modal-body no-padding-modal-body">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+		        <button type="button" class="btn btn-danger" ng-click="deleteCorporativo(deleteIdCorporativo)">Eliminar</button>
+		      </div>
+		    </div>
+		  </div>
+		</div><!-- END Modal DELETE Corporativo -->
 	</div>
 </div>

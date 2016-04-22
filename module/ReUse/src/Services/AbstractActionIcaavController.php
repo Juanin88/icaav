@@ -237,8 +237,14 @@ abstract class AbstractActionIcaavController extends AbstractActionController {
 	*	Example:
 	*	setSP('my_sp', array(
 	*			array('method' => 'route', 'name' => 'id_album'),
-	*			array('method' => 'get', 'name' => 'artist'),
-	*			array('method' => 'post', 'name' => 'title'),
+	*			array('method' => 'get', 'name' => 'artist',
+	*				'extra_operation_value' => function($artist) {
+	*					return empty($artist) ? 'Unknown artist' : $artist;
+	*				}
+	*			),
+	*			array('method' => 'post', 'name' => 'title',
+	*				'default' => 'Unknown title'
+	*			),
 	*		), array('@out1', '@myOut2'), new MyFormZF2(), self::ONLY_RESULT
 	*	);
 	*	@author Alan Olivares

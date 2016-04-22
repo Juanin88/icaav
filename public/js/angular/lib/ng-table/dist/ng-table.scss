@@ -1,5 +1,5 @@
-@table-border-color: #999;
-@cell-border-color: #eee;
+$table-border-color: #999;
+$cell-border-color: #eee;
 
 .ng-table {
     th {
@@ -44,7 +44,7 @@
                 visibility: visible;
             }
             &.sort-desc, &.sort-asc {
-                background-color: rgba(141, 192, 219, 0.25);
+                //background-color: rgba(141, 192, 219, 0.25);
                 text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
 
                 .sort-indicator:after {
@@ -107,11 +107,11 @@
 
 @media only screen and (max-width: 800px) {
     .ng-table-responsive {
-        border-bottom: 1px solid @table-border-color;
+        border-bottom: 1px solid $table-border-color;
         tr {
-            border-top: 1px solid @table-border-color;
-            border-left: 1px solid @table-border-color;
-            border-right: 1px solid @table-border-color;
+            border-top: 1px solid $table-border-color;
+            border-left: 1px solid $table-border-color;
+            border-right: 1px solid $table-border-color;
         }
         td:before {
             position: absolute;
@@ -141,7 +141,7 @@
         }
         td {
             border: none;
-            border-bottom: 1px solid @cell-border-color;
+            border-bottom: 1px solid $cell-border-color;
             position: relative;
             padding-left: 50%;
             white-space: normal;
@@ -238,5 +238,58 @@
     }
     .filter > .filter-cell {
         padding: 0px;
+    }
+}
+
+.sort-indicator {
+    float: left;
+}
+
+        td {
+        }
+tr {
+    &:hover {
+        td {
+            background-color: #d7dfe6;
+            position: relative;
+        }
+        td:first-child, td:last-child {
+            &:before {
+                position: absolute;
+                content: '';
+                width: 15px;
+                height: 100%;
+                border-radius: 80%;
+                border-top: 0px solid transparent;
+                border-bottom: 0px solid transparent;
+                top: 0;
+            }
+        }
+        td:first-child{
+            &:before {
+                left: -10px;
+                border-left: 10px solid #d7dfe6;
+                border-right: 10px solid transparent;
+
+            }
+            //border-radius: 20px 0px 0px 20px;
+        }
+        td:last-child{
+            //border-radius: 0px 20px 20px 0px;
+            &:before {
+                right: -10px;
+                border-left: 10px solid transparent;
+                border-right: 10px solid #d7dfe6;
+            }
+        }
+    }
+}
+
+.pagination {
+    .active {
+        a, a:hover, a:focus, span, span:hover, span:focus {
+            background-color: #0074e2;
+            border-color: #0074e2;
+        }
     }
 }

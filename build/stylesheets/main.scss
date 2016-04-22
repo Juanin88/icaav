@@ -20,51 +20,172 @@
 @import "skin-blue";
 @import "forms";
 @import "tabs";
+@import "_/proxima-nova";
+@import "_/toggle-buttons";
 
 
 .catalog-title-group {
-	background: #ECECEC;
-	border-radius: 20px;
-	padding: 10px 10px 10px 10px !important;
+	background: #ECF0F3 !important;
+	border-radius: 14px;
+	//padding: 10px 10px 10px 10px !important;
+    box-shadow: -1px 2px 18px rgba(184,199,209,0.35);
+    border-radius: 14px;
+    margin-left: 154px;
+    margin-top: 6px;
+    position: relative;
 	h3 {
-		color: #137CE9;
-		font-family: lato, sans serif;
+		color: #434957;
+		font-family: proxima nova, sans-serif;
+	    font-weight: 700;
+	    font-size: 16px;
+	    line-height: 35px;
 	}
 	div {
-		h3 {
-
-		}
 		.input-group {
-			.input-group-addon {
-				background: transparent !important;
-				border: none !important;
-				position: absolute;
-				z-index: 5;
-				left: -15px;
-			    top: -9px;
-			    font-size: 23px;
-			}
 			.input-group-btn {
-				button {
-					height: 47px;
-					width: 47px;
-					margin-top: -11px;
-					margin-right: -3px;
+				button,a {
+					background-color: #0074E2;
+					border: 0;
+					padding: 0;
+					height: 30px;
+					width: 30px;
 					z-index: 3;
+					margin: 1px;
 				}
-			}
-			position: absolute;
-			right: 0;
-			top: 0;
-			input {
-				position: absolute;
-				right: 18px;
-				top: -11px;
-				height: 47px;
-				padding-left: 40px !important;
-				padding-right: 32px !important;
 			}
 		}
 	}
 }
 
+.group-input-search {
+	.icon-input-search {
+		background-color: transparent;
+		position: absolute;
+		font-size: 20px;
+		left: 7px;
+    	top: 2px;
+		z-index: 5;
+	}
+	.input-search {
+		border-radius: 50px 50px 50px 50px !important;
+		padding-left: 30px;
+		width: 174px;
+		height: 30px;
+		margin-top: 2px;
+		border: none;
+	}
+}
+
+.icon-float-hover {
+	&:hover {
+		.fa-trash {
+			color: #A63434;
+		}
+		i {
+			animation: flotar .5s linear 0s infinite alternate;
+		}
+	}
+}
+
+.btn-gray {
+	background-color: #ECF0F3 !important;
+	color: #9eabb6;
+	border: none;
+	&:hover, &:active, &:focus {
+		color: #0074E2;
+	}
+}
+
+.btn-blue {
+	background-color: rgba(0, 116, 226, 1) !important;
+	color: #fff;
+	border: none;
+	border-radius: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    &:hover, &:active {
+    	color: #fff;
+    }
+}
+
+@keyframes flotar {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.7); }
+}
+
+
+.dark-modal {
+	.modal-dialog {
+		.modal-content {
+			background-color: rgba(0, 0, 0, .5);
+			border: none;
+			.modal-header, .modal-body, .modal-footer {
+				border: none;
+			}
+			.modal-header {
+				padding-bottom: 0;
+				.close {
+					opacity: 1;
+					color: #fff;
+					span {
+						color: red;
+						font-size: 15px;
+						text-shadow: none;
+					}
+				}
+				h2, h3, h4, h5 {
+					color: #fff;
+					font-weight: 700;
+					font-size: 15px;
+					padding: 20px 0px 10px 0px;
+					font-family: proxima nova, sans-serif;
+				}
+			}
+			.modal-body {}
+			.modal-footer {}
+		}
+	}
+}
+
+.dark-form {
+	background-color: rgba(148,144,144,.4);
+	border: solid .5px rgba(148,144,144,.1);
+	border-radius: 10px;
+	padding: 3px;
+	font-weight: 700;
+	font-family: proxima nova, sans-serif;
+	padding: 3px 15px 3px 15px;
+	color: #fff;
+	width: 100%;
+	margin-top: 3px;
+	margin-bottom: 5px;
+	&:focus {
+		border: solid .5px rgba(0, 116, 226, 1);
+		background-color: rgba(0, 116, 226, .1);
+		color: #fff;
+	}
+}
+
+.btn-modal-submit {
+	width: 8em;
+}
+
+.no-padding-modal-body {
+	padding: 15px 0px 0px 0px;
+	display: flex;
+	flex-direction: row;
+	-webkit-flex-direction: row;
+	button {
+		flex: 1 49%;
+	}
+	button:first-child {
+		border-radius: 0px 0px 0px 5px;
+	}
+	button:last-child {
+		border-radius: 0px 0px 5px 0px;
+	}
+}
+
+button, input {
+	outline: 0px !important;
+}

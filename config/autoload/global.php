@@ -27,7 +27,7 @@ return array(
                     'port'     => '3306',
                     'user'     => 'suite_aplicativo',
                     'password' => 'Apli$uite&11',
-                    'dbname'   => 'icaav_facturacion',
+                    'dbname'   => 'suite_mig',
                 )
             )
         )
