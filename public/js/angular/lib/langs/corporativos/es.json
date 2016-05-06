@@ -1,0 +1,13 @@
+{
+	"CORPORATE": {
+		"NAME_ONE":								"Corporativo",
+		"NAME_MANY":							"Corporativos",
+		"NAME_OF_CORPORATIVE":					"Nombre del corporativo",
+		"TITLE":								"Catálogo de corporativos",
+		"MESSAGE_DELETE":						"¿Esta seguro de eliminar el corporativo?",
+		"MESSAGE_SUCCESS_CREATE":				"Corporativo creado correctamente",
+		"MESSAGE_SUCCESS_UPDATE":				"Corporativo actualizado correctamente",
+		"MESSAGE_SUCCESS_DELETE":				"Corporativo eliminado correctamente",
+		"STATUS_CORPORATIVO":					"Estatus del corporativo"
+	}
+}

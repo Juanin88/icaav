@@ -1,0 +1,22 @@
+{
+  "LANGS": {
+    "ES":                               "Espanhol",
+    "EN":                               "Inglês",
+    "PT":                               "Portugues"
+  },
+  "ACTIONS": {
+    "SEARCH":                           "Pesquisa",
+    "NEW":                              "Novo",
+    "EDIT":                             "Editar",
+    "CREATE":                           "Criar",
+    "UPDATE":                           "Atualizar",
+    "DELETE":                           "Eliminar",
+    "ACCEPT":                           "Aceitar",
+    "CANCEL":                           "Cancelar"
+  },
+  "NAME":                               "Nome",
+  "STATUS":                             "Estatus",
+  "ACTIVE":                             "Activo",
+  "INACTIVE":                           "Inactivo",
+  "CREDIT_LIMIT":                       "Limite de crédito"
+}

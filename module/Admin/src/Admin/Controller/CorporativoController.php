@@ -53,11 +53,6 @@ class CorporativoController extends AbstractActionIcaavController {
 		return (new ViewModel())->setTerminal($terminal);
 	}
 
-	public function addAction() {
-		$terminal = $this->params()->fromQuery('terminal');
-		return (new ViewModel())->setTerminal($terminal);
-	}
-
 	public function addAjaxAction() {
 		return new JsonModel($this->callSPByName('sp_fac_i_corporativo'));
 	}

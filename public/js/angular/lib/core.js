@@ -1,5 +1,5 @@
-angular.module('core', ['ngRoute', 'ngStorage'])
-.controller('main', ['$scope', '$rootScope', 'tabs', '$location', '$localStorage', function($scope, $rootScope, tabs, $location, $localStorage, NgTableParams, ngTableSimpleMediumList) {
+var core = angular.module('core', ['ngRoute', 'ngStorage', 'pascalprecht.translate']);
+core.controller('main', ['$scope', '$rootScope', 'tabs', '$location', '$localStorage', '$translate', "$translatePartialLoader", function($scope, $rootScope, tabs, $location, $localStorage, $translate, $translatePartialLoader) {
   var basePath = icaav.helpers.getBasePath();
   $scope.menu = [{
     url: basePath + '/admin',
@@ -13,6 +13,10 @@ angular.module('core', ['ngRoute', 'ngStorage'])
         url: basePath + '/admin/corporativo',
         classIcon: 'fa fa-suitcase'
       }, {
+        name: 'Corporativos 2',
+        url: basePath + '/admin/corporativo',
+        classIcon: 'fa fa-suitcase'
+      }, {
         name: 'Unidades de negocio',
         url: basePath + '/admin/unidad-negocio',
         classIcon: 'fa fa-user-secret'
@@ -20,6 +24,9 @@ angular.module('core', ['ngRoute', 'ngStorage'])
   }];
   $scope.tabs = [];
   $scope.selectedTab = {};
+
+  $translatePartialLoader.addPart('system');
+  $translate.refresh();
 
   $scope.$on('changeTabs', function() {
     $scope.tabs = tabs.getTabs();
@@ -30,8 +37,8 @@ angular.module('core', ['ngRoute', 'ngStorage'])
     tabs.updatePathSelectedTab($location.path());
   });
 
-  $scope.setDefaultTab = function() {
-
+  $scope.changeLanguaje = function(lang) {
+    $translate.use(lang);
   };
 
   $scope.activeMenu = function() {
@@ -133,4 +140,12 @@ angular.module('core', ['ngRoute', 'ngStorage'])
       }
     }
   };
-});
+}).config(function ($translateProvider) {
+
+  $translateProvider.useLoader('$translatePartialLoader', {  
+    urlTemplate: icaav.helpers.getBasePath() + '/js/angular/lib/langs/{part}/{lang}.json'
+  });
+
+  $translateProvider.preferredLanguage('es');
+
+});;

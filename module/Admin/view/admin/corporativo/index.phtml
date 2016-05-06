@@ -4,17 +4,20 @@
       })">
 </div>
 <div class="container">
-	<div ng-controller="CorporativoController">
+	<div ng-controller="CorporativoController">{{corporate}}
+		<a href="#" ng-click="changeLanguaje('es')">{{'LANGS.ES' | translate}}</a>
+		<a href="#" ng-click="changeLanguaje('en')">{{'LANGS.EN' | translate}}</a>
+		<a href="#" ng-click="changeLanguaje('pt')">{{'LANGS.PT' | translate}}</a>
 		<div class="catalog-title-group row" style="padding:0;margin:0">
 			<div class="col-md-6 col-sm-7 col-xs-12">
-				<h3 style="padding:0;margin:0">Cat&aacute;logo de corporativos</h3>
+				<h3 style="padding:0;margin:0">{{ 'CORPORATE.TITLE' | translate}}</h3>
 			</div>
 			<div class="col-md-3 col-sm-5 col-xs-12 pull-right">
 				<div class="input-group group-input-search">
 					<span class="icon-input-search" id="search-corporativo">
 						<i class="fa fa-search"></i>
 					</span>
-					<input type="text" class="form-control input-search" ng-model="searchCorporativo" aria-describedby="search-corporativo" ng-keyup="tableCorporativos.filter({ $: searchCorporativo })" placeholder="Buscar...">
+					<input type="text" class="form-control input-search" ng-model="searchCorporativo" aria-describedby="search-corporativo" ng-keyup="tableCorporativos.filter({ $: searchCorporativo })" placeholder="{{'ACTIONS.SEARCH' | translate}}...">
 					<span class="input-group-btn">
 						<button class="btn btn-gray" type="button" style="border-radius:50%" ng-click="getCorporativos()">
 							<i class="fa fa-refresh {{searchingCorporativos ? 'fa-spin' : ''}}"></i>
@@ -25,13 +28,13 @@
 							<button class="btn btn-gray dropdown-toggle" type="button" id="filterColumnsCorporativos"  title="Popover Header" data-placement="bottom"  data-toggle="popover" data-template="#test" aria-haspopup="true" aria-expanded="true" ng-init="initFilterColumns()">
 								<i class="fa fa-thumb-tack"></i>
 							</button>
+							
 							<ul class="dropdown-menu" id="test" aria-labelledby="dropdownMenu1">
-								<li></li>
 								<li ng-repeat="col in cols">
 									<div class="checkbox">
 										<label for="{{col.name}}">
 											<input type="checkbox" ng-model="col.show" id="{{col.name}}" ng-click="verify()" ng-disabled="disabledCols && col.show">
-											{{col.name}}
+											{{col.name | translate}}
 										</label>
 									</div>
 								</li>
@@ -54,24 +57,24 @@
 		<br>
 		<div loading-container="tableCorporativos.settings().$loading" ng-init="getCorporativos()">
 			<table class="table table-condensed" ng-table="tableCorporativos" show-filter="false">
-				<tr ng-repeat="corporativo in $data" ng-dblclick="prepareUpdate(corporativo)">
+				<tr ng-repeat="corporativo in $data" ng-dblclick="prepareUpdate(corporativo)" style="{{corporativo.estatus_corporativo == 0 ? 'color:red;':''}}">
 					<td width="1">
 						<a href="#" class="icon-float-hover" ng-click="prepareDelete(corporativo.id_corporativo)">
 							<i class="fa fa-trash"></i>
 						</a>
 					</td>
-					<td data-title="'Nombre'" sortable="'nombre_corporativo'" ng-if="cols.nombre_corporativo.show">
+					<td data-title="'NAME' | translate" sortable="'nombre_corporativo'" ng-if="cols.nombre_corporativo.show">
 						{{corporativo.nombre_corporativo}}
 					</td>
-					<td data-title="'Límite de crédito'" sortable="'limite_credito'" ng-if="cols.limite_credito.show">
+					<td data-title="'CREDIT_LIMIT' | translate" sortable="'limite_credito'" ng-if="cols.limite_credito.show">
 						{{corporativo.limite_credito}}
 					</td>
-					<td data-title="'Estatus'"  sortable="'estatus_corporativo'" ng-if="cols.estatus_corporativo.show">
-						{{corporativo.estatus_corporativo == 1 ? 'Activo' : 'Inactivo'}}
+					<td data-title="'STATUS' | translate"  sortable="'estatus_corporativo'" ng-if="cols.estatus_corporativo.show">
+						{{corporativo.estatus_corporativo == 1 ? 'ACTIVE' : 'INACTIVE' | translate}}
 					</td>
 				</tr>
 				<tr ng-show="!filteredCorporativos.length">
-					<td colspan="5" align="center" class="icon-float-hover">No se encontraron resultados <i class="fa fa-frown-o"></i> </td>
+					<td colspan="5" align="center" class="icon-float-hover">{{ 'TABLES.NO_RESULTS_FOUND' | translate }} <i class="fa fa-frown-o"></i> </td>
 				</tr>
 			</table>
 		</div>
@@ -83,26 +86,26 @@
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">
 		        	<i class="fa fa-circle"></i>
 		        </span></button>
-		        <h4 class="modal-title" id="ModalCorporativo">{{ optionsCorporativo.create ? 'Nuevo' : 'Editar'}} corporativo</h4>
+		        <h4 class="modal-title" id="ModalCorporativo">{{ optionsCorporativo.create ? 'ACTIONS.NEW' : 'ACTIONS.EDIT' | translate}} {{'CORPORATE.NAME_ONE' | translate}}</h4>
 		      </div>
 		      <div class="modal-body">
 		      	<div class="row">
 		      		<form ng-submit="optionSubmitCorporativo()">
 				      	<div class="col-md-12">
-				        	<input type="text" class="dark-form" placeholder="Corporativo" ng-model="corporativo.nombre_corporativo" required maxlength="30">
+				        	<input type="text" class="dark-form" placeholder="{{'CORPORATE.NAME_ONE' | translate}}" ng-model="corporativo.nombre_corporativo" required maxlength="30">
 				      	</div>
 				      	<div class="col-md-7">
-				        	<input type="number" class="dark-form" placeholder="Limite de crédito" step="any" ng-model="corporativo.limite_credito" max="1000000" required>
+				        	<input type="number" class="dark-form" placeholder="{{'CREDIT_LIMIT' | translate}}" step="any" ng-model="corporativo.limite_credito" max="1000000" required>
 				      	</div>
 				      	<div class="col-md-3 col-sm-3 col-xs-6 col-sm-offset-7 col-md-offset-0" style="display:-webkit-inline-box;display:-moz-inline-box;display:-ms-inline-box;padding:10px">
 				        	<input class="tgl tgl-ios" id="cb2" type="checkbox" ng-model="corporativo.estatus_corporativo">
 						    <label class="tgl-btn" for="cb2"></label>&nbsp;
 				        	<span style="color:rgba(148, 144, 144, 1)">
-					        	<b> Activo</b>
+					        	<b> {{'ACTIVE' | translate}}</b>
 				        	</span>
 				      	</div>
 				      	<div class="col-md-2 col-sm-2 col-xs-6">
-				        	<button class="btn btn-blue btn-modal-submit pull-right">{{ optionsCorporativo.create ? 'Crear' : 'Actualizar'}}</button>
+				        	<button class="btn btn-blue btn-modal-submit pull-right">{{ optionsCorporativo.create ? 'ACTIONS.CREATE' : 'ACTIONS.UPDATE' | translate}}</button>
 				      	</div>
 		      		</form>
 		      	</div>
@@ -118,11 +121,11 @@
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">
 		        	<i class="fa fa-circle"></i>
 		        </span></button>
-		        <h4 class="modal-title" id="ModalCorporativo">¿Esta seguro de eliminar el corporativo?</h4>
+		        <h4 class="modal-title" id="ModalCorporativo">{{'CORPORATE.MESSAGE_DELETE' | translate}}</h4>
 		      </div>
 		      <div class="modal-body no-padding-modal-body">
-		        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-		        <button type="button" class="btn btn-danger" ng-click="deleteCorporativo(deleteIdCorporativo)">Eliminar</button>
+		        <button type="button" class="btn btn-default" data-dismiss="modal">{{'ACTIONS.CANCEL' | translate}}</button>
+		        <button type="button" class="btn btn-danger" ng-click="deleteCorporativo(deleteIdCorporativo)">{{'ACTIONS.DELETE' | translate}}</button>
 		      </div>
 		    </div>
 		  </div>

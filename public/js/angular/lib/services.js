@@ -80,6 +80,27 @@ var icaav = (function () {
 		return formData;
 	};
 
+	icaav.helpers.ToastTranslate = function($translate) {
+
+		toastr.options = {
+			"closeButton": true,
+		}
+
+		this.success = function(CODE) {
+			$translate(CODE).then(toastr.success);
+		};
+		this.info = function() {
+			$translate(CODE).then(toastr.info);
+		};
+		this.warning = function() {
+			$translate(CODE).then(toastr.warning);
+		};
+		this.error = function() {
+			$translate(CODE).then(toastr.error);
+		};
+
+	};
+
 	icaav.helpers.getArrayCopy = function(array) {
 		return array ? array.slice() : [];
 	};

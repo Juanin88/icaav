@@ -1,0 +1,13 @@
+{
+	"CORPORATE": {
+		"NAME_ONE":								"Corporate",
+		"NAME_MANY":							"Corporates",
+		"NAME_OF_CORPORATIVE":					"Name of corporate",
+		"TITLE":								"Corporate catalogue",
+		"MESSAGE_DELETE":						"Are you sure to remove the corporate?",
+		"MESSAGE_SUCCESS_CREATE":				"Corporate created successfully",
+		"MESSAGE_SUCCESS_UPDATE":				"Corporate updated successfully",
+		"MESSAGE_SUCCESS_DELETE":				"Corporate removed successfully",
+		"STATUS_CORPORATIVO":					"Corporate status"
+	}
+}

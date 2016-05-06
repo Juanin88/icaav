@@ -1,10 +1,12 @@
-admin.controller('CorporativoController', ['$scope', '$http', '$localStorage', '$location', '$timeout', 'NgTableParams', 'CorporativoService', '$filter', function($scope, $http, $localStorage, $location, $timeout, NgTableParams, CorporativoService, $filter) {
+admin.controller('CorporativoController', ['$scope', '$http', '$localStorage', '$location', '$timeout', 'NgTableParams', 'CorporativoService', '$filter', '$translate', '$translatePartialLoader', function($scope, $http, $localStorage, $location, $timeout, NgTableParams, CorporativoService, $filter, $translate, $translatePartialLoader) {
 
   $scope.httpForm = new icaav.services.HTTPForm($http);
   $scope.location = new icaav.services.Location($location);
+  $scope.toastr   = new icaav.helpers.ToastTranslate($translate);
   $scope.page = 1;
   $scope.countPerPage = 5;
   $scope.corporativoEdit = {};
+
   /*
   $scope.vars = $localStorage.$default({
     corporativoAdd: {
@@ -15,11 +17,15 @@ admin.controller('CorporativoController', ['$scope', '$http', '$localStorage', '
     }
   });
   */
+
+  $translatePartialLoader.addPart('corporativos');
+  $translate.refresh();
+
   $scope.tableCorporativos = null;
   $scope.cols = {
-      nombre_corporativo: {name: 'Nombre corporativo', show: true},
-      limite_credito: {name: 'Limite de credito', show: true},
-      estatus_corporativo: {name: 'Estatus del corporativo', show: true},
+      nombre_corporativo: {name:  'CORPORATE.NAME_OF_CORPORATIVE',      show: true},
+      limite_credito: {name:      'CREDIT_LIMIT',       show: true},
+      estatus_corporativo: {name: 'CORPORATE.STATUS_CORPORATIVO', show: true},
     };
   $scope.disabledCols = false;
   $scope.corporativos = [];
@@ -30,6 +36,8 @@ admin.controller('CorporativoController', ['$scope', '$http', '$localStorage', '
     create: true
   };
   $scope.deleteIdCorporativo = null;
+
+  $scope.corporate = null;
 
   $scope.setDataEditCorportativo = function(corporativo) {
     $scope.corporativoEdit = new Object(corporativo);
@@ -117,9 +125,9 @@ admin.controller('CorporativoController', ['$scope', '$http', '$localStorage', '
       if(data['@pr_message'] == 'SUCCESS' && data['@pr_affect_rows']) {
         $scope.getCorporativos();
         $("#modalDeleteCorporativo").modal('hide');
-        toastr.success("Corporativo eliminado correctamente");
+        $scope.toastr.success('CORPORATE.MESSAGE_SUCCESS_DELETE');
       } else {
-        toastr.error("No se pudo eliminar el corporativo");
+        $scope.toastr.error('CORPORATE.MESSAGE_ERROR_DELETE');
       }
     });
   };
@@ -131,11 +139,11 @@ $scope.createCorporativo = function() {
       $timeout(function() {
         $scope.corporativo = {};
       }, 0);
-      toastr.success("Corporativo creado correctamente");
+      $scope.toastr.success('CORPORATE.MESSAGE_SUCCESS_CREATE');
       $("#modalCorporativo").modal('hide');
       $scope.getCorporativos();
     } else {
-      toastr.error("No se pudo crear el corporativo");
+      $scope.toastr.error("CORPORATE.MESSAGE_ERROR_CREATE");
     }
   });
 };
@@ -144,12 +152,12 @@ $scope.updateCorporativo = function() {
   CorporativoService.update($scope.corporativo)
   .success(function(data) {
     if(data['@pr_message'] == 'SUCCESS' && data['@pr_affect_rows']) {
-      toastr.success("Corporativo actualizado correctamente");
+      $scope.toastr.success('CORPORATE.MESSAGE_SUCCESS_UPDATE');
       $("#modalCorporativo").modal('hide');
       $scope.getCorporativos();
       $scope.corporativo = {};
     } else {
-      toastr.error("No se pudo actualizar el corporativo");
+      $scope.toastr.error('CORPORATE.MESSAGE_ERROR_UPDATE');
     }
   });
 };
