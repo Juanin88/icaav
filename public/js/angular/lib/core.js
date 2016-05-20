@@ -26,6 +26,7 @@ core.controller('main', ['$scope', '$rootScope', 'tabs', '$location', '$localSto
   $scope.selectedTab = {};
 
   $translatePartialLoader.addPart('system');
+  $translatePartialLoader.addPart('tables');
   $translate.refresh();
 
   $scope.$on('changeTabs', function() {

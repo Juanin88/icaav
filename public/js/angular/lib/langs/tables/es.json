@@ -1,5 +1,8 @@
 {
 	"TABLES": {
-		"NO_RESULTS_FOUND":					"No se encontraron resultados"
+		"NO_RESULTS_FOUND":					"No se encontraron resultados",
+		"LABEL_RECORDS_1": 					"Mostrar",
+		"LABEL_RECORDS_2": 					"registros por página",
+		"LABEL_PAGE": 						"Página"
 	}
 }

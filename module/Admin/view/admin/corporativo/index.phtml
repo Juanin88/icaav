@@ -101,7 +101,7 @@
 				        	<input class="tgl tgl-ios" id="cb2" type="checkbox" ng-model="corporativo.estatus_corporativo">
 						    <label class="tgl-btn" for="cb2"></label>&nbsp;
 				        	<span style="color:rgba(148, 144, 144, 1)">
-					        	<b> {{'ACTIVE' | translate}}</b>
+					        	<b> {{corporativo.estatus_corporativo == 1 ? 'ACTIVE' : 'INACTIVE' | translate}}</b>
 				        	</span>
 				      	</div>
 				      	<div class="col-md-2 col-sm-2 col-xs-6">
