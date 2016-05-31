@@ -16,6 +16,7 @@ return array(
     'module_layouts' => array(
        'Album'       => 'layoutAlbum/layout.phtml',
        'Admin'       => 'layoutAdmin/layout.phtml',
+       'Test'        => 'layoutTest/layout.phtml',
        'Index'       => 'layout/layout.phtml',
     ),
     'doctrine' => array(

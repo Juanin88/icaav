@@ -1,0 +1,63 @@
+<style type="text/css">
+	html, body {
+		background: transparent;
+	}
+</style>
+<script>
+
+	var moduleTest = angular.module('test', []);
+
+	moduleTest.controller('TestController', ['$scope', '$http', '$location', '$timeout', 'CorporativoService', function($scope, $http, $location, $timeout, CorporativoService) {
+		$scope.httpForm = new icaav.services.HTTPForm($http);
+  		$scope.location = new icaav.services.Location($location);
+  		$scope.corporativos = [];
+
+  		CorporativoService.getAll({
+  			pr_ini_pag: 0,
+  			pr_fin_pag: 100
+  		}).success(function(data) {
+  			console.log(data);
+  			$scope.corporativos = data.results;
+  		});
+
+  		$scope.deleteCorporativo = function(id) {
+  			console.log('deleting...' + id);
+  		};
+
+	}]).factory('CorporativoService', ['$http', function($http) {
+	  httpForm = new icaav.services.HTTPForm($http);
+	  basePath = icaav.helpers.getBasePath();
+	  return {
+	    getAll: function(data) {
+	      return httpForm.post(basePath + '/test/index/get-corporativos', data);
+	    }
+	  }
+	}]);
+
+</script>
+<div ng-app="test">
+	<div ng-controller="TestController">
+		<table class="table">
+			<thead>
+				<tr>
+					<td>Nombre</td>
+					<td>Estatus</td>
+					<td></td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="corporativo in corporativos">
+					<td>{{corporativo.nombre_corporativo}}</td>
+					<td>
+						{{corporativo.estatus_corporativo == 1 ? 'Activo': 'Inactivo'}}
+					</td>
+					<td>
+						<a class="icon-float-hover" ng-click="deleteCorporativo(corporativo.id_corporativo)">
+							<i class="fa fa-trash"></i>
+						</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

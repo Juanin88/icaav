@@ -1,0 +1,52 @@
+<?php echo $this->doctype(); ?>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <base href="/">
+        <?php echo $this->headTitle($this->translate('Icaav | '))->setSeparator(' - ')->setAutoEscape(false) ?>
+
+        <?php echo $this->headMeta()
+            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+        ?>
+
+        <!-- Le styles -->
+        <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/images/logosuite.ico'))
+                        ->prependStylesheet($this->basePath() . '/css/style.css')
+                        ->prependStylesheet($this->basePath() . '/css/skin-blue.css')
+                        ->prependStylesheet($this->basePath() . '/js/toastr/build/toastr.min.css')
+                        ->prependStylesheet($this->basePath() . '/js/angular/lib/ng-table/dist/ng-table.min.css')
+                        ->prependStylesheet($this->basePath() . '/css/main.css')
+                        ->prependStylesheet('https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css') ?>
+
+        <!-- Scripts -->
+        <?php echo $this->headScript()
+            ->appendFile($this->basePath() . '/js/jquery.min.js')
+            ->appendFile($this->basePath() . '/js/bootstrap.min.js')
+            ->appendFile($this->basePath() . '/js/app.min.js')
+            ->appendFile($this->basePath() . '/js/jquery.slimscroll.min.js')
+            ->appendFile($this->basePath() . '/js/toastr/toastr.js')
+            ->appendFile($this->basePath() . '/js/angular/lib/angular.min.js')
+            ->appendFile($this->basePath() . '/js/angular/lib/ngStorage.js')
+            ->appendFile($this->basePath() . '/js/angular/lib/angular-route.js')
+            ->appendFile($this->basePath() . '/js/angular/lib/services.js')
+            ->appendFile($this->basePath() . '/js/angular/lib/ng-table/dist/angular-resource.min.js')
+            ->appendFile($this->basePath() . '/js/angular/lib/ng-table/dist/ng-table.min.js')
+            ->appendFile($this->basePath() . '/js/angular/lib/angular-translate/angular-translate.min.js')
+            ->appendFile($this->basePath() . '/js/angular/lib//angular-translate-loader-partial.min.js')
+            ->appendFile($this->basePath() . '/js/angular/lib/core.js')
+            ->appendFile($this->basePath() . '/js/respond.min.js', 'text/javascript', array('conditional' => 'lt IE 9',))
+            ->appendFile($this->basePath() . '/js/html5shiv.js',   'text/javascript', array('conditional' => 'lt IE 9',))
+        ; ?>
+    </head>
+    <body class="hold-transition skin-blue sidebar-mini fixed" ng-toast>
+
+        <div style="padding-top:15px;">
+           <?php
+              echo $this->content;
+            ?>
+        </div>
+      </div>
+    <script> icaav.helpers.setBasePath("<?php echo $this->basePath()?>"); </script>
+    </body>
+</html>

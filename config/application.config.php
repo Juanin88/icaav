@@ -7,6 +7,7 @@ return array(
     	'DoctrineModule',
     	'DoctrineORMModule',
         'Index',
+        'Test',
         'Admin',
         'ReUse',
     	'Auth'

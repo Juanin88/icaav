@@ -82,7 +82,7 @@ abstract class AbstractActionIcaavController extends AbstractActionController {
 	 * Example: callSP('my_sp', array(
 	 *				'param1' => 'value1'
 	 *				'param2' => 'value2'
-	 *				), array('@out1', '@myOut2', self::ONLY_RESULT)
+	 *				), array('@out1', '@myOut2'), self::ONLY_RESULT)
 	 *			);
 	 *
 	 * @author Alan Olivares
