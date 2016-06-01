@@ -12,15 +12,7 @@ core.controller('main', ['$scope', '$rootScope', 'tabs', '$location', '$localSto
         name: 'Corporativos',
         url: basePath + '/admin/corporativo',
         classIcon: 'fa fa-suitcase'
-      }, {
-        name: 'Corporativos 2',
-        url: basePath + '/admin/corporativo',
-        classIcon: 'fa fa-suitcase'
-      }, {
-        name: 'Unidades de negocio',
-        url: basePath + '/admin/unidad-negocio',
-        classIcon: 'fa fa-user-secret'
-    }]
+      }]
   }];
   $scope.tabs = [];
   $scope.selectedTab = {};
