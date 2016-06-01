@@ -6,6 +6,17 @@ admin.controller('CorporativoController', ['$scope', '$http', '$localStorage', '
   $scope.page = 1;
   $scope.countPerPage = 5;
   $scope.corporativoEdit = {};
+  $scope.io = io.connect('http://localhost:3000');
+
+  $scope.io.on('corporativo_created', function(data) {
+    $scope.getCorporativos();
+  });
+  $scope.io.on('corporativo_edited', function(data) {
+    $scope.getCorporativos();
+  });
+  $scope.io.on('corporativo_deleted', function(data) {
+    $scope.getCorporativos();
+  });
 
   /*
   $scope.vars = $localStorage.$default({
@@ -23,9 +34,9 @@ admin.controller('CorporativoController', ['$scope', '$http', '$localStorage', '
 
   $scope.tableCorporativos = null;
   $scope.cols = {
-      nombre_corporativo: {name:  'CORPORATE.NAME_OF_CORPORATIVE',      show: true},
-      limite_credito: {name:      'CREDIT_LIMIT',       show: true},
-      estatus_corporativo: {name: 'CORPORATE.STATUS_CORPORATIVO', show: true},
+      nombre_corporativo:  { name: 'CORPORATE.NAME_OF_CORPORATIVE', show: true },
+      limite_credito:      { name: 'CREDIT_LIMIT', show: true },
+      estatus_corporativo: { name: 'CORPORATE.STATUS_CORPORATIVO',  show: true },
     };
   $scope.disabledCols = false;
   $scope.corporativos = [];
@@ -125,6 +136,7 @@ admin.controller('CorporativoController', ['$scope', '$http', '$localStorage', '
       if(data['@pr_message'] == 'SUCCESS' && data['@pr_affect_rows']) {
         $scope.getCorporativos();
         $("#modalDeleteCorporativo").modal('hide');
+        $scope.io.emit('corporativo_deleted', {});
         $scope.toastr.success('CORPORATE.MESSAGE_SUCCESS_DELETE');
       } else {
         $scope.toastr.error('CORPORATE.MESSAGE_ERROR_DELETE');
@@ -139,9 +151,9 @@ $scope.createCorporativo = function() {
       $timeout(function() {
         $scope.corporativo = {};
       }, 0);
+      $scope.io.emit('corporativo_created', {});
       $scope.toastr.success('CORPORATE.MESSAGE_SUCCESS_CREATE');
       $("#modalCorporativo").modal('hide');
-      $scope.getCorporativos();
     } else {
       $scope.toastr.error("CORPORATE.MESSAGE_ERROR_CREATE");
     }
@@ -156,6 +168,7 @@ $scope.updateCorporativo = function() {
       $("#modalCorporativo").modal('hide');
       $scope.getCorporativos();
       $scope.corporativo = {};
+      $scope.io.emit('corporativo_edited', {});
     } else {
       $scope.toastr.error('CORPORATE.MESSAGE_ERROR_UPDATE');
     }
