@@ -1,1 +1,0 @@
-var admin = angular.module('admin', ['core', 'ngTable', 'ngResource', 'ngStorage']);

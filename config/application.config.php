@@ -8,7 +8,7 @@ return array(
     	'DoctrineORMModule',
         'Index',
         'Test',
-        'Admin',
+        'Facturacion',
         'ReUse',
     	'Auth'
     ),
