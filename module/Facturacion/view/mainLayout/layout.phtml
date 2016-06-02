@@ -1,0 +1,151 @@
+<?php echo $this->doctype(); ?>
+<html lang="es" ng-app="facturacion">
+    <head>
+        <meta charset="utf-8">
+        <base href="/">
+        <?php echo $this->headTitle($this->translate('Icaav | '))->setSeparator(' - ')->setAutoEscape(false) ?>
+
+        <?php echo $this->headMeta()
+            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+        ?>
+
+        <!-- Le styles -->
+        <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/images/logosuite.ico'))
+                        ->prependStylesheet($this->basePath() . '/css/style.css')
+                        ->prependStylesheet($this->basePath() . '/css/skin-blue.css')
+                        ->prependStylesheet($this->basePath() . '/js/toastr/build/toastr.min.css')
+                        ->prependStylesheet($this->basePath() . '/js/angular/lib/ng-table/dist/ng-table.min.css')
+                        ->prependStylesheet($this->basePath() . '/css/main.css')
+                        ->prependStylesheet('https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css') ?>
+
+        <!-- Scripts -->
+        <?php echo $this->headScript()
+            ->appendFile($this->basePath() . '/js/jquery.min.js')
+            ->appendFile($this->basePath() . '/js/bootstrap.min.js')
+            ->appendFile($this->basePath() . '/js/app.min.js')
+            ->appendFile($this->basePath() . '/js/jquery.slimscroll.min.js')
+            ->appendFile($this->basePath() . '/js/toastr/toastr.js')
+            ->appendFile($this->basePath() . '/js/angular/lib/angular.min.js')
+            ->appendFile($this->basePath() . '/js/angular/lib/ngStorage.js')
+            ->appendFile($this->basePath() . '/js/angular/lib/angular-route.js')
+            ->appendFile($this->basePath() . '/js/angular/lib/services.js')
+            ->appendFile($this->basePath() . '/js/angular/lib/ng-table/dist/angular-resource.min.js')
+            ->appendFile($this->basePath() . '/js/angular/lib/ng-table/dist/ng-table.min.js')
+            //->appendFile($this->basePath() . '/js/angular/lib/ng-table/dist/ng-table.js')
+            ->appendFile($this->basePath() . '/js/angular/lib/angular-translate/angular-translate.min.js')
+            ->appendFile($this->basePath() . '/js/angular/lib//angular-translate-loader-partial.min.js')
+            ->appendFile($this->basePath() . '/js/angular/lib/core.js')
+            ->appendFile($this->basePath() . '/js/angular/modules/facturacion/facturacion.module.js')
+            ->appendFile($this->basePath() . '/js/angular/modules/facturacion/controllers/CorporativoController.js')
+            ->appendFile($this->basePath() . '/js/angular/modules/auth/controllers/login.js')
+            ->appendFile('http://localhost:3000/socket.io/socket.io.js')
+            ->appendFile($this->basePath() . '/js/respond.min.js', 'text/javascript', array('conditional' => 'lt IE 9',))
+            ->appendFile($this->basePath() . '/js/html5shiv.js',   'text/javascript', array('conditional' => 'lt IE 9',))
+        ; ?>
+    </head>
+    <body class="hold-transition skin-blue sidebar-mini fixed" ng-toast>
+      <header class="main-header">
+        <!-- Logo -->
+        <a href="#" class="logo">
+          <!-- mini logo for sidebar mini 50x50 pixels -->
+          <span class="logo-mini"><b>I</b>W</span>
+          <!-- logo for regular state and mobile devices -->
+          <span class="logo-lg"><b>ICAAV</b>web</span>
+        </a>
+
+        <!-- Header Navbar: style can be found in header.less -->
+        <nav class="navbar navbar-static-top" role="navigation">
+          <!-- Sidebar toggle button-->
+          <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+            <span class="sr-only">Toggle navigation</span>
+          </a>
+          <!-- Navbar Right Menu -->
+          <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+              <!-- User Account: style can be found in dropdown.less -->
+              <li class="dropdown user user-menu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <span class="hidden-xs">.</span>
+                </a>
+                <ul class="dropdown-menu">
+                  <!-- User image -->
+                  <li class="user-header">
+                  </li>
+                  <!-- Menu Body -->
+                  <li class="user-body">
+                    <div class="col-xs-4 text-center">
+                      <a href="#">Informaci&oacute;n</a>
+                    </div>
+                  </li>
+                  <!-- Menu Footer-->
+                  <li class="user-footer">
+                    <div class="pull-left">
+                      <a href="#" class="btn btn-default btn-flat">Profile</a>
+                    </div>
+                    <div class="pull-right">
+                      <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+      <!-- Left side column. contains the logo and sidebar -->
+      <aside class="main-sidebar" ng-controller="main">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+          <ul class="sidebar-menu">
+            <li ng-repeat="m in menu" class="{{m.isActive?'active':''}} treeview">
+              <a ng-click="setTab(m)" style="cursor:pointer;">
+                <i class="{{m.classIcon}}"></i>
+                <span>{{m.name}}</span>
+                <i class="{{m.isActive?'fa fa-circle pull-right':''}}" style="color:#2EFE2E;font-size:7px;padding-top:5px"></i>
+                <i class="{{(m.li)?'fa fa-angle-left pull-right':''}}"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li ng-repeat="li in m.li">
+                  <a href="{{li.url?li.url:''}}" ng-click="setTab(li)">
+                    <i class="{{li.classIcon}}"></i>
+                    <span>{{li.name}}</span>
+                    <i class="{{li.isActive?'fa fa-circle pull-right':''}}" style="color:#2EFE2E;font-size:7px;padding-top:5px"></i>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <img src="<?php print $this->basePath() . '/images/logosuite.ico';?>" class="logo-suite-sidebar">
+        </section>
+        <!-- /.sidebar -->
+      </aside>
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper" style="margin-top:-60px;min-height: 610px;" ng-controller="main">
+        <div>
+          <ul class="nav nav-tabs tabs-window" role="tablist">
+            <li ng-repeat="tab in tabs" role="presentation" class="{{tab.isActive?'active':''}}">
+              <a href="{{tab.url}}" ng-click="setTab(tab)" class="content-tabs-window">
+                {{tab.name}}
+              </a>
+                <i class="fa fa-remove pull right close-tab-window" ng-click="removeTab(tab.name)" ng-show="!tab.isActive"></i>
+            </li>
+          </ul>
+        </div>
+        <div style="padding-top:15px;">
+          <?php
+            if($this->errorInView) {
+              echo $this->content;
+            } else {
+              echo '<div ng-view></div>';
+            }
+          ?>
+        </div>
+      </div>
+      <footer class="main-footer">
+        <strong>Copyright &copy; 2016-2017 Microinform&aacute;tica Gerencial S.A de C.V.</strong> All rights reserved.
+      </footer>
+
+    <script> icaav.helpers.setBasePath("<?php echo $this->basePath()?>"); </script>
+    </body>
+</html>
