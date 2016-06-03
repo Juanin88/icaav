@@ -124,9 +124,9 @@ abstract class AbstractActionIcaavController extends AbstractActionController {
 
 		return "CALL $nameSP("
 				// Set params
-				.$this->getParamsForCallSP($params, $optionCall)
+				.(!empty($params) ? $this->getParamsForCallSP($params, $optionCall).',' : '')
 				// Set outs if exist
-				.($outs ? ','.implode(',', array_values($outs)) : '')
+				.($outs ? implode(',', array_values($outs)) : '')
 				.');';
 	}
 
@@ -254,7 +254,7 @@ abstract class AbstractActionIcaavController extends AbstractActionController {
 	*	@param int $expectedResult -> posible values: contants in this class {ONLY_RESULT, OUTS, ALL}
 	*/
 	protected function setSP($nameSP, array $dataParams, array $outs = null, Form $form = null, $expectedResult = null) {
-		if(!empty($nameSP) && !empty($dataParams)) {
+		if(!empty($nameSP) && is_array($dataParams)) {
 			$this->SPs[$nameSP] = array(
 				'dataParams'		=> $dataParams,
 				'outs'				=> $outs,

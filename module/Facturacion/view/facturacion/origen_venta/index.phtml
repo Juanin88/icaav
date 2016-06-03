@@ -1,0 +1,125 @@
+<div ng-controller="main" ng-init="setTab({
+        name: 'Origen Venta',
+        classIcon: 'fa fa-suitcase'
+      })">
+</div>
+<div class="container">
+	<div ng-controller="OrigenVentaController">{{origen_venta}}
+		<a href="#" ng-click="changeLanguaje('es')">{{'LANGS.ES' | translate}}</a>
+		<a href="#" ng-click="changeLanguaje('en')">{{'LANGS.EN' | translate}}</a>
+		<a href="#" ng-click="changeLanguaje('pt')">{{'LANGS.PT' | translate}}</a>
+		<div class="catalog-title-group row" style="padding:0;margin:0">
+			<div class="col-md-6 col-sm-7 col-xs-12">
+				<h3 style="padding:0;margin:0">{{ 'CORPORATE.TITLE' | translate}}</h3>
+			</div>
+			<div class="col-md-3 col-sm-5 col-xs-12 pull-right">
+				<div class="input-group group-input-search">
+					<span class="icon-input-search" id="search-origenventa">
+						<i class="fa fa-search"></i>
+					</span>
+					<input type="text" class="form-control input-search" ng-model="searchOrigenVentao" aria-describedby="search-origenventa" ng-keyup="tableOrigenVenta.filter({ $: searchOrigenVenta })" placeholder="{{'ACTIONS.SEARCH' | translate}}...">
+					<span class="input-group-btn">
+						<button class="btn btn-gray" type="button" style="border-radius:50%" ng-click="getOrigenVentas()">
+							<i class="fa fa-refresh {{searchingOrigenVenta ? 'fa-spin' : ''}}"></i>
+						</button>
+					</span>
+					<span class="input-group-btn">
+						<div class="dropdown">
+							<button class="btn btn-gray dropdown-toggle" type="button" id="filterColumnsOrigenVenta"  title="Popover Header" data-placement="bottom"  data-toggle="popover" data-template="#test" aria-haspopup="true" aria-expanded="true" ng-init="initFilterColumns()">
+								<i class="fa fa-thumb-tack"></i>
+							</button>
+							
+							<ul class="dropdown-menu" id="test" aria-labelledby="dropdownMenu1">
+								<li ng-repeat="col in cols">
+									<div class="checkbox">
+										<label for="{{col.name}}">
+											<input type="checkbox" ng-model="col.show" id="{{col.name}}" ng-click="verify()" ng-disabled="disabledCols && col.show">
+											{{col.name | translate}}
+										</label>
+									</div>
+								</li>
+							</ul>
+						</div>
+					</span>
+					<span class="input-group-btn">
+						<button class="btn btn-primary" type="button" style="border-radius:50%" data-toggle="modal" data-target="#modalOrigenVenta" ng-click="optionsOrigenVenta.create=true;origenventa={}">
+							<i class="fa fa-plus"></i>
+						</button>
+					</span>
+				</div>
+			</div>
+		</div>
+		<br>
+		<div loading-container="tableOrigenVenta.settings().$loading" ng-init="getOrigenVenta()">
+			<table class="table table-condensed" ng-table="tableOrigenVenta" show-filter="false">
+				<tr ng-repeat="origenventa in $data" ng-dblclick="prepareUpdate(origenventa)" style="{{origenventa.estatus_origenventa == 0 ? 'color:red;':''}}">
+					<td width="1">
+						<a href="#" class="icon-float-hover" ng-click="prepareDelete(origenventa.pr_id_orig)">
+							<i class="fa fa-trash"></i>
+						</a>
+					</td>
+					<td data-title="'NAME' | translate" sortable="'pr_orig_ven'" ng-if="cols.pr_orig_ven.show">
+						{{origenventa.pr_orig_ven}}
+					</td>
+					<td data-title="'CREDIT_LIMIT' | translate" sortable="'limite_credito'" ng-if="cols.limite_credito.show">
+						{{origenventa.limite_credito}}
+					</td>
+					
+				</tr>
+				<tr ng-show="!filteredOrigenVenta.length">
+					<td colspan="5" align="center" class="icon-float-hover">{{ 'TABLES.NO_RESULTS_FOUND' | translate }} <i class="fa fa-frown-o"></i> </td>
+				</tr>
+			</table>
+		</div>
+		<!-- START Modal OrigenVenta -->
+		<div class="modal fade dark-modal" id="modalOrigenVenta" tabindex="-1" role="dialog" aria-labelledby="ModalOrigenVenta">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">
+		        	<i class="fa fa-circle"></i>
+		        </span></button>
+		        <h4 class="modal-title" id="ModalOrigenVenta">{{ optionsOrigenVenta.create ? 'ACTIONS.NEW' : 'ACTIONS.EDIT' | translate}} {{'CORPORATE.NAME_ONE' | translate}}</h4>
+		      </div>
+		      <div class="modal-body">
+		      	<div class="row">
+		      		<form ng-submit="optionSubmitOrigenVenta()">
+				      	<div class="col-md-12">
+				        	<input type="text" class="dark-form" placeholder="{{'CORPORATE.NAME_ONE' | translate}}" ng-model="origenventa.pr_orig_ven" required maxlength="30">
+				      	</div>
+				      
+				      	<div class="col-md-3 col-sm-3 col-xs-6 col-sm-offset-7 col-md-offset-0" style="display:-webkit-inline-box;display:-moz-inline-box;display:-ms-inline-box;padding:10px">
+				        	<input class="tgl tgl-ios" id="cb2" type="checkbox" ng-model="origenventa.estatus_corporativo">
+						    <label class="tgl-btn" for="cb2"></label>&nbsp;
+				        	<span style="color:rgba(148, 144, 144, 1)">
+					        	<b> {{origenventa.estatus_corporativo == 1 ? 'ACTIVE' : 'INACTIVE' | translate}}</b>
+				        	</span>
+				      	</div>
+				      	<div class="col-md-2 col-sm-2 col-xs-6">
+				        	<button class="btn btn-blue btn-modal-submit pull-right">{{ optionsOrigenVenta.create ? 'ACTIONS.CREATE' : 'ACTIONS.UPDATE' | translate}}</button>
+				      	</div>
+		      		</form>
+		      	</div>
+		      </div>
+		    </div>
+		  </div>
+		</div><!-- END Modal OrigenVenta -->
+		<!-- START Modal DELETE OrigenVenta -->
+		<div class="modal fade dark-modal" id="modalDeleteOrigenVenta" tabindex="-1" role="dialog" aria-labelledby="ModalOrigenVenta">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">
+		        	<i class="fa fa-circle"></i>
+		        </span></button>
+		        <h4 class="modal-title" id="ModalOrigenVenta">{{'CORPORATE.MESSAGE_DELETE' | translate}}</h4>
+		      </div>
+		      <div class="modal-body no-padding-modal-body">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">{{'ACTIONS.CANCEL' | translate}}</button>
+		        <button type="button" class="btn btn-danger" ng-click="deleteOrigenVentao(deleteIdOrigenVenta)">{{'ACTIONS.DELETE' | translate}}</button>
+		      </div>
+		    </div>
+		  </div>
+		</div><!-- END Modal DELETE OrigenVenta -->
+	</div>
+</div>
