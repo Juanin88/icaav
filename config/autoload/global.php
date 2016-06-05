@@ -15,7 +15,7 @@ return array(
     // ...
     'module_layouts' => array(
        'Album'       => 'layoutAlbum/layout.phtml',
-       'Facturacion' => 'mainLayout/layout.phtml',
+       'Icaav'       => 'mainLayout/layout.phtml',
        'Test'        => 'layoutTest/layout.phtml',
        'Index'       => 'layout/layout.phtml',
     ),

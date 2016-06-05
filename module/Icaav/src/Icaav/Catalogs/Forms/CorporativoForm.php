@@ -1,39 +1,39 @@
 <?php 
-namespace Facturacion\Forms;
+namespace Icaav\Catalogs\Forms;
 
  use Zend\Form\Form;
  use Zend\InputFilter\InputFilter;
- use Facturacion\InputFilters\OrigenVentaFilter;
+ use Icaav\Catalogs\InputFilters\CorporativoFilter;
  
- class OrigenVentaForm extends Form {
+ class CorporativoForm extends Form {
 
      public function __construct($name = null) {
          // we want to ignore the name passed
          parent::__construct('corporativo');
 
          $this->setAttribute('method', 'post')
-         ->setInputFilter((new OrigenVentaFilter())->getInputFilter());
+         ->setInputFilter((new CorporativoFilter())->getInputFilter());
 
          $this->add(array(
-             'name' => 'pr_id_orig',
+             'name' => 'id_corporativo',
              'type' => 'Text',
          ));
 
          $this->add(array(
-             'name' => 'pr_orig_ven',
+             'name' => 'nombre_corporativo',
              'type' => 'Text',
          ));
 
          $this->add(array(
-             'name' => 'pr_est_orig',
-             'type' => 'Text',
+             'name' => 'limite_credito',
+             'type' => 'Number',
              'attributes' => array(
                     'step' => 'any',
              )
          ));
 
          $this->add(array(
-             'name' => 'pr_fec_mod_ori',
+             'name' => 'estatus_corporativo',
              'type' => 'checkbox',
          ));
 

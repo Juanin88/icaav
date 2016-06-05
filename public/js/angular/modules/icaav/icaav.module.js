@@ -1,0 +1,1 @@
+var icaavModule = angular.module('icaav', ['core', 'ngTable', 'ngResource', 'ngStorage']);

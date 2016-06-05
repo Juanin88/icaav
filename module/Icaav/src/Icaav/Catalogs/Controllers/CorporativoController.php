@@ -1,11 +1,11 @@
 <?php
 
-namespace Facturacion\Controller;
+namespace Icaav\Catalogs\Controllers;
 
 use ReUse\Services\AbstractActionIcaavController;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
-use Facturacion\Forms\CorporativoForm;
+use Icaav\Catalogs\Forms\CorporativoForm;
 /**
 *
 * @author Alan Olivares

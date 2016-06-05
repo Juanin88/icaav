@@ -1,29 +1,28 @@
 <?php
 
-namespace Facturacion;
+namespace Icaav;
 
 /**
- * Facturacion Module Configuration.
+ * Icaav Module Configuration.
  */
 
 return array(
 		'controllers' => array(
 				'invokables' => array(
-						'Facturacion\Controller\Index' => 'Facturacion\Controller\IndexController',
-						'Facturacion\Controller\Corporativo' => 'Facturacion\Controller\CorporativoController',
-						'Facturacion\Controller\UnidadNegocio' => 'Facturacion\Controller\UnidadNegocioController',
-						'Facturacion\Controller\OrigenVenta'=>'Facturacion\Controller\OrigenVentaController'				),
+						'Icaav\Controller\Index' 			=> 'Icaav\Catalogs\Controllers\IndexController',
+						'Icaav\Controller\Corporativo'  	=> 'Icaav\Catalogs\Controllers\CorporativoController',
+						'Icaav\Controller\UnidadNegocio' 	=> 'Icaav\Catalogs\Controllers\UnidadNegocioController',
+						'Icaav\Controller\OrigenVenta'		=> 'Icaav\Catalogs\Controllers\OrigenVentaController'				),
 		),
-
 		// The following section is new and should be added to your file
 		'router' => array(
 				'routes' => array(
-						'Facturacion' => array(
+						'Icaav' => array(
 			                'type'    => 'Segment',
 			                'options' => array(
-			                    'route'    => '/facturacion[/:controller][/:action][/:id]',
+			                    'route'    => '/icaav[/:controller][/:action][/:id]',
 			                    'defaults' => array(
-			                        '__NAMESPACE__' => 'Facturacion\Controller',
+			                        '__NAMESPACE__' => 'Icaav\Controller',
 			                        'controller'    => 'Index',
 			                        'action'        => 'index',
 			                    ),
@@ -44,10 +43,9 @@ return array(
 			            ),
 				),
 		),
-
 		'view_manager' => array(
 				'template_path_stack' => array(
-						'facturacion' => __DIR__ . '/../view',
+						'icaav' => __DIR__ . '/../view',
 				),
 		),
 		'doctrine' => array(

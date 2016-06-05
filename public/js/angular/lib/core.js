@@ -2,7 +2,7 @@ var core = angular.module('core', ['ngRoute', 'ngStorage', 'pascalprecht.transla
 core.controller('main', ['$scope', '$rootScope', 'tabs', '$location', '$localStorage', '$translate', "$translatePartialLoader", function($scope, $rootScope, tabs, $location, $localStorage, $translate, $translatePartialLoader) {
   var basePath = icaav.helpers.getBasePath();
   $scope.menu = [{
-    url: basePath + '/facturacion',
+    url: basePath + '/icaav',
     name: 'Dashboard',
     classIcon: 'fa fa-dashboard',
   }, {
@@ -10,7 +10,7 @@ core.controller('main', ['$scope', '$rootScope', 'tabs', '$location', '$localSto
     classIcon: 'fa fa-files-o',
     li: [{
         name: 'Corporativos',
-        url: basePath + '/facturacion/corporativo',
+        url: basePath + '/icaav/corporativo',
         classIcon: 'fa fa-suitcase'
       }]
   }];

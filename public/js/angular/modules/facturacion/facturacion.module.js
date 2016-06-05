@@ -1,1 +1,0 @@
-var facturacion = angular.module('facturacion', ['core', 'ngTable', 'ngResource', 'ngStorage']);
