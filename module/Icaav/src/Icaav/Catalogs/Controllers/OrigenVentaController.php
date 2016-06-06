@@ -16,12 +16,12 @@ class OrigenVentaController extends AbstractActionIcaavController {
 	protected function setSPs() {
 		//SET INSERT SP
 		$this->setSP('sp_fac_i_origen_venta', array(
-			array('method' => 'post', 'name' => 'pr_orig_ven'),
+			array('method' => 'post', 'name' => 'origen_venta'),
 		 ), array('@pr_affect_rows', '@pr_message'), null, self::OUTS);
 		// SET UPDATE SP
 		$this->setSP('sp_fac_u_origen_venta', array(
-			array('method' => 'post', 'name' => 'pr_id_orig'),
-			array('method' => 'post', 'name' => 'pr_orig_ven'),
+			array('method' => 'post', 'name' => 'id_origen_venta'),
+			array('method' => 'post', 'name' => 'origen_venta'),
 		), array('@pr_affect_rows', '@pr_message'), null, self::OUTS);
 
 		// SET SELECT SP

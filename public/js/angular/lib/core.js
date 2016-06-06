@@ -12,7 +12,7 @@ core.controller('main', ['$scope', '$rootScope', 'tabs', '$location', '$localSto
         name: 'Corporativos',
         url: basePath + '/icaav/corporativo',
         classIcon: 'fa fa-suitcase'
-      },{
+      }, {
         name: 'Origen Venta',
         url: basePath + '/icaav/origen-venta',
         classIcon: 'fa fa-suitcase'
