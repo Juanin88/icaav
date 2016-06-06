@@ -33,6 +33,11 @@ class OrigenVentaController extends AbstractActionIcaavController {
 				array('method' => 'post', 'name' => 'pr_id_orig'),
 		), array('@pr_affect_rows','@pr_message'),   null, self::OUTS);
 	}
+	
+	public function indexAction() {
+    	$terminal = $this->params()->fromQuery('terminal');
+        return (new ViewModel())->setTerminal($terminal);
+    }
 
 	public function addOrigenVentaAction() {
 		return new JsonModel($this->callSPByName('sp_fac_i_origen_venta'));

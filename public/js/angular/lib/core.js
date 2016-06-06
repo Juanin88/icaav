@@ -1,5 +1,5 @@
 var core = angular.module('core', ['ngRoute', 'ngStorage', 'pascalprecht.translate']);
-core.controller('main', ['$scope', '$rootScope', 'tabs', '$location', '$localStorage', '$translate', "$translatePartialLoader", function($scope, $rootScope, tabs, $location, $localStorage, $translate, $translatePartialLoader) {
+core.controller('main', ['$scope', '$rootScope', 'tabs', '$location', '$localStorage', '$translate', "$translatePartialLoader", "$timeout", function($scope, $rootScope, tabs, $location, $localStorage, $translate, $translatePartialLoader, $timeout) {
   var basePath = icaav.helpers.getBasePath();
   $scope.menu = [{
     url: basePath + '/icaav',
@@ -11,6 +11,10 @@ core.controller('main', ['$scope', '$rootScope', 'tabs', '$location', '$localSto
     li: [{
         name: 'Corporativos',
         url: basePath + '/icaav/corporativo',
+        classIcon: 'fa fa-suitcase'
+      },{
+        name: 'Origen Venta',
+        url: basePath + '/icaav/origen-venta',
         classIcon: 'fa fa-suitcase'
       }]
   }];
@@ -63,7 +67,9 @@ core.controller('main', ['$scope', '$rootScope', 'tabs', '$location', '$localSto
   $scope.setTab = function(tab) {
     if(!tab.li && tab.name) {
       if(tab.url && $location.path() != tab.url) {
-        $location.path(tab.url);
+        $timeout(function() {
+          $location.path(tab.url);
+        }, 0)
       } else {
         tab.url = $location.path();
       }
