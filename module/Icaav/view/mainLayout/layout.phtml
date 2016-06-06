@@ -1,5 +1,5 @@
 <?php echo $this->doctype(); ?>
-<html lang="es" ng-app="facturacion">
+<html lang="es" ng-app="icaav">
     <head>
         <meta charset="utf-8">
         <base href="/">
@@ -36,8 +36,8 @@
             ->appendFile($this->basePath() . '/js/angular/lib/angular-translate/angular-translate.min.js')
             ->appendFile($this->basePath() . '/js/angular/lib//angular-translate-loader-partial.min.js')
             ->appendFile($this->basePath() . '/js/angular/lib/core.js')
-            ->appendFile($this->basePath() . '/js/angular/modules/facturacion/facturacion.module.js')
-            ->appendFile($this->basePath() . '/js/angular/modules/facturacion/controllers/CorporativoController.js')
+            ->appendFile($this->basePath() . '/js/angular/modules/icaav/icaav.module.js')
+            ->appendFile($this->basePath() . '/js/angular/modules/icaav/controllers/CorporativoController.js')
             ->appendFile($this->basePath() . '/js/angular/modules/auth/controllers/login.js')
             ->appendFile('http://localhost:3000/socket.io/socket.io.js')
             ->appendFile($this->basePath() . '/js/respond.min.js', 'text/javascript', array('conditional' => 'lt IE 9',))

@@ -1,4 +1,4 @@
-facturacion.controller('CorporativoController', ['$scope', '$http', '$localStorage', '$location', '$timeout', 'NgTableParams', 'CorporativoService', '$filter', '$translate', '$translatePartialLoader', function($scope, $http, $localStorage, $location, $timeout, NgTableParams, CorporativoService, $filter, $translate, $translatePartialLoader) {
+icaavModule.controller('CorporativoController', ['$scope', '$http', '$localStorage', '$location', '$timeout', 'NgTableParams', 'CorporativoService', '$filter', '$translate', '$translatePartialLoader', function($scope, $http, $localStorage, $location, $timeout, NgTableParams, CorporativoService, $filter, $translate, $translatePartialLoader) {
 
   $scope.httpForm = new icaav.services.HTTPForm($http);
   $scope.location = new icaav.services.Location($location);
@@ -170,10 +170,10 @@ $scope.updateCorporativo = function() {
 .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
   var basePath = icaav.helpers.getBasePath();
   $routeProvider
-  .when(basePath + '/facturacion', {templateUrl : basePath + '/facturacion?terminal=true'})
-  .when(basePath + '/facturacion/corporativo', {templateUrl : basePath + '/facturacion/corporativo?terminal=true'})
-  .when(basePath + '/facturacion/corporativo/add', {templateUrl : basePath + '/facturacion/corporativo/add?terminal=true'})
-  .when(basePath + '/facturacion/unidad-negocio', {templateUrl : basePath + '/facturacion/unidad-negocio?terminal=true'})
+  .when(basePath + '/icaav', {templateUrl : basePath + '/icaav?terminal=true'})
+  .when(basePath + '/icaav/corporativo', {templateUrl : basePath + '/icaav/corporativo?terminal=true'})
+  .when(basePath + '/icaav/corporativo/add', {templateUrl : basePath + '/icaav/corporativo/add?terminal=true'})
+  .when(basePath + '/icaav/unidad-negocio', {templateUrl : basePath + '/icaav/unidad-negocio?terminal=true'})
   .otherwise({
     templateUrl: window.location.href + '?terminal=true'
   });
@@ -184,13 +184,13 @@ $scope.updateCorporativo = function() {
   basePath = icaav.helpers.getBasePath();
   return {
     getAll: function(data) {
-      return httpForm.post(basePath + '/facturacion/corporativo/get-corporativos', data);
+      return httpForm.post(basePath + '/icaav/corporativo/get-corporativos', data);
     }, create: function(data) {
-      return httpForm.post(basePath + '/facturacion/corporativo/add-ajax', data);
+      return httpForm.post(basePath + '/icaav/corporativo/add-ajax', data);
     }, update: function(data) {
-      return httpForm.post(basePath + '/facturacion/corporativo/edit-ajax', data);
+      return httpForm.post(basePath + '/icaav/corporativo/edit-ajax', data);
     }, delete: function(data) {
-      return httpForm.post(basePath + '/facturacion/corporativo/delete-ajax', data);
+      return httpForm.post(basePath + '/icaav/corporativo/delete-ajax', data);
     }
   }
 }]);

@@ -1,5 +1,5 @@
 <?php
-namespace Facturacion\InputFilters;
+namespace Icaav\Catalogs\InputFilters;
 
 // Add these import statements
 use Zend\InputFilter\InputFilter;
