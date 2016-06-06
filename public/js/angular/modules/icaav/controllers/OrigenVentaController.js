@@ -24,8 +24,12 @@ icaavModule.controller('OrigenVentaController', ['$scope', '$http', function($sc
     console.log(data);
   });
 
-  $scope.httpForm.post($scope.basePath + '/icaav/origen-venta/update-origen-venta',{
-    pr_id_orig: , pr_orig_ven  
+  $scope.httpForm.post($scope.basePath + '/icaav/origen-venta/edit-origen-venta',{
+    pr_id_orig:  23,
+    pr_orig_ven: 'qwerty'
+   })
+  .success(function(data){
+    console.log(data);
   })
 
 }]);
