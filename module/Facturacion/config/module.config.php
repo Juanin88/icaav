@@ -12,7 +12,7 @@ return array(
 						'Facturacion\Controller\Index' => 'Facturacion\Controller\IndexController',
 						'Facturacion\Controller\Corporativo' => 'Facturacion\Controller\CorporativoController',
 						'Facturacion\Controller\UnidadNegocio' => 'Facturacion\Controller\UnidadNegocioController',
-						'Facturacion\Controller\OrigenVenta'=>'Facturacion\Controller\OrigenVentaController'				),
+						'Facturacion\Controller\OrigenVenta' => 'Facturacion\Controller\OrigenVentaController1'),
 		),
 
 		// The following section is new and should be added to your file
