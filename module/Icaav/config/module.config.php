@@ -9,10 +9,6 @@ namespace Icaav;
 return array(
 		'controllers' => array(
 				'invokables' => array(
-						'Facturacion\Controller\Index' => 'Facturacion\Controller\IndexController',
-						'Facturacion\Controller\Corporativo' => 'Facturacion\Controller\CorporativoController',
-						'Facturacion\Controller\UnidadNegocio' => 'Facturacion\Controller\UnidadNegocioController',
-						'Facturacion\Controller\OrigenVenta' => 'Facturacion\Controller\OrigenVentaController1'),
 						'Icaav\Controller\Index' 			=> 'Icaav\Catalogs\Controllers\IndexController',
 						'Icaav\Controller\Corporativo'  	=> 'Icaav\Catalogs\Controllers\CorporativoController',
 						'Icaav\Controller\UnidadNegocio' 	=> 'Icaav\Catalogs\Controllers\UnidadNegocioController',
