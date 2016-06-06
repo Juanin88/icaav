@@ -124,7 +124,7 @@ abstract class AbstractActionIcaavController extends AbstractActionController {
 
 		return "CALL $nameSP("
 				// Set params
-				.(!empty($params) ? $this->getParamsForCallSP($params, $optionCall).',' : '')
+				.($params ? $this->getParamsForCallSP($params, $optionCall).',' : '')
 				// Set outs if exist
 				.($outs ? implode(',', array_values($outs)) : '')
 				.');';

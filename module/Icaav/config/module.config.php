@@ -16,7 +16,8 @@ return array(
 						'Icaav\Controller\Index' 			=> 'Icaav\Catalogs\Controllers\IndexController',
 						'Icaav\Controller\Corporativo'  	=> 'Icaav\Catalogs\Controllers\CorporativoController',
 						'Icaav\Controller\UnidadNegocio' 	=> 'Icaav\Catalogs\Controllers\UnidadNegocioController',
-						'Icaav\Controller\OrigenVenta'		=> 'Icaav\Catalogs\Controllers\OrigenVentaController'				),
+						'Icaav\Controller\OrigenVenta'		=> 'Icaav\Catalogs\Controllers\OrigenVentaController'
+				),
 		),
 		// The following section is new and should be added to your file
 		'router' => array(
