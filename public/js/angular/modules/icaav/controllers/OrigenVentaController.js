@@ -70,7 +70,10 @@ icaavModule.controller('OrigenVentaController', ['$scope', '$http', '$translate'
 
 		  $scope.getOrigenesVenta = function() {
 		  	$scope.searchingOrigenesVenta = true;
-		  	$scope.httpForm.post($scope.basePath + '/icaav/origen-venta/get-origen-venta')
+		  	$scope.httpForm.post($scope.basePath + '/icaav/origen-venta/get-origen-venta', {
+		  		pr_ini_pag: 0,
+		  		pr_fin_pag: 2
+		  	})
 		  	.success(function(data){
 		  		$scope.searchingOrigenesVenta = false;
 		  		$scope.tableOrigenVenta = new NgTableParams({

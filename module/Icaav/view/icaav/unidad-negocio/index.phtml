@@ -1,5 +1,15 @@
+
 <div ng-controller="main" ng-init="setTab({
         name: 'Unidades de negocio',
-        classIcon: 'fa fa-user-secret'
-    })"></div>
-<h3>Unidades de negocio</h3>
+        classIcon: 'fa fa-suitcase'
+      })">
+</div>
+<div ng-controller="UnidadNegocioController" class="container">
+
+	<a href="#" ng-click="changeLanguaje('es')">{{'LANGS.ES' | translate}}</a>
+	<a href="#" ng-click="changeLanguaje('en')">{{'LANGS.EN' | translate}}</a>
+	<a href="#" ng-click="changeLanguaje('pt')">{{'LANGS.PT' | translate}}</a>
+	<div class="catalog-title-group row" style="padding:0;margin:0">
+		<div class="col-md-6 col-sm-7 col-xs-12">
+			<h3 style="padding:0;margin:0">{{ 'UNIDAD_NEGOCIO.TITLE' | translate}}</h3>
+		

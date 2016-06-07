@@ -1,13 +1,13 @@
 {
 	"ORIGEN_VENTA": {
-		"NAME_ONE":								"Origen Venta",
-		"NAME_MANY":							"Origenes Venta",
-		"NAME_OF_CORPORATIVE":					"Name of OrigenVenta",
-		"TITLE":								"OrigenVenta catalogue",
+		"NAME_ONE":								"Origin Sale",
+		"NAME_MANY":							"Origin Sale",
+		"NAME_OF_CORPORATIVE":					"Name of Origin Sale",
+		"TITLE":								"Origin Sale catalogue",
 		"MESSAGE_DELETE":						"Are you sure to remove the Origen Venta?",
-		"MESSAGE_SUCCESS_CREATE":				"Origen Venta created successfully",
-		"MESSAGE_SUCCESS_UPDATE":				"Origen Venta updated successfully",
-		"MESSAGE_SUCCESS_DELETE":				"Origen Venta removed successfully",
-		"STATUS_ORIGEN_VENTA":					"Origen Venta status"
+		"MESSAGE_SUCCESS_CREATE":				"Origin Sale created successfully",
+		"MESSAGE_SUCCESS_UPDATE":				"Origin Sale updated successfully",
+		"MESSAGE_SUCCESS_DELETE":				"Origin Sale removed successfully",
+		"STATUS_ORIGEN_VENTA":					"Origin Sale status"
 	}
 }

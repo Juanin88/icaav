@@ -39,8 +39,8 @@ class CorporativoController extends AbstractActionIcaavController {
 			), array('@pr_affect_rows', '@pr_message'), new CorporativoForm(), self::OUTS);
 		// SET SELECT SP
 		$this->setSP('sp_fac_c_corporativo', array(
-				array('method' => 'post', 'name' => 'start_pag'),
-				array('method' => 'post', 'name' => 'end_pag'),
+				array('method' => 'post', 'name' => 'start_pag', 'default' => 0),
+				array('method' => 'post', 'name' => 'end_pag', 'default' => 10),
 			), array('@pr_affect_rows', '@pr_message'), null, self::ALL);
 		// SET DELETE SP
 		$this->setSP('sp_fac_d_corporativo', array(
