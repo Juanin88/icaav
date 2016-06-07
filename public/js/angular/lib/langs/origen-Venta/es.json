@@ -1,0 +1,13 @@
+{
+	"ORIGEN_VENTA": {
+		"NAME_ONE":								"Origen venta",
+		"NAME_MANY":							"Origenes de venta",
+		"NAME_OF_CORPORATIVE":					"Nombre de Origenes Venta",
+		"TITLE":								"Catálogo de Origen Venta",
+		"MESSAGE_DELETE":						"¿Esta seguro de eliminar el Origen Venta?",
+		"MESSAGE_SUCCESS_CREATE":				"Origen Venta creado correctamente",
+		"MESSAGE_SUCCESS_UPDATE":				"Origen Venta actualizado correctamente",
+		"MESSAGE_SUCCESS_DELETE":				"Origen Venta eliminado correctamente",
+		"STATUS_ORIGEN_VENTA":					"Estatus de Origen Venta"
+	}
+}
