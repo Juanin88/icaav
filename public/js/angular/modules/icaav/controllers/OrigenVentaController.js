@@ -44,10 +44,10 @@ icaavModule.controller('OrigenVentaController', ['$scope', '$http', '$translate'
 					$('#modalOrigenVenta').modal('hide');
 					$scope.toastr.success('Origen de venta actualizado correctamente');
 				} else {
-					console.log('No se pudo elimiar el refistro no existe');
+					console.log('No se puede eliminar el registro no existe');
 				}
-				});
-			};
+			});
+		};
 		
 		$scope.optionSubmitOrigenVenta = function() {
 			if($scope.isCreating) {

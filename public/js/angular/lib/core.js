@@ -13,8 +13,12 @@ core.controller('main', ['$scope', '$rootScope', 'tabs', '$location', '$localSto
         url: basePath + '/icaav/corporativo',
         classIcon: 'fa fa-suitcase'
       }, {
-        name: 'Origen Venta',
+        name: 'Origen venta',
         url: basePath + '/icaav/origen-venta',
+        classIcon: 'fa fa-suitcase'
+      }, {
+        name: 'Unidad de negocio',
+        url: basePath + '/icaav/unidad-negocio',
         classIcon: 'fa fa-suitcase'
       }]
   }];
@@ -72,6 +76,7 @@ core.controller('main', ['$scope', '$rootScope', 'tabs', '$location', '$localSto
         }, 0)
       } else {
         tab.url = $location.path();
+        console.log(tab.url);
       }
       tabs.set(tab);
     }
