@@ -1,0 +1,13 @@
+{
+	"UNIDAD_NEGOCIO": {
+		"NAME_ONE":								"Unidade de Negocio",
+		"NAME_MANY":							"Unidade de Negocio",
+		"NAME_OF_CORPORATIVE":					"Nome Unidade de Negocio",
+		"TITLE":								"Catálogo de Unidade de Negocio",
+		"MESSAGE_DELETE":						"Tem certeza que deseja remover o Unidade de Negocio?",
+		"MESSAGE_SUCCESS_CREATE":				"Unidade de Negocio criada com sucesso'",
+		"MESSAGE_SUCCESS_UPDATE":				"Unidade de Negocio atualizado com sucesso",
+		"MESSAGE_SUCCESS_DELETE":				"Unidade de Negocio removido com sucesso",
+		"STATUS_UNIDAD_NEGOCIO":				"Estatus Unidade de Negocio"
+	}
+}
