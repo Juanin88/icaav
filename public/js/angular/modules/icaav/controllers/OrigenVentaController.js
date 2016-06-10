@@ -1,5 +1,5 @@
-icaavModule.controller('OrigenVentaController', ['$scope', '$http', '$translate', '$translatePartialLoader', 'NgTableParams', '$filter', function($scope, $http, $translate, $translatePartialLoader, NgTableParams, $filter) {
-
+icaavModule.controller('OrigenVentaController', ['$scope', '$http', '$translate', '$translatePartialLoader', 'NgTableParams', '$filter', 'CorporativoService', function($scope, $http, $translate, $translatePartialLoader, NgTableParams, $filter, CorporativoService) {
+//CorporativoService.getAll();
 	$scope.httpForm = new icaav.services.HTTPForm($http);
 	$scope.toastr 	= new icaav.helpers.ToastTranslate($translate);
 	$scope.basePath = icaav.helpers.getBasePath();
@@ -9,14 +9,14 @@ icaavModule.controller('OrigenVentaController', ['$scope', '$http', '$translate'
 	$scope.isCreating = null;
 	$scope.tableOrigenVenta = null;
 	$scope.page = 1;
-  	$scope.countPerPage = 5;
-  	$scope.searchingOrigenesVenta = false;
-  	$scope.cols = {
+  $scope.countPerPage = 5;
+  $scope.searchingOrigenesVenta = false;
+  $scope.cols = {
       nombre_origen_venta:  { name: 'CORPORATE.NAME_OF_CORPORATIVE', show: true },
     };
 
 	$translatePartialLoader.addPart('origen-venta');
-  	$translate.refresh();
+  $translate.refresh();
 
 	$scope.prepareDeleteOrigenVenta = function(idOrigenVenta) {
 		$scope.idDeleteOrigenVenta = idOrigenVenta;
@@ -27,14 +27,15 @@ icaavModule.controller('OrigenVentaController', ['$scope', '$http', '$translate'
 		$scope.httpForm.post($scope.basePath +'/icaav/origen-venta/add-origen-venta', $scope.origenVenta)
 		.success(function(data){
 			if (data['@pr_affect_rows'] == 1) {
+				$scope.origenVenta = {};
 				$scope.getOrigenesVenta();
 				$('#modalOrigenVenta').modal ('hide');
 				$scope.toastr.success('Origen de venta cread correctamente.');
 			} else{
-					console.log('No se puede eliminar el registro ya que no existe.');
-				}
-			});	
-		};
+				console.log('No se puede eliminar el registro ya que no existe.');
+			}
+		});
+	};
 
 		$scope.updateOrigenVenta = function() {
 			$scope.httpForm.post($scope.basePath + '/icaav/origen-venta/edit-origen-venta' , $scope.origenVenta)
@@ -48,7 +49,7 @@ icaavModule.controller('OrigenVentaController', ['$scope', '$http', '$translate'
 				}
 			});
 		};
-		
+
 		$scope.optionSubmitOrigenVenta = function() {
 			if($scope.isCreating) {
 				$scope.createOrigenVenta();
@@ -106,9 +107,9 @@ icaavModule.controller('OrigenVentaController', ['$scope', '$http', '$translate'
       if(data['@pr_affect_rows'] == 1) {
         $scope.getOrigenesVenta();
         $('#modalDeleteOrigenVenta').modal('hide');
-        $scope.toastr.success('!!!!!!!!!Origen de venta eliminado correctamente!!');
+        $scope.toastr.success('Origen de venta eliminado correctamente!!');
       } else {
-        console.log('!!!!!!!No se pudo eliminar porque el registro no existe!!');
+        console.log('No se pudo eliminar porque el registro no existe!!');
       }
     });
   };

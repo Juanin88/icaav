@@ -1,13 +1,13 @@
 {
 	"UNIDAD_NEGOCIO": {
-		"NAME_ONE":								"Business Unit",
-		"NAME_MANY":							"Business Unit",
-		"NAME_OF_CORPORATIVE":					"Name of Business Unit",
-		"TITLE":								"Business Unit catalogue",
+		"NAME_ONE":								"Business unit",
+		"NAME_MANY":							"Business unit",
+		"NAME_OF_CORPORATIVE":					"Name of business unit",
+		"TITLE":								"Business unit catalogue",
 		"MESSAGE_DELETE":						"Are you sure to remove the Origen Venta?",
-		"MESSAGE_SUCCESS_CREATE":				"Business Unit created successfully",
-		"MESSAGE_SUCCESS_UPDATE":				"Business Unit updated successfully",
-		"MESSAGE_SUCCESS_DELETE":				"Business Unit removed successfully",
-		"STATUS_UNIDAD_NEGOCIO":					"Business Unit status"
+		"MESSAGE_SUCCESS_CREATE":				"Business unit created successfully",
+		"MESSAGE_SUCCESS_UPDATE":				"Business unit updated successfully",
+		"MESSAGE_SUCCESS_DELETE":				"Business unit removed successfully",
+		"STATUS_UNIDAD_NEGOCIO":				"Business unit status"
 	}
 }

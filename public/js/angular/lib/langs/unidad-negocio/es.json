@@ -1,13 +1,13 @@
 {
 	"UNIDAD_NEGOCIO": {
-		"NAME_ONE":								"Unidad de Negocio",
-		"NAME_MANY":							"Unidades de Negocio",
-		"NAME_OF_CORPORATIVE":					"Nombre de Unidad de Negocio",
-		"TITLE":								"Catálogo de Unidad de Negocio",
-		"MESSAGE_DELETE":						"¿Esta seguro de eliminar el Unidad de Negocio",
-		"MESSAGE_SUCCESS_CREATE":				"Unidad de Negocio creado correctamente",
-		"MESSAGE_SUCCESS_UPDATE":				"Unidad de Negocio actualizado correctamente",
-		"MESSAGE_SUCCESS_DELETE":				"Unidad de Negocio eliminado correctamente",
-		"STATUS_UNIDAD_NEGOCIO":				"Estatus de Unidad de Negocio"
+		"NAME_ONE":								"Unidad de negocio",
+		"NAME_MANY":							"Unidades de negocio",
+		"NAME_OF_CORPORATIVE":					"Nombre de unidad de negocio",
+		"TITLE":								"Catálogo de unidad de negocio",
+		"MESSAGE_DELETE":						"¿Esta seguro de eliminar el unidad de negocio",
+		"MESSAGE_SUCCESS_CREATE":				"Unidad de negocio creado correctamente",
+		"MESSAGE_SUCCESS_UPDATE":				"Unidad de negocio actualizado correctamente",
+		"MESSAGE_SUCCESS_DELETE":				"Unidad de negocio eliminado correctamente",
+		"STATUS_UNIDAD_NEGOCIO":				"Estatus de unidad de negocio"
 	}
 }

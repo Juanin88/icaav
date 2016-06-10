@@ -1,0 +1,13 @@
+{
+	"TIPO_PROVEEDOR": {
+		"NAME_ONE":								"Provider type",
+		"NAME_MANY":							"Provider type",
+		"NAME_OF_CORPORATIVE":					"Name of provider type",
+		"TITLE":								"Provider type unit catalogue",
+		"MESSAGE_DELETE":						"Are you sure to remove the provider type?",
+		"MESSAGE_SUCCESS_CREATE":				"Provider type created successfully",
+		"MESSAGE_SUCCESS_UPDATE":				"Provider type updated successfully",
+		"MESSAGE_SUCCESS_DELETE":				"Provider type removed successfully",
+		"STATUS_TIPO_PROVEEDOR":				"Provider type status"
+	}
+}

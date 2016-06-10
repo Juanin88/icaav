@@ -1,11 +1,9 @@
-
 <div ng-controller="main" ng-init="setTab({
         name: 'Unidad de negocio',
         classIcon: 'fa fa-suitcase'
       })">
 </div>
 <div ng-controller="UnidadNegocioController" class="container">
-
 	<a href="#" ng-click="changeLanguaje('es')">{{'LANGS.ES' | translate}}</a>
 	<a href="#" ng-click="changeLanguaje('en')">{{'LANGS.EN' | translate}}</a>
 	<a href="#" ng-click="changeLanguaje('pt')">{{'LANGS.PT' | translate}}</a>
@@ -13,6 +11,90 @@
 		<div class="col-md-6 col-sm-7 col-xs-12">
 			<h3 style="padding:0;margin:0">{{ 'UNIDAD_NEGOCIO.TITLE' | translate}}</h3>
 		</div>
+		<div class="col-md-3 col-sm-5 col-xs-12 pull-right">
+			<div class="input-group group-input-search">
+				<span class="icon-input-search" id="search-corporativo">
+					<i class="fa fa-search"></i>
+				</span>
+				<input type="text" class="form-control input-search" ng-model="searchUnidadNegocio" aria-describedby="search-corporativo" ng-keyup="tableUnidadNegocio.filter({ $: searchUnidadNegocio })" placeholder="{{'ACTIONS.SEARCH' | translate}}...">
+				<span class="input-group-btn">
+					<button class="btn btn-gray" type="button" style="border-radius:50%" ng-click="getUnidadNegocio()">
+						<i class="fa fa-refresh {{searchingUnidadesNegocio ? 'fa-spin' : ''}}"></i>
+					</button>
+				</span>
+				<span class="input-group-btn">
+					<button class="btn btn-primary" type="button" style="border-radius:50%" data-toggle="modal" data-target="#modalCorporativo" ng-click="prepareCreationUnidadNegocio()">
+						<i class="fa fa-plus"></i>
+					</button>
+				</span>
+			</div>
+		</div>
 	</div>
-</div>
+	<br>
 
+	<div loading-container="tableUnidadNegocio.settings().$loading" ng-init="getUnidadesNegocio()">
+		<table class="table table-condensed" ng-table="tableUnidadNegocio">
+			<tbody>
+				<tr ng-repeat="unidad in $data" ng-dblclick="prepareUpdatingUnidadNegocio(unidad)">
+					<td width="1">
+						<a href="#" class="icon-float-hover" ng-click="prepareDeleteUnidadNegocio(unidad.id_unidad_negocio)">
+							<i class="fa fa-trash"></i>
+						</a>
+					</td>
+					<td data-title="'NAME' | translate" sortable="'unidad_negocio'" ng-if="cols.nombre_unidad_negocio.show">
+						{{unidad.unidad_negocio}}
+					</td>
+				</tr>
+				<tr ng-show="!unidadesNegocio.length">
+					<td>{{'TABLES.NO_RESULTS_FOUND' | translate}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<!--Star Modal Unidadde Negocio-->
+	<div class="modal face dark-modal" id="modalUnidadNegocio" tabindex="-1" role="dialog" aria-labelledby="ModalCorporativo">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">
+						<i class="fa fa-circle"></i>
+					</span></button>
+					<h4 class="modal-title" id="ModalCorporativo">{{isCreating ? 'Crear' : 'Editar'}} Unidad de negocio</h4>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<form ng-submit="optionSubmitUnidadNegocio()">
+							<div class="col-md-12">
+								<input type="text" class="dark-form" placeholder="Unidad de negocio" ng-model="unidadNegocio.unidad_negocio" required maxlength="30">
+							</div>
+							<div class="col-md-12">
+								<button class="btn btn-blue btn-modal-submit pull-right">{{isCreating ? 'Crear' : 'Actualizar'}}
+								</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div><!-- End Modal Unidad de Negocio -->
+
+	<!-- Star Modal Delete Unidad de Negocio  -->
+	<div class="modal fade dark-modal" id="modalDeleteUnidadNegocio" tabindex="-1" role="dialog" aria-labelledby="ModalUnidadNegocio">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">
+						<i class="fa fa-circle"></i>
+					</span></button>
+					<h4 class="modal-title" id="ModalUnidadNegocio">¿Esta seguro de borrar la unidad de negocio?</h4>
+				</div>
+				<div class="modal-body no-padding-modal-body">
+					<button type="button" class="btn btn-default" data-dismiss="modal"> Cancelar</button>
+					 <button type="button" class="btn btn-danger" ng-click="deleteUnidadNegocio()">Eliminar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>

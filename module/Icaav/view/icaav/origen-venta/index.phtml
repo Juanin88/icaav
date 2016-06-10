@@ -4,7 +4,6 @@
       })">
 </div>
 <div ng-controller="OrigenVentaController" class="container">
-
 	<a href="#" ng-click="changeLanguaje('es')">{{'LANGS.ES' | translate}}</a>
 	<a href="#" ng-click="changeLanguaje('en')">{{'LANGS.EN' | translate}}</a>
 	<a href="#" ng-click="changeLanguaje('pt')">{{'LANGS.PT' | translate}}</a>
@@ -42,7 +41,7 @@
 							<i class="fa fa-trash"></i>
 						</a>
 					</td>
-					<td data-title="'NAME' | translate" sortable="'nombre_corporativo'" ng-if="cols.nombre_origen_venta.show">
+					<td data-title="'NAME' | translate" sortable="'origen_venta'" ng-if="cols.nombre_origen_venta.show">
 						{{origen.origen_venta}}
 					</td>
 				</tr>
@@ -88,7 +87,7 @@
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">
 						<i class="fa fa-circle"></i>
 					</span></button>
-					<h4 class="modal-title" id="ModalOrigenVenta">¿Esta seguro de borrar el Origen de Venta?</h4>
+					<h4 class="modal-title" id="ModalOrigenVenta">¿Esta seguro de borrar el origen de venta?</h4>
 				</div>
 				<div class="modal-body no-padding-modal-body">
 					<button type="button" class="btn btn-default" data-dismiss="modal"> Cancelar</button>

@@ -15,18 +15,18 @@ class UnidadNegocioController extends AbstractActionIcaavController {
 	protected function setSPs() {
 		//SET INSERT SP
 		$this->setSP('sp_fac_i_unidad_negocio', array(
-			array('method' => 'post', 'name' => 'pr_unidad_neg'),
+			array('method' => 'post', 'name' => 'unidad_negocio'),
 		 ), array('@pr_affect_rows', '@pr_message'), null, self::OUTS);
 		// SET UPDATE SP
 		$this->setSP('sp_fac_u_unidad_negocio', array(
-			array('method' => 'post', 'name' => 'pr_id_uni_neg'),
-			array('method' => 'post', 'name' => 'pr_unidad_neg'),
+			array('method' => 'post', 'name' => 'id_unidad_negocio'),
+			array('method' => 'post', 'name' => 'unidad_negocio'),
 		), array('@pr_affect_rows', '@pr_message'), null, self::OUTS);
 
 		// SET SELECT SP
 		$this->setSP('sp_fac_c_unidad_negocio', array(
-			array('method' => 'get', 'name' => 'pr_ini_pag', 'default' => 0),
-			array('method' => 'get', 'name' => 'pr_fin_pag', 'default' => 10),
+			array('method' => 'post', 'name' => 'pr_ini_pag', 'default' => 0),
+			array('method' => 'post', 'name' => 'pr_fin_pag', 'default' => 10),
 		), array('@pr_affect_rows','@pr_message'),   null, self::ALL);
  
 		//SET DELETE SP

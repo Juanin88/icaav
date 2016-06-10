@@ -1,0 +1,100 @@
+<div ng-controller="main" ng-init="setTab({
+        name: 'Tipo Proveedor',
+        classIcon: 'fa fa-suitcase'
+      })">
+</div>
+<div ng-controller="TipoProveedorController" class="container">
+	<a href="#" ng-click="changeLanguaje('es')">{{'LANGS.ES' | translate}}</a>
+	<a href="#" ng-click="changeLanguaje('en')">{{'LANGS.EN' | translate}}</a>
+	<a href="#" ng-click="changeLanguaje('pt')">{{'LANGS.PT' | translate}}</a>
+	<div class="catalog-title-group row" style="padding:0;margin:0">
+		<div class="col-md-6 col-sm-7 col-xs-12">
+			<h3 style="padding:0;margin:0">{{ 'TIPO_PROVEEDOR.TITLE' | translate}}</h3>
+		</div>
+		<div class="col-md-3 col-sm-5 col-xs-12 pull-right">
+			<div class="input-group group-input-search">
+				<span class="icon-input-search" id="search-corporativo">
+					<i class="fa fa-search"></i>
+				</span>
+				<input type="text" class="form-control input-search" ng-model="searchTipoProveedor" aria-describedby="search-corporativo" ng-keyup="tableTipoProveedor.filter({ $: searchTipoProveedor })" placeholder="{{'ACTIONS.SEARCH' | translate}}...">
+				<span class="input-group-btn">
+					<button class="btn btn-gray" type="button" style="border-radius:50%" ng-click="getTiposProveedor()">
+						<i class="fa fa-refresh {{searchingTiposProveedor ? 'fa-spin' : ''}}"></i>
+					</button>
+				</span>
+				<span class="input-group-btn">
+					<button class="btn btn-primary" type="button" style="border-radius:50%" data-toggle="modal" data-target="#modalCorporativo" ng-click="prepareCreationTipoProveedor()">
+						<i class="fa fa-plus"></i>
+					</button>
+				</span>
+			</div>
+		</div>
+	</div>
+	<br>
+
+	<div loading-container="tableTipoProveedor.settings().$loading" ng-init="getTiposProveedor()">
+		<table class="table table-condensed" ng-table="tableTipoProveedor">
+			<tbody>
+				<tr ng-repeat="tipo in $data" ng-dblclick="prepareUpdatingTipoProveedor(tipo)">
+					<td width="1">
+						<a href="#" class="icon-float-hover" ng-click="prepareDeleteTipoProveedor(tipo.id_tipo_proveedor)">
+							<i class="fa fa-trash"></i>
+						</a>
+					</td>
+					<td data-title="'NAME' | translate" sortable="'tipo_negocio'" ng-if="cols.nombre_tipo_proveedor.show">
+						{{tipo.tipo_proveedor}}
+					</td>
+				</tr>
+				<tr ng-show="!tiposProveedor.length">
+					<td>{{'TABLES.NO_RESULTS_FOUND' | translate}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<!--Star Modal Tipo Proveedor-->
+	<div class="modal face dark-modal" id="modalTipoProveedor" tabindex="-1" role="dialog" aria-labelledby="ModalCorporativo">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">
+						<i class="fa fa-circle"></i>
+					</span></button>
+					<h4 class="modal-title" id="ModalCorporativo">{{isCreating ? 'Crear' : 'Editar'}} tipo proveedor</h4>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<form ng-submit="optionSubmitTipoProveedor()">
+							<div class="col-md-12">
+								<input type="text" class="dark-form" placeholder="Tipo proveedor" ng-model="tipoProveedor.tipo_proveedor" required maxlength="30">
+							</div>
+							<div class="col-md-12">
+								<button class="btn btn-blue btn-modal-submit pull-right">{{isCreating ? 'Crear' : 'Actualizar'}}
+								</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div><!-- End Modal Tipo Proveedor -->
+
+	<!-- Star Modal Delete Tipo Proveedor -->
+	<div class="modal fade dark-modal" id="modalDeleteTipoProveedor" tabindex="-1" role="dialog" aria-labelledby="ModalTipoProveedor">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">
+						<i class="fa fa-circle"></i>
+					</span></button>
+					<h4 class="modal-title" id="ModalTipoProveedor">¿Esta seguro de borrar el Tipo proveedor?</h4>
+				</div>
+				<div class="modal-body no-padding-modal-body">
+					<button type="button" class="btn btn-default" data-dismiss="modal"> Cancelar</button>
+					 <button type="button" class="btn btn-danger" ng-click="deleteTipoProveedor()">Eliminar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>

@@ -1,0 +1,13 @@
+{
+	"TIPO_PROVEEDOR": {
+		"NAME_ONE":								"Tipo proveedor",
+		"NAME_MANY":							"Tipos de proveedor",
+		"NAME_OF_CORPORATIVE":					"Nombre de tipo proveedor",
+		"TITLE":								"Catálogo de tipo proveedor",
+		"MESSAGE_DELETE":						"¿Esta seguro de eliminar el tipo proveedor",
+		"MESSAGE_SUCCESS_CREATE":				"Tipo proveedor creado correctamente",
+		"MESSAGE_SUCCESS_UPDATE":				"Tipo proveedor actualizado correctamente",
+		"MESSAGE_SUCCESS_DELETE":				"Tipo proveedor eliminado correctamente",
+		"STATUS_TIPO_PROVEEDOR":				"Estatus de tipo proveedor"
+	}
+}

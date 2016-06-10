@@ -35,7 +35,7 @@ class OrigenVentaController extends AbstractActionIcaavController {
 		//SET DELETE SP
 		$this->setSP('sp_fac_d_origen_venta', array(
 				array('method' => 'post', 'name' => 'pr_id_orig'),
-		), array('@pr_affect_rows','@pr_message'),   null, self::OUTS);
+		), array('@pr_affect_rows','@pr_message'),  null, self::OUTS);
 	}
 	
 	public function indexAction() {

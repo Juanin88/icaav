@@ -20,6 +20,10 @@ core.controller('main', ['$scope', '$rootScope', 'tabs', '$location', '$localSto
         name: 'Unidad de negocio',
         url: basePath + '/icaav/unidad-negocio',
         classIcon: 'fa fa-suitcase'
+      }, {
+        name: 'Tipo Proveedor',
+        url: basePath + '/icaav/tipo-proveedor',
+        classIcon: 'fa fa-suitcase'
       }]
   }];
   $scope.tabs = [];
@@ -76,7 +80,7 @@ core.controller('main', ['$scope', '$rootScope', 'tabs', '$location', '$localSto
         }, 0)
       } else {
         tab.url = $location.path();
-        console.log(tab.url);
+        console.log();
       }
       tabs.set(tab);
     }
